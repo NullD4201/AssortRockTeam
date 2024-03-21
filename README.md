@@ -66,17 +66,13 @@
 ## 전우치가 사용하는 무기는 검(칼), 봉, 활
 - 검 담당자 
 
-<iframe width="1382" height="786" src="https://www.youtube.com/embed/OE8u0wtV1Ag" title="UE4 Sword Basic Animation set" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![사용할 에셋](https://cdn1.epicgames.com/ue/product/Thumbnail/SwordBasicAnimation_thumb-284x284-7974ad6a6889f2926ebf42931b32735c.png?resize=1&w=300)](https://youtu.be/OE8u0wtV1Ag)
 
 - 봉 담당자
 
-<iframe width="1382" height="786" src="https://www.youtube.com/embed/9kiyHn2liUI" title="UE4 Spear Animation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![사용할 에셋](https://cdn1.epicgames.com/ue/product/Thumbnail/SpearGlaiveAnimation_thumb-284x284-a51e829dae26d7ee09d483cf60223433.png?resize=1&w=300)](https://youtu.be/9kiyHn2liUI)
 
-- 활 담당자 
-> <br>
-> [Mixamo 사용] <br><br>
-
-<br>
+- 활 담당자 [Mixamo 사용]
 
 `아마도 검 담당자가 임무 작업을 먼저 하게될듯`
 
