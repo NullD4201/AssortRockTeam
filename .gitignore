@@ -77,3 +77,6 @@ KDT1/Content/StarterContent/*
 KDT1/Saved/*
 KDT1/Intermediate/*
 KDT1/Content/*/Demo/*.mp4
+KDT1/.idea/*
+KDT1/.vsconfig
+KDT1/Binaries/*
