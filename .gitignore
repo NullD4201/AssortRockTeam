@@ -73,4 +73,6 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-.vsconfig
+KDT1/Content/StarterContent/*
+KDT1/Saved/*
+KDT1/Intermediate/*
