@@ -64,9 +64,15 @@
 
 # 무기류
 ## 전우치가 사용하는 무기는 검(칼), 봉, 활
-- 검 담당자
+- 검 담당자 
+
+[![사용할 에셋](https://cdn1.epicgames.com/ue/product/Thumbnail/SwordBasicAnimation_thumb-284x284-7974ad6a6889f2926ebf42931b32735c.png?resize=1&w=300)](https://youtu.be/OE8u0wtV1Ag)
+
 - 봉 담당자
-- 활 담당자
+
+[![사용할 에셋](https://cdn1.epicgames.com/ue/product/Thumbnail/SpearGlaiveAnimation_thumb-284x284-a51e829dae26d7ee09d483cf60223433.png?resize=1&w=300)](https://youtu.be/9kiyHn2liUI)
+
+- 활 담당자 [Mixamo 사용]
 
 `아마도 검 담당자가 임무 작업을 먼저 하게될듯`
 
@@ -78,7 +84,8 @@
 <br><br><br><br>
 
 ### 정말 시간이 남아돈다 싶으면 할거
-```- 배그처럼 벽뒤에서 고개만 숙여서 오른쪽 왼쪽 시야 넓히기
+```
+- 배그처럼 벽뒤에서 고개만 숙여서 오른쪽 왼쪽 시야 넓히기
 - 병사, 장군 패턴 추가
 - 병사, 장군 AI 개선
 - 전우치 주먹액션 추가
