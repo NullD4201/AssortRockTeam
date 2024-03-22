@@ -3,6 +3,7 @@
 
 #include "MainCharacter.h"
 #include "PlayerAnimInstance.h"
+#include "../Item/Weapon.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -15,6 +16,9 @@ AMainCharacter::AMainCharacter()
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
+
+	//mWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
+	//mWeaponMesh->SetupAttachment(GetMesh());
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +28,22 @@ void AMainCharacter::BeginPlay()
 	
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 
+	bSpearEquip = false;
+
+	/*USkeletalMeshComponent* mMesh;
+	static ConstructorHelpers::FObjectFinder<USkeletalMeshComponent> Asset(TEXT("/Script/Engine.SkeletalMesh'/Game/SpearAnimation/Demo/Character/Mesh/Weapom_Spear.Weapom_Spear'"));
+	if (Asset.Succeeded())
+		mMesh = Asset.Object;*/
+
+	FActorSpawnParameters	param;
+	param.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	mWeapon = GetWorld()->SpawnActor<AWeapon>(
+		FVector::ZeroVector, FRotator::ZeroRotator,
+		param);
+	mWeapon->AttachToComponent(GetMesh(),
+		FAttachmentTransformRules::KeepRelativeTransform,
+		TEXT("Weapon_Spear"));
 
 }
 
@@ -39,5 +59,16 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMainCharacter::SetWeaponMesh(USkeletalMesh* WeaponMesh)
+{
+	mWeapon->SetMesh(WeaponMesh);
+}
+
+void AMainCharacter::PlayAttackMontage()
+{
+	if(bSpearEquip)
+		mAnimInst->PlayAttackMontage();
 }
 

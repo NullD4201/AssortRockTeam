@@ -21,8 +21,18 @@ public :
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	float mMoveDir;
+	USkeletalMesh* mSpearMesh;
+
+public :
+	float GetMoveDir()
+	{
+		return mMoveDir;
+	}
 
 protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
+	void OnAttack(const FInputActionValue& InputActionValue);
+	void OnItem1(const FInputActionValue& InputActionValue);
 };

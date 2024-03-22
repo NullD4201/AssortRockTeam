@@ -23,6 +23,13 @@ protected:
 	USpringArmComponent* mCameraArm;
 
 	class UPlayerAnimInstance* mAnimInst;
+	class AWeapon* mWeapon;
+
+	bool bSpearEquip;
+
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	//USkeletalMeshComponent* mWeaponMesh;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -35,4 +42,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	void SetWeaponMesh(USkeletalMesh* WeaponMesh);
+	void PlayAttackMontage();
+
+	void SetBoolSpear(bool equip)
+	{
+		bSpearEquip = equip;
+	}
+	bool GetBoolSpearEquip()
+	{
+		return bSpearEquip;
+	}
 };

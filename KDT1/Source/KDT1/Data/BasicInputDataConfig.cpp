@@ -29,4 +29,20 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			Look = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Attack.IA_Attack'") };
+		if (Asset.Succeeded())
+		{
+			Attack = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Spear.IA_Spear'") };
+		if (Asset.Succeeded())
+		{
+			Item1 = Asset.Object;
+		}
+	}
 }
