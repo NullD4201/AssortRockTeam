@@ -15,7 +15,30 @@ AMainCharacter::AMainCharacter()
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
+
+	MaxCombo = 4;
+	AttackEndComboState();
 }
+
+void AMainCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
+	mAnimInst->OnMontageEnded.AddDynamic(this, &AMainCharacter::OnAttackMontageEnded);
+
+	mAnimInst->OnNextAttackCheck.AddLambda([this]() -> void
+		{
+			CanNextCombo = false;
+
+			if (IsComboInputOn)
+			{
+				AttackStartComboState();
+				mAnimInst->JumpToAttackMontageSection(CurrentCombo);
+			}
+		});
+}
+
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
@@ -39,5 +62,44 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMainCharacter::Attack()
+{
+	if (IsAttacking)
+	{
+		if (CanNextCombo)
+		{
+			IsComboInputOn = true;
+		}
+	}
+	else
+	{
+		AttackStartComboState();
+		mAnimInst->PlayAttackMontage();
+		mAnimInst->JumpToAttackMontageSection(CurrentCombo);
+		IsAttacking = true;
+	}
+}
+
+
+void AMainCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	IsAttacking = false;
+	AttackEndComboState();
+}
+
+void AMainCharacter::AttackStartComboState()
+{
+	CanNextCombo = true;
+	IsComboInputOn = false;
+	CurrentCombo = FMath::Clamp<int32>(CurrentCombo + 1, 1, MaxCombo);
+}
+
+void AMainCharacter::AttackEndComboState()
+{
+	IsComboInputOn = false;
+	CanNextCombo = false;
+	CurrentCombo = 0;
 }
 

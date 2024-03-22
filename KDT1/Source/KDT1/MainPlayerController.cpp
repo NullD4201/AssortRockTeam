@@ -7,6 +7,8 @@
 #include "Data/BasicInputDataConfig.h"
 #include "Character/MainCharacter.h"
 
+int count = 0;
+
 AMainPlayerController::AMainPlayerController()
 {
 
@@ -32,6 +34,8 @@ void AMainPlayerController::SetupInputComponent()
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Move, ETriggerEvent::Triggered, this, &ThisClass::OnMove);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->RandomColor, ETriggerEvent::Triggered, this, &ThisClass::OnRandomColor);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordAttack, ETriggerEvent::Triggered, this, &ThisClass::OnSwordAttack);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -48,6 +52,44 @@ void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
 	ControlledPawn->AddMovementInput(ForwardVector, ActionValue.Y);
 	// 좌 우 이동
 	ControlledPawn->AddMovementInput(RightVector, ActionValue.X);
+
+	// 이동 방향을 저장한다.
+	// 먼저 ActionValue.X 는 왼쪽일때 -1, 오른쪽일때 1, 좌우로 움직이지 않을경우
+	// 0이 들어오게 된다.
+	mMoveDir = ActionValue.X * 90.f;
+
+	// ActionValue.Y는 앞일때 1, 뒤일때 -1, 앞뒤로 움직이지 않을 경우 0이다.
+	// 앞으로 이동할 경우
+	if (ActionValue.Y > 0.f)
+	{
+		// 앞으로 이동하는데 왼쪽으로 이동하고 있을 경우
+		// 왼쪽 전방 대각선 이동이다.
+		if (ActionValue.X < 0.f)
+			mMoveDir = -45.f;
+
+		// 앞으로 이동하는데 오른쪽으로 이동하고 있을 경우
+		// 오른쪽 전방 대각선 이동이다.
+		else if (ActionValue.X > 0.f)
+			mMoveDir = 45.f;
+	}
+
+	// 뒤로 이동할 경우
+	else if (ActionValue.Y < 0.f)
+	{
+		// 뒤로 이동하는데 왼쪽으로 이동하고 있을 경우
+		// 왼쪽 후방 대각선 이동이다.
+		if (ActionValue.X < 0.f)
+			mMoveDir = -135.f;
+
+		// 뒤로 이동하는데 오른쪽으로 이동하고 있을 경우
+		// 오른쪽 후방 대각선 이동이다.
+		else if (ActionValue.X > 0.f)
+			mMoveDir = 135.f;
+
+		// 뒤로 이동할 경우
+		else
+			mMoveDir = 180.f;
+	}
 }
 
 void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
@@ -55,4 +97,21 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	const FVector ActionValue = InputActionValue.Get<FVector>();
 	AddYawInput(ActionValue.X);
 	AddPitchInput(ActionValue.Y);
+}
+
+void AMainPlayerController::OnSwordAttack(const FInputActionValue& InputActionValue)
+{
+	APawn* ControlledPawn = GetPawn();
+	// Attack함수실행
+}
+
+void AMainPlayerController::OnRandomColor(const FInputActionValue& InputActionValue)
+{	
+	
+	int a, b, c, d;
+	a = FMath::RandRange(0.0, 255.0);
+	b = FMath::RandRange(0.0, 255.0);
+	c = FMath::RandRange(0.0, 255.0);
+	d = FMath::RandRange(20.0, 35.0);
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3600.0f, FColor(a, b, c), TEXT("■■■■■■■■■■■■■■"));
 }
