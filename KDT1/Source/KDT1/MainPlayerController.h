@@ -28,6 +28,12 @@ private:
 	float	mDetectDelay = 0.4f;
 	TArray<AActor*>	mDetectActorArray;
 
+public:
+	float GetMoveDir()
+	{
+		return mMoveDir;
+	}
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;

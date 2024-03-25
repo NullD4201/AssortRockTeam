@@ -3,6 +3,7 @@
 
 #include "PlayerAnimInstance.h"
 #include "MainCharacter.h"
+#include "../MainPlayerController.h"
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
 {
@@ -33,11 +34,15 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 	}
 
-	/*static ConstructorHelpers::FObjectFinder<UAnimMontage>ATTACK_MONTAGE
-	(TEXT("/Script/Engine.AnimMontage'/Game/SwordBasicAnimation/SwordPlayer/Attack/AM_SwordAttack.AM_SwordAttack'"));
+	// 이 애님인스턴스를 가지고 있는 캐릭터로부터 해당 캐릭터를 컨트롤 하고 있는 플레이어
+		// 컨트롤러를 얻어온다.
+	AMainPlayerController* Controller = OwnerPawn->GetController<AMainPlayerController>();
 
-	if (ATTACK_MONTAGE.Succeeded())
-		AttackMontage = ATTACK_MONTAGE.Object;*/
+	// 위에서 얻어온 컨트롤러가 유효한지 체크한다.
+	/*if (IsValid(Controller))
+	{
+		mMoveDir = Controller->GetMoveDir();
+	}*/
 }
 
 void UPlayerAnimInstance::PlayAttackMontage()

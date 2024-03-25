@@ -7,8 +7,6 @@
 #include "Data/BasicInputDataConfig.h"
 #include "Character/MainCharacter.h"
 
-int count = 0;
-
 AMainPlayerController::AMainPlayerController()
 {
 
@@ -108,10 +106,9 @@ void AMainPlayerController::OnSwordAttack(const FInputActionValue& InputActionVa
 void AMainPlayerController::OnRandomColor(const FInputActionValue& InputActionValue)
 {	
 	
-	int a, b, c, d;
+	int a, b, c;
 	a = FMath::RandRange(0.0, 255.0);
 	b = FMath::RandRange(0.0, 255.0);
 	c = FMath::RandRange(0.0, 255.0);
-	d = FMath::RandRange(20.0, 35.0);
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3600.0f, FColor(a, b, c), TEXT("■■■■■■■■■■■■■■"));
 }
