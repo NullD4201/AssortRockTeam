@@ -63,6 +63,12 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
+UPlayerAnimInstance::UPlayerAnimInstance()
+{
+	mAttackIndex = 0;
+	mAttackEnable = true;
+}
+
 void UPlayerAnimInstance::PlayAttackMontage()
 {
 	// mAttackEnable 변수는 공격할 수 있는지를 저장해둔 변수이다.

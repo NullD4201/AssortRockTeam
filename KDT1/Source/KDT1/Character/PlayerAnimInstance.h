@@ -6,10 +6,6 @@
 #include "Animation/AnimInstance.h"
 #include "PlayerAnimInstance.generated.h"
 
-//여러개를 엮을 수 있는 델리게이트 선언
-DECLARE_MULTICAST_DELEGATE(FOnNextAttackCheckDelegate);
-DECLARE_MULTICAST_DELEGATE(FOnAttackHitCheckDelegate);
-
 /**
  *
  */
@@ -38,6 +34,7 @@ protected:
 public:
 	virtual void NativeInitializeAnimation();
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
+	UPlayerAnimInstance();
 
 public:
 	void PlayAttackMontage();
