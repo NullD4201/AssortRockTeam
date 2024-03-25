@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "Data/BasicInputDataConfig.h"
 #include "Character/MainCharacter.h"
+#include "Character/PlayerAnimInstance.h"
 #include "Item/Weapon.h"
 
 AMainPlayerController::AMainPlayerController()
@@ -53,40 +54,28 @@ void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
 	// 좌 우 이동
 	ControlledPawn->AddMovementInput(RightVector, ActionValue.X);
 
-	mMoveDir = ActionValue.X * 90.f;
+	/*mMoveDir = ActionValue.X * 90.f;
 
-	// ActionValue.Y는 앞일때 1, 뒤일때 -1, 앞뒤로 움직이지 않을 경우 0이다.
-	// 앞으로 이동할 경우
 	if (ActionValue.Y > 0.f)
 	{
-		// 앞으로 이동하는데 왼쪽으로 이동하고 있을 경우
-		// 왼쪽 전방 대각선 이동이다.
 		if (ActionValue.X < 0.f)
 			mMoveDir = -45.f;
 
-		// 앞으로 이동하는데 오른쪽으로 이동하고 있을 경우
-		// 오른쪽 전방 대각선 이동이다.
 		else if (ActionValue.X > 0.f)
 			mMoveDir = 45.f;
 	}
 
-	// 뒤로 이동할 경우
 	else if (ActionValue.Y < 0.f)
 	{
-		// 뒤로 이동하는데 왼쪽으로 이동하고 있을 경우
-		// 왼쪽 후방 대각선 이동이다.
 		if (ActionValue.X < 0.f)
 			mMoveDir = -135.f;
 
-		// 뒤로 이동하는데 오른쪽으로 이동하고 있을 경우
-		// 오른쪽 후방 대각선 이동이다.
 		else if (ActionValue.X > 0.f)
 			mMoveDir = 135.f;
 
-		// 뒤로 이동할 경우
 		else
 			mMoveDir = 180.f;
-	}
+	}*/
 }
 
 void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)

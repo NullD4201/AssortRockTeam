@@ -6,6 +6,7 @@
 #include "Animation/AnimInstance.h"
 #include "PlayerAnimInstance.generated.h"
 
+
 /**
  * 
  */
@@ -30,8 +31,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UAnimMontage>>	mAttackMontageArray;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bCanMove;
+
 	bool mAttackEnable;
 	int32 mAttackIndex;
+
+	
 
 public:
 	virtual void NativeInitializeAnimation();
