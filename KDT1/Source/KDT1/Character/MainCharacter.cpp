@@ -37,3 +37,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AMainCharacter::PlayAttackMontage()
+{
+	mAnimInst->PlayAttackMontage();
+}

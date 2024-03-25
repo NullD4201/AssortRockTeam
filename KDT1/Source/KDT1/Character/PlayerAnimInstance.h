@@ -25,28 +25,34 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float	mMoveSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TObjectPtr<UAnimMontage>>	mAttackMontageArray;
+	//TArray<UAnimMontage*>
+
+	// 공격 몽타주를 재생하기 위한 인덱스이다.
+	int32	mAttackIndex;
+
+	// 현재 공격가능한 상황인지를 판단하는 변수이다.
+	bool	mAttackEnable;
+
 public:
 	virtual void NativeInitializeAnimation();
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
 
 public:
 	void PlayAttackMontage();
-	void JumpToAttackMontageSection(int32 NewSection);
 
+	UFUNCTION()
+	void AnimNotify_Attack();
 
-	FOnNextAttackCheckDelegate OnNextAttackCheck;
-	FOnAttackHitCheckDelegate  OnAttackHitCheck;
+	UFUNCTION()
+	void AnimNotify_AttackEnable();
+
+	UFUNCTION()
+	void AnimNotify_AttackEnd();
 
 private:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 	UAnimMontage* AttackMontage;
-
-	UFUNCTION()
-	void AnimNotify_AttackHitCheck();
-
-	UFUNCTION()
-	void AnimNotify_NextAttackCheck();
-
-	FName GetAttackMontageSectionName(int32 Section);
 };

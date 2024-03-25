@@ -99,8 +99,15 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 
 void AMainPlayerController::OnSwordAttack(const FInputActionValue& InputActionValue)
 {
-	APawn* ControlledPawn = GetPawn();
-	// Attack함수실행
+
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3600.0f, FColor(1,1,0), TEXT("■■■■■■■■■■■■■■"));
+	// 컨트롤하는 캐릭터의 애니메이션을 공격 모션으로 전환한다.
+	// 애님인스턴스는 플레이어 캐릭터의 SkeletalMeshComponent에 있으므로
+	// PlayerCharacter 를 얻어온다.
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	// PlayAttackMontage에서는 애님인스턴스의 공격 몽타주를 재생시켜준다.
+	ControlledPawn->PlayAttackMontage();
 }
 
 void AMainPlayerController::OnRandomColor(const FInputActionValue& InputActionValue)
