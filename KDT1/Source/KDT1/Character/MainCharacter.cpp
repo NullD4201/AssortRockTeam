@@ -12,9 +12,24 @@ AMainCharacter::AMainCharacter()
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
+
+	mMesh->SetupAttachment(GetMesh(), "weapon");
+	
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> SwordAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/InfinityBladeWeapons/Weapons/Blade/Swords/Blade_BlackKnight/SK_Blade_BlackKnight.SK_Blade_BlackKnight'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> SpearAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/SpearAnimation/Demo/Character/Mesh/Weapom_Spear.Weapom_Spear'"));
+
+	if (SwordAsset.Succeeded())
+	{
+		mMesh->SetSkeletalMeshAsset(SwordAsset.Object);
+	}
+	if (SpearAsset.Succeeded())
+	{
+		// mMesh->SetSkeletalMeshAsset(SpearAsset.Object);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -23,8 +38,6 @@ void AMainCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
-
-
 }
 
 // Called every frame
@@ -40,4 +53,25 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+void AMainCharacter::NormalAttack()
+{
+	
+}
+
+void AMainCharacter::PlayAttackMontage()
+{
+	mAnimInst->PlayAttackMontage();
+}
+
+void AMainCharacter::PlayDodgeMontage()
+{
+	mAnimInst->PlayDodgeMontage();
+}
+
+void AMainCharacter::PlaySkillMontage()
+{
+	mAnimInst->PlaySkillMontage();
+}
+
 

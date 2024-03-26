@@ -32,6 +32,8 @@ void AMainPlayerController::SetupInputComponent()
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Move, ETriggerEvent::Triggered, this, &ThisClass::OnMove);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Completed, this, &ThisClass::OnAttack);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Completed, this, &ThisClass::OnSkill);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -55,4 +57,19 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	const FVector ActionValue = InputActionValue.Get<FVector>();
 	AddYawInput(ActionValue.X);
 	AddPitchInput(ActionValue.Y);
+}
+
+void AMainPlayerController::OnAttack(const FInputActionValue& InputActionValue)
+{
+	// GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Red, TEXT("Attack"));
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayAttackMontage();
+}
+
+void AMainPlayerController::OnSkill(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlaySkillMontage();
 }

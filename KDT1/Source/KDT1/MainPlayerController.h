@@ -25,4 +25,6 @@ protected:
 protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
+	void OnAttack(const FInputActionValue& InputActionValue);
+	void OnSkill(const FInputActionValue& InputActionValue);
 };
