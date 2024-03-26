@@ -45,4 +45,15 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			SwordAttack = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwordSkill.IA_SwordSkill'") };
+		if (Asset.Succeeded())
+		{
+			SwordSkill = Asset.Object;
+		}
+	}
+
+
+	
 }

@@ -33,11 +33,14 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Move, ETriggerEvent::Triggered, this, &ThisClass::OnMove);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->RandomColor, ETriggerEvent::Triggered, this, &ThisClass::OnRandomColor);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordAttack, ETriggerEvent::Triggered, this, &ThisClass::OnSwordAttack);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordAttack, ETriggerEvent::Started, this, &ThisClass::OnSwordAttack);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordSkill, ETriggerEvent::Started, this, &ThisClass::OnSwordSkill);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
 {
+	// 공격 중이 아닌 경우에만 이동 코드를 실행
+	
 	APawn* ControlledPawn = GetPawn();
 
 	const FRotator Rotation = K2_GetActorRotation();
@@ -106,6 +109,25 @@ void AMainPlayerController::OnSwordAttack(const FInputActionValue& InputActionVa
 
 	// PlayAttackMontage에서는 애님인스턴스의 공격 몽타주를 재생시켜준다.
 	ControlledPawn->PlayAttackMontage();
+
+	// 공격이 끝나면 bIsAttacking을 다시 false로 설정
+
+	/*GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("bIsAttacking  = false"));*/
+}
+
+void AMainPlayerController::OnSwordSkill(const FInputActionValue& InputActionValue)
+{
+	// 컨트롤하는 캐릭터의 애니메이션을 공격 모션으로 전환한다.
+	// 애님인스턴스는 플레이어 캐릭터의 SkeletalMeshComponent에 있으므로
+	// PlayerCharacter 를 얻어온다.
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	// PlayAttackMontage에서는 애님인스턴스의 공격 몽타주를 재생시켜준다.
+	ControlledPawn->PlaySkillMontage(0);
+
+	// 공격이 끝나면 bIsAttacking을 다시 false로 설정
+
+	/*GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("bIsAttacking  = false"));*/
 }
 
 void AMainPlayerController::OnRandomColor(const FInputActionValue& InputActionValue)

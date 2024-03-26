@@ -20,7 +20,7 @@ public :
 
 private:
 	float	mMoveDir;
-
+	
 	bool	mDetectEnable = false;
 	float	mDetectTime = 0.f;
 	float	mDetectDuration = 4.f;
@@ -43,4 +43,5 @@ protected:
 	void OnLook(const FInputActionValue& InputActionValue);
 	void OnRandomColor(const FInputActionValue& InputActionValue);
 	void OnSwordAttack(const FInputActionValue& InputActionValue);
+	void OnSwordSkill(const FInputActionValue& InputActionValue);
 };

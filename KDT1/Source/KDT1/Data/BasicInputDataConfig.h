@@ -27,5 +27,6 @@ public:
 	UInputAction* Look = nullptr;
 	UInputAction* RandomColor = nullptr;
 	UInputAction* SwordAttack = nullptr;
+	UInputAction* SwordSkill = nullptr;
 
 };

@@ -37,4 +37,9 @@ public:
 
 	void PlayAttackMontage();
 
+	void PlaySkillMontage(int32 index);
+
+public:
+	virtual void NormalAttack();
+
 };
