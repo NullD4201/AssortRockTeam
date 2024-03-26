@@ -45,4 +45,12 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			Item1 = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Dodge.IA_Dodge'") };
+		if (Asset.Succeeded())
+		{
+			DoubleTap = Asset.Object;
+		}
+	}
 }

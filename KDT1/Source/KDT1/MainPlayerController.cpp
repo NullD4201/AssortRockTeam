@@ -37,6 +37,7 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Triggered, this, &ThisClass::OnAttack);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Item1, ETriggerEvent::Triggered, this, &ThisClass::OnItem1);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DoubleTap, ETriggerEvent::Triggered, this, &ThisClass::OnDoubleTap);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -101,4 +102,13 @@ void AMainPlayerController::OnItem1(const FInputActionValue& InputActionValue)
 		ControlledPawn->SetBoolSpear(true);
 		ControlledPawn->SetWeaponMesh(mSpearMesh);
 	}
+}
+
+void AMainPlayerController::OnDoubleTap(const FInputActionValue& InputActionValue)
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Double Tap"));
+
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayDodgeMontage();
 }

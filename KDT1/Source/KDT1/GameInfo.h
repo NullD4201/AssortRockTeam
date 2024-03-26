@@ -14,6 +14,7 @@ enum class EPlayerType : uint8
 {
 	Idle,
 	Walk,
+	Dodge,
 	Sprint
 };
 

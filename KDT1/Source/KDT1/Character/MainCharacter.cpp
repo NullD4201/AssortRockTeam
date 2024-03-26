@@ -72,3 +72,8 @@ void AMainCharacter::PlayAttackMontage()
 		mAnimInst->PlayAttackMontage();
 }
 
+void AMainCharacter::PlayDodgeMontage()
+{
+	mAnimInst->PlayDodgeMontage();
+}
+

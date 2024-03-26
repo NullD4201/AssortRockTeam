@@ -27,5 +27,6 @@ public:
 	UInputAction* Look = nullptr;
 	UInputAction* Attack = nullptr;
 	UInputAction* Item1 = nullptr;
+	UInputAction* DoubleTap = nullptr;
 
 };

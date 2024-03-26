@@ -77,6 +77,17 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	}
 }
 
+void UPlayerAnimInstance::PlayDodgeMontage()
+{
+	//Montage_Play(mDodgeMontageArray[0]);
+
+	// 단순 몽타지 플레이가 아닌 블렌드 스페이스를 이용해야 할듯
+
+	//mAnimType = EPlayerType::Dodge;
+
+
+}
+
 void UPlayerAnimInstance::AnimNotify_AttackStart()
 {	
 	//bCanMove = false;
@@ -116,4 +127,9 @@ void UPlayerAnimInstance::AnimNotify_EndMontage()
 	bCanMove = true;
 
 	mAnimType = EPlayerType::Idle;
+}
+
+void UPlayerAnimInstance::AnimNotify_DodgeFinish()
+{
+	//mAnimType = EPlayerType::Idle;
 }

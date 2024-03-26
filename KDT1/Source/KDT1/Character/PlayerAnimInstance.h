@@ -32,6 +32,9 @@ protected:
 	TArray<TObjectPtr<UAnimMontage>>	mAttackMontageArray;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TObjectPtr<UAnimMontage>>	mDodgeMontageArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bCanMove;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -47,6 +50,7 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
 
 	void PlayAttackMontage();
+	void PlayDodgeMontage();
 
 public :
 	UFUNCTION()
@@ -63,4 +67,7 @@ public :
 
 	UFUNCTION()
 	void AnimNotify_EndMontage();
+
+	UFUNCTION()
+	void AnimNotify_DodgeFinish();
 };
