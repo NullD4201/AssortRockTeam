@@ -10,6 +10,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	mAttackEnable = true;
 	mAttackIndex = 0;
 	bCanMove = true;
+	mAnimType = EPlayerType::Idle;
 }
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
@@ -66,6 +67,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	{
 		mAttackEnable = false;
 		bCanMove = true;
+		mAnimType = EPlayerType::Idle;
 
 		Montage_SetPosition(mAttackMontageArray[mAttackIndex], 0.f);
 		
@@ -78,6 +80,8 @@ void UPlayerAnimInstance::PlayAttackMontage()
 void UPlayerAnimInstance::AnimNotify_AttackStart()
 {	
 	//bCanMove = false;
+
+	Montage_SetPlayRate(mAttackMontageArray[mAttackIndex], 0.5f);
 }
 
 void UPlayerAnimInstance::AnimNotify_AttackEnd()
@@ -85,7 +89,16 @@ void UPlayerAnimInstance::AnimNotify_AttackEnd()
 	mAttackEnable = true;
 
 	bCanMove = false;
+
+	Montage_SetPlayRate(mAttackMontageArray[mAttackIndex], 1.f);
+
 }
+
+void UPlayerAnimInstance::AnimNotify_CanMove()
+{
+	mAnimType = EPlayerType::Walk;
+}
+
 
 void UPlayerAnimInstance::AnimNotify_CoolDown()
 {
@@ -96,9 +109,11 @@ void UPlayerAnimInstance::AnimNotify_CoolDown()
 	//bCanMove = true;
 }
 
-void UPlayerAnimInstance::AnimNotify_CanAttack()
+void UPlayerAnimInstance::AnimNotify_EndMontage()
 {
 	//mAttackEnable = true;
 
 	bCanMove = true;
+
+	mAnimType = EPlayerType::Idle;
 }

@@ -34,6 +34,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bCanMove;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	EPlayerType	mAnimType;
+
 	bool mAttackEnable;
 	int32 mAttackIndex;
 
@@ -53,8 +56,11 @@ public :
 	void AnimNotify_AttackEnd();
 
 	UFUNCTION()
+	void AnimNotify_CanMove();
+
+	UFUNCTION()
 	void AnimNotify_CoolDown();
 
 	UFUNCTION()
-	void AnimNotify_CanAttack();
+	void AnimNotify_EndMontage();
 };

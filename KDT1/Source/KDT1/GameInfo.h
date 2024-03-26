@@ -8,6 +8,16 @@
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
+
+UENUM(BlueprintType)
+enum class EPlayerType : uint8
+{
+	Idle,
+	Walk,
+	Sprint
+};
+
+
 /**
  * 
  */
