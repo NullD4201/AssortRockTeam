@@ -44,4 +44,7 @@ public:
 	void PlayDodgeMontage();
 	void PlaySkillMontage();
 
+	void ChangeToWeaponSword();
+	void ChangeToWeaponSpear();
+
 };

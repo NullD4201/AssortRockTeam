@@ -34,6 +34,8 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Completed, this, &ThisClass::OnAttack);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Completed, this, &ThisClass::OnSkill);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon1, ETriggerEvent::Completed, this, &ThisClass::ChangeToSword);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon2, ETriggerEvent::Completed, this, &ThisClass::ChangeToSpear);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -72,4 +74,20 @@ void AMainPlayerController::OnSkill(const FInputActionValue& InputActionValue)
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->PlaySkillMontage();
+}
+
+void AMainPlayerController::ChangeToSword(const FInputActionValue& InputActionValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Blue, TEXT("Change1"));
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->ChangeToWeaponSword();
+}
+
+void AMainPlayerController::ChangeToSpear(const FInputActionValue& InputActionValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Blue, TEXT("Change2"));
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->ChangeToWeaponSpear();
 }

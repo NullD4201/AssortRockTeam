@@ -45,4 +45,20 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			Skill = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change1.IA_Change1'") };
+		if (Asset.Succeeded())
+		{
+			Weapon1 = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change2.IA_Change2'") };
+		if (Asset.Succeeded())
+		{
+			Weapon2 = Asset.Object;
+		}
+	}
 }
