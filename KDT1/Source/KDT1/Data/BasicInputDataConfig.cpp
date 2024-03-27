@@ -31,42 +31,18 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_RandomColor.IA_RandomColor'") };
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Attack.IA_Attack'") };
 		if (Asset.Succeeded())
 		{
-			RandomColor = Asset.Object;
+			Attack = Asset.Object;
 		}
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwordAttack.IA_SwordAttack'") };
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Skill.IA_Skill'") };
 		if (Asset.Succeeded())
 		{
-			SwordAttack = Asset.Object;
-		}
-	}
-	{
-		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwordSkill.IA_SwordSkill'") };
-		if (Asset.Succeeded())
-		{
-			SwordSkill = Asset.Object;
-		}
-	}
-	{
-		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change1.IA_Change1'") };
-		if (Asset.Succeeded())
-		{
-			Weapon1 = Asset.Object;
-		}
-	}
-	{
-		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change2.IA_Change2'") };
-		if (Asset.Succeeded())
-		{
-			Weapon2 = Asset.Object;
+			Skill = Asset.Object;
 		}
 	}
 }

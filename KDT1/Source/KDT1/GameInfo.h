@@ -8,9 +8,29 @@
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
-/**
- * 
- */
+DECLARE_LOG_CATEGORY_EXTERN(KDT1, Log, All);
+
+
+UENUM(BlueprintType)
+enum class EPlayerAnimType : uint8
+{
+	Idle,
+	Walk,
+	Run,
+	Death,
+	Dodge,
+	Attack,
+	Skill
+};
+
+UENUM(BlueprintType)
+enum class EPlayerWeaponType : uint8
+{
+	Sword,
+	Spear,
+	Bow
+};
+
 UCLASS()
 class KDT1_API UGameInfo : public UObject
 {

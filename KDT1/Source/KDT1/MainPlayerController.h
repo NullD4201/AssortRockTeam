@@ -18,22 +18,6 @@ class KDT1_API AMainPlayerController : public APlayerController
 public :
 	AMainPlayerController();
 
-private:
-	float	mMoveDir;
-	
-	bool	mDetectEnable = false;
-	float	mDetectTime = 0.f;
-	float	mDetectDuration = 4.f;
-	float	mDetectDelayTime = 0.f;
-	float	mDetectDelay = 0.4f;
-	TArray<AActor*>	mDetectActorArray;
-
-public:
-	float GetMoveDir()
-	{
-		return mMoveDir;
-	}
-
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -41,14 +25,6 @@ protected:
 protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
-
-	void OnRandomColor(const FInputActionValue& InputActionValue);
-	void OnSwordAttack(const FInputActionValue& InputActionValue);
-	void OnSwordSkill(const FInputActionValue& InputActionValue);
-
 	void OnAttack(const FInputActionValue& InputActionValue);
 	void OnSkill(const FInputActionValue& InputActionValue);
-	void ChangeToSword(const FInputActionValue& InputActionValue);
-	void ChangeToSpear(const FInputActionValue& InputActionValue);
-
 };

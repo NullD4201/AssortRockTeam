@@ -24,6 +24,9 @@ protected:
 
 	class UPlayerAnimInstance* mAnimInst;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMeshComponent* mMesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -35,19 +38,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void PlayAttackMontage();
-
-	void PlaySkillMontage(int32 index);
-
-public:
 	virtual void NormalAttack();
 
 	void PlayAttackMontage();
 	void PlayDodgeMontage();
 	void PlaySkillMontage();
 
-	void ChangeToWeaponSword();
-	void ChangeToWeaponSpear();
-
 };
-
