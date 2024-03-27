@@ -27,4 +27,6 @@ protected:
 	void OnLook(const FInputActionValue& InputActionValue);
 	void OnAttack(const FInputActionValue& InputActionValue);
 	void OnSkill(const FInputActionValue& InputActionValue);
+	void ChangeToSword(const FInputActionValue& InputActionValue);
+	void ChangeToSpear(const FInputActionValue& InputActionValue);
 };

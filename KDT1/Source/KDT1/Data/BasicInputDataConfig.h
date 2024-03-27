@@ -27,5 +27,6 @@ public:
 	UInputAction* Look = nullptr;
 	UInputAction* Attack = nullptr;
 	UInputAction* Skill = nullptr;
-
+	UInputAction* Weapon1 = nullptr;
+	UInputAction* Weapon2 = nullptr;
 };

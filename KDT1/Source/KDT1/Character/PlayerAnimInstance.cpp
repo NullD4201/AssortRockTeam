@@ -44,7 +44,6 @@ void UPlayerAnimInstance::PlayAttackMontage()
 		return;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Montage2"));
 	if (!Montage_IsPlaying(mAttackMontageArray[mAttackIndex]))
 	{
 		mAttackEnable = false;
@@ -53,10 +52,6 @@ void UPlayerAnimInstance::PlayAttackMontage()
 		Montage_SetPosition(mAttackMontageArray[mAttackIndex], 0.f);
 		Montage_Play(mAttackMontageArray[mAttackIndex]);
 		mAttackIndex = (mAttackIndex + 1) % mAttackMontageArray.Num();
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, FString::FromInt(mAttackIndex));
 	}
 }
 
