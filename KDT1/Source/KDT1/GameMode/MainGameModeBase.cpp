@@ -4,11 +4,13 @@
 #include "MainGameModeBase.h"
 #include "../Character/MainCharacter.h"
 #include "../MainPlayerController.h"
+#include "KDT1/Character/SpearCharacter.h"
+#include "KDT1/Character/SwordCharacter.h"
 
 
 AMainGameModeBase::AMainGameModeBase()
 {
-	DefaultPawnClass = AMainCharacter::StaticClass();
+	DefaultPawnClass = ASpearCharacter::StaticClass();
 	PlayerControllerClass = AMainPlayerController::StaticClass();
 
 }

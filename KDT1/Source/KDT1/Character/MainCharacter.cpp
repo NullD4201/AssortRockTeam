@@ -8,13 +8,18 @@
 AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
+<<<<<<< HEAD
+=======
+
+	mMesh->SetupAttachment(GetMesh(), "weapon");
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 }
 
 // Called when the game starts or when spawned
@@ -96,3 +101,18 @@ void AMainCharacter::NormalAttack()
 //		}
 //	}
 }
+<<<<<<< HEAD
+=======
+
+void AMainCharacter::ChangeToWeaponSword()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
+}
+
+void AMainCharacter::ChangeToWeaponSpear()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
+}
+
+
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)

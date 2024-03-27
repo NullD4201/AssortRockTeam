@@ -90,6 +90,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	if (!mAttackEnable)
 		return;
 
+<<<<<<< HEAD
 	// 밑에서 공격을 진행하므로 공격 불가능 상황으로 만들어준다.
 	mAttackEnable = false;
 
@@ -97,6 +98,8 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	// Montage_IsPlaying 함수는 재생되고 있을 경우 true, 아니면 false가 반환된다.
 
 	
+=======
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 	if (!Montage_IsPlaying(mAttackMontageArray[mAttackIndex]))
 	{
 		// 재생 시키기 전에 재생 위치를 처음으로 초기화 시켜준다.
@@ -108,6 +111,17 @@ void UPlayerAnimInstance::PlayAttackMontage()
 		// 다음 공격 동작을 재생하기 위해 1 증가시켜준다.
 		mAttackIndex = (mAttackIndex + 1) % mAttackMontageArray.Num();
 	}
+<<<<<<< HEAD
+=======
+}
+
+void UPlayerAnimInstance::PlayDodgeMontage()
+{
+}
+
+void UPlayerAnimInstance::PlaySkillMontage()
+{
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 }
 
 void UPlayerAnimInstance::AnimNotify_Attack()

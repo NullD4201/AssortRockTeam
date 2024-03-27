@@ -25,8 +25,15 @@ public:
 public:
 	UInputAction* Move = nullptr;
 	UInputAction* Look = nullptr;
+<<<<<<< HEAD
 	UInputAction* RandomColor = nullptr;
 	UInputAction* SwordAttack = nullptr;
 	UInputAction* SwordSkill = nullptr;
 
+=======
+	UInputAction* Attack = nullptr;
+	UInputAction* Skill = nullptr;
+	UInputAction* Weapon1 = nullptr;
+	UInputAction* Weapon2 = nullptr;
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 };

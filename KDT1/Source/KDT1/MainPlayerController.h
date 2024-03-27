@@ -41,7 +41,14 @@ protected:
 protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
+<<<<<<< HEAD
 	void OnRandomColor(const FInputActionValue& InputActionValue);
 	void OnSwordAttack(const FInputActionValue& InputActionValue);
 	void OnSwordSkill(const FInputActionValue& InputActionValue);
+=======
+	void OnAttack(const FInputActionValue& InputActionValue);
+	void OnSkill(const FInputActionValue& InputActionValue);
+	void ChangeToSword(const FInputActionValue& InputActionValue);
+	void ChangeToSpear(const FInputActionValue& InputActionValue);
+>>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 };
