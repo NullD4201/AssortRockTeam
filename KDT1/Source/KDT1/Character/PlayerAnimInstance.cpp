@@ -113,11 +113,6 @@ void UPlayerAnimInstance::PlayDodgeMontage()
 {
 }
 
-void UPlayerAnimInstance::PlaySkillMontage()
-{
-
-}
-
 void UPlayerAnimInstance::AnimNotify_Attack()
 {
 	// 공격중이므로 true로 바꿈

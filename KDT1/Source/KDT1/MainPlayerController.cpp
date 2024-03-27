@@ -32,16 +32,15 @@ void AMainPlayerController::SetupInputComponent()
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Move, ETriggerEvent::Triggered, this, &ThisClass::OnMove);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
-<<<<<<< HEAD
-	EnhancedInputComponent->BindAction(MainInputDataConfig->RandomColor, ETriggerEvent::Triggered, this, &ThisClass::OnRandomColor);
+
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordAttack, ETriggerEvent::Started, this, &ThisClass::OnSwordAttack);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwordSkill, ETriggerEvent::Started, this, &ThisClass::OnSwordSkill);
-=======
+
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Completed, this, &ThisClass::OnAttack);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Completed, this, &ThisClass::OnSkill);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon1, ETriggerEvent::Completed, this, &ThisClass::ChangeToSword);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon2, ETriggerEvent::Completed, this, &ThisClass::ChangeToSpear);
->>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
+
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -137,7 +136,6 @@ void AMainPlayerController::OnSwordSkill(const FInputActionValue& InputActionVal
 	/*GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("bIsAttacking  = false"));*/
 }
 
-<<<<<<< HEAD
 void AMainPlayerController::OnRandomColor(const FInputActionValue& InputActionValue)
 {	
 	

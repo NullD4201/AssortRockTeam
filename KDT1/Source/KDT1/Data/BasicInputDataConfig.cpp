@@ -47,17 +47,14 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-<<<<<<< HEAD
 		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwordSkill.IA_SwordSkill'") };
 		if (Asset.Succeeded())
 		{
 			SwordSkill = Asset.Object;
 		}
 	}
-
-
-	
-=======
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
 		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change1.IA_Change1'") };
 		if (Asset.Succeeded())
 		{
@@ -72,5 +69,4 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			Weapon2 = Asset.Object;
 		}
 	}
->>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
 }

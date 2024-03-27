@@ -55,6 +55,7 @@ public:
 
 public:
 	void PlayAttackMontage();
+	void PlayDodgeMontage();
 	void PlaySkillMontage(int32 Index);
 
 	UFUNCTION()

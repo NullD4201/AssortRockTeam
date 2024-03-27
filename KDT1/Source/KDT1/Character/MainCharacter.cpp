@@ -15,11 +15,9 @@ AMainCharacter::AMainCharacter()
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
-<<<<<<< HEAD
-=======
 
 	mMesh->SetupAttachment(GetMesh(), "weapon");
->>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
+
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +43,14 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::PlayAttackMontage()
 {
 	mAnimInst->PlayAttackMontage();
+}
+
+void AMainCharacter::PlayDodgeMontage()
+{
+}
+
+void AMainCharacter::PlaySkillMontage()
+{
 }
 
 void AMainCharacter::PlaySkillMontage(int32 Index)
@@ -101,18 +107,17 @@ void AMainCharacter::NormalAttack()
 //		}
 //	}
 }
-<<<<<<< HEAD
-=======
 
 void AMainCharacter::ChangeToWeaponSword()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
 }
 
+void AMainCharacter::ChangeToWeaponSword()
+{
+}
+
 void AMainCharacter::ChangeToWeaponSpear()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
 }
-
-
->>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)

@@ -42,9 +42,6 @@ public:
 public:
 	virtual void NormalAttack();
 
-<<<<<<< HEAD
-};
-=======
 	void PlayAttackMontage();
 	void PlayDodgeMontage();
 	void PlaySkillMontage();
@@ -53,4 +50,4 @@ public:
 	void ChangeToWeaponSpear();
 
 };
->>>>>>> cdaf7b7 (Add ChangeWeapon Inputs)
+
