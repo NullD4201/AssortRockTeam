@@ -56,7 +56,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AMainCharacter::NormalAttack()
 {
-	
+	// TODO NormalAttack()
 }
 
 void AMainCharacter::PlayAttackMontage()
