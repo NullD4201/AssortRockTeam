@@ -46,7 +46,8 @@ public:
 public:
 	void SetWeaponMesh(USkeletalMesh* WeaponMesh);
 	void PlayAttackMontage();
-	void PlayDodgeMontage();
+
+	void PlayDodgeMontage(int8 index);
 
 	void SetBoolSpear(bool equip)
 	{

@@ -37,7 +37,10 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Triggered, this, &ThisClass::OnAttack);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Item1, ETriggerEvent::Triggered, this, &ThisClass::OnItem1);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->DoubleTap, ETriggerEvent::Triggered, this, &ThisClass::OnDoubleTap);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeFwd, ETriggerEvent::Triggered , this, &ThisClass::OnDodgeFwd);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeBwd, ETriggerEvent::Triggered , this, &ThisClass::OnDodgeBwd);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeRight, ETriggerEvent::Triggered , this, &ThisClass::OnDodgeRight);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeLeft, ETriggerEvent::Triggered , this, &ThisClass::OnDodgeLeft);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -104,11 +107,26 @@ void AMainPlayerController::OnItem1(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AMainPlayerController::OnDoubleTap(const FInputActionValue& InputActionValue)
+void AMainPlayerController::OnDodgeFwd(const FInputActionValue& InputActionValue)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Double Tap"));
+	AMainCharacter* ControlledCharacter = GetPawn<AMainCharacter>();
+	ControlledCharacter->PlayDodgeMontage(0);
+}
 
-	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+void AMainPlayerController::OnDodgeBwd(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledCharacter = GetPawn<AMainCharacter>();
+	ControlledCharacter->PlayDodgeMontage(1);
+}
 
-	ControlledPawn->PlayDodgeMontage();
+void AMainPlayerController::OnDodgeRight(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledCharacter = GetPawn<AMainCharacter>();
+	ControlledCharacter->PlayDodgeMontage(2);
+}
+
+void AMainPlayerController::OnDodgeLeft(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledCharacter = GetPawn<AMainCharacter>();
+	ControlledCharacter->PlayDodgeMontage(3);
 }

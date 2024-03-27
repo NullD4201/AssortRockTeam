@@ -34,23 +34,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UAnimMontage>>	mDodgeMontageArray;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bCanMove;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EPlayerType	mAnimType;
 
 	bool mAttackEnable;
 	int32 mAttackIndex;
+	bool mDodgeEnable;
 
-	
 
 public:
 	virtual void NativeInitializeAnimation();
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
 
 	void PlayAttackMontage();
-	void PlayDodgeMontage();
+	void PlayDodgeMontage(int8 index);
 
 public :
 	UFUNCTION()
@@ -67,6 +64,9 @@ public :
 
 	UFUNCTION()
 	void AnimNotify_EndMontage();
+
+	UFUNCTION()
+	void AnimNotify_DodgeCoolDown();
 
 	UFUNCTION()
 	void AnimNotify_DodgeFinish();

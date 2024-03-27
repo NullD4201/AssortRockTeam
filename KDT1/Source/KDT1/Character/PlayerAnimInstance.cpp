@@ -9,15 +9,13 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 {
 	mAttackEnable = true;
 	mAttackIndex = 0;
-	bCanMove = true;
 	mAnimType = EPlayerType::Idle;
+	mDodgeEnable = true;
 }
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
-
-
 }
 
 void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -66,7 +64,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	if (!Montage_IsPlaying(mAttackMontageArray[mAttackIndex]))
 	{
 		mAttackEnable = false;
-		bCanMove = true;
+		mDodgeEnable = false;
 		mAnimType = EPlayerType::Idle;
 
 		Montage_SetPosition(mAttackMontageArray[mAttackIndex], 0.f);
@@ -77,39 +75,25 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	}
 }
 
-void UPlayerAnimInstance::PlayDodgeMontage()
-{
-	//Montage_Play(mDodgeMontageArray[0]);
-
-	// 단순 몽타지 플레이가 아닌 블렌드 스페이스를 이용해야 할듯
-
-	//mAnimType = EPlayerType::Dodge;
-
-
-}
-
 void UPlayerAnimInstance::AnimNotify_AttackStart()
 {	
-	//bCanMove = false;
+	// 데미지 콜리전 함수 호출 용;
 
-	Montage_SetPlayRate(mAttackMontageArray[mAttackIndex], 0.5f);
 }
 
 void UPlayerAnimInstance::AnimNotify_AttackEnd()
 {
 	mAttackEnable = true;
 
-	bCanMove = false;
-
-	Montage_SetPlayRate(mAttackMontageArray[mAttackIndex], 1.f);
-
 }
 
 void UPlayerAnimInstance::AnimNotify_CanMove()
 {
-	mAnimType = EPlayerType::Walk;
-}
+	mAnimType = EPlayerType::AttackCoolDown;
 
+	//bIsDodging = false;
+	mDodgeEnable = true;
+}
 
 void UPlayerAnimInstance::AnimNotify_CoolDown()
 {
@@ -117,19 +101,45 @@ void UPlayerAnimInstance::AnimNotify_CoolDown()
 
 	mAttackIndex = 0;
 
-	//bCanMove = true;
 }
 
 void UPlayerAnimInstance::AnimNotify_EndMontage()
 {
 	//mAttackEnable = true;
 
-	bCanMove = true;
-
 	mAnimType = EPlayerType::Idle;
+}
+
+void UPlayerAnimInstance::AnimNotify_DodgeCoolDown()
+{
+	mAttackEnable = true;
+	mAttackIndex = 0;
+	mDodgeEnable = true;
+
+	mAnimType = EPlayerType::DodgeCoolDown;
 }
 
 void UPlayerAnimInstance::AnimNotify_DodgeFinish()
 {
-	//mAnimType = EPlayerType::Idle;
+	mAnimType = EPlayerType::Idle;
+
+	//bIsDodging = false;
+}
+
+void UPlayerAnimInstance::PlayDodgeMontage(int8 index)
+{
+	if (!mDodgeEnable)
+		return;
+
+	mAnimType = EPlayerType::Idle;
+
+	mAttackEnable = false;
+
+	mDodgeEnable = false;
+
+	Montage_SetPosition(mDodgeMontageArray[index], 0.f);
+
+	Montage_Play(mDodgeMontageArray[index]);
+
+
 }

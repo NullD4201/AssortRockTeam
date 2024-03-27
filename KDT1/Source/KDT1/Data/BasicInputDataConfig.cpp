@@ -47,10 +47,34 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Dodge.IA_Dodge'") };
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeFwd.IA_DodgeFwd'") };
 		if (Asset.Succeeded())
 		{
-			DoubleTap = Asset.Object;
+			DodgeFwd = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeBwd.IA_DodgeBwd'") };
+		if (Asset.Succeeded())
+		{
+			DodgeBwd = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeRight.IA_DodgeRight'") };
+		if (Asset.Succeeded())
+		{
+			DodgeRight = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeLeft.IA_DodgeLeft'") };
+		if (Asset.Succeeded())
+		{
+			DodgeLeft = Asset.Object;
 		}
 	}
 }

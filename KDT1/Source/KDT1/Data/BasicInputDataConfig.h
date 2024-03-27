@@ -27,6 +27,9 @@ public:
 	UInputAction* Look = nullptr;
 	UInputAction* Attack = nullptr;
 	UInputAction* Item1 = nullptr;
-	UInputAction* DoubleTap = nullptr;
+	UInputAction* DodgeFwd = nullptr;
+	UInputAction* DodgeBwd = nullptr;
+	UInputAction* DodgeRight = nullptr;
+	UInputAction* DodgeLeft = nullptr;
 
 };

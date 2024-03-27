@@ -13,8 +13,9 @@ UENUM(BlueprintType)
 enum class EPlayerType : uint8
 {
 	Idle,
-	Walk,
-	Dodge,
+	Attack,
+	AttackCoolDown,
+	DodgeCoolDown,
 	Sprint
 };
 

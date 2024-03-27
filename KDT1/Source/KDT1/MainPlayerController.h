@@ -35,5 +35,8 @@ protected:
 	void OnLook(const FInputActionValue& InputActionValue);
 	void OnAttack(const FInputActionValue& InputActionValue);
 	void OnItem1(const FInputActionValue& InputActionValue);
-	void OnDoubleTap(const FInputActionValue& InputActionValue);
+	void OnDodgeFwd(const FInputActionValue& InputActionValue);
+	void OnDodgeBwd(const FInputActionValue& InputActionValue);
+	void OnDodgeRight(const FInputActionValue& InputActionValue);
+	void OnDodgeLeft(const FInputActionValue& InputActionValue);
 };
