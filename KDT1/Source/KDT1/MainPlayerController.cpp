@@ -36,6 +36,10 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Completed, this, &ThisClass::OnSkill);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon1, ETriggerEvent::Completed, this, &ThisClass::ChangeToSword);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon2, ETriggerEvent::Completed, this, &ThisClass::ChangeToSpear);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeFwd, ETriggerEvent::Triggered, this, &ThisClass::DodgeFwd);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeBwd, ETriggerEvent::Triggered, this, &ThisClass::DodgeBwd);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeRight, ETriggerEvent::Triggered, this, &ThisClass::DodgeRight);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeLeft, ETriggerEvent::Triggered, this, &ThisClass::DodgeLeft);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -90,4 +94,32 @@ void AMainPlayerController::ChangeToSpear(const FInputActionValue& InputActionVa
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->ChangeToWeaponSpear();
+}
+
+void AMainPlayerController::DodgeFwd(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayDodgeMontage(0);
+}
+
+void AMainPlayerController::DodgeBwd(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayDodgeMontage(1);
+}
+
+void AMainPlayerController::DodgeRight(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayDodgeMontage(2);
+}
+
+void AMainPlayerController::DodgeLeft(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlayDodgeMontage(3);
 }

@@ -15,12 +15,12 @@ UENUM(BlueprintType)
 enum class EPlayerAnimType : uint8
 {
 	Idle,
-	Walk,
 	Run,
-	Death,
 	Dodge,
 	Attack,
-	Skill
+	Skill,
+	CoolDown,
+	Death
 };
 
 UENUM(BlueprintType)

@@ -41,7 +41,7 @@ public:
 	virtual void NormalAttack();
 
 	void PlayAttackMontage();
-	void PlayDodgeMontage();
+	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 
 	void ChangeToWeaponSword();

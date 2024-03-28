@@ -9,6 +9,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 {
 	mAttackEnable = true;
 	mAttackIndex = 0;
+	mDodgeEnable = true;
 	mAnimType = EPlayerAnimType::Idle;
 }
 
@@ -47,6 +48,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	if (!Montage_IsPlaying(mAttackMontageArray[mAttackIndex]))
 	{
 		mAttackEnable = false;
+		mDodgeEnable = false;
 		mAnimType = EPlayerAnimType::Attack;
 
 		Montage_SetPosition(mAttackMontageArray[mAttackIndex], 0.f);
@@ -55,12 +57,34 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	}
 }
 
-void UPlayerAnimInstance::PlayDodgeMontage()
+void UPlayerAnimInstance::PlayDodgeMontage(int8 index)
 {
+	if (!mDodgeEnable)
+		return;
+	
+	mAttackEnable = false;
+	mDodgeEnable = false;
+	mAnimType = EPlayerAnimType::Dodge;
+
+	Montage_SetPosition(mDodgeMontageArray[index], 0.f);
+	Montage_Play(mDodgeMontageArray[index]);
+	
 }
 
 void UPlayerAnimInstance::PlaySkillMontage()
 {
+	if (mAnimType == EPlayerAnimType::Dodge || mAnimType == EPlayerAnimType::Attack)
+		return;
+
+	if (!Montage_IsPlaying(mSkillMontage))
+	{
+		mAttackEnable = false;
+		mDodgeEnable = false;
+		mAnimType = EPlayerAnimType::Skill;
+
+		Montage_SetPosition(mSkillMontage, 0.f);
+		Montage_Play(mSkillMontage);
+	}
 }
 
 void UPlayerAnimInstance::AnimNotify_Attack()
@@ -75,14 +99,40 @@ void UPlayerAnimInstance::AnimNotify_AttackEnable()
 	mAttackEnable = true;
 }
 
-void UPlayerAnimInstance::AnimNotify_AttackEnd()
-{
-	mAttackEnable = true;
-	mAnimType = EPlayerAnimType::Idle;
-}
-
-void UPlayerAnimInstance::AnimNotify_CoolDown()
+void UPlayerAnimInstance::AnimNotify_AttackCoolDown()
 {
 	mAttackEnable = true;
 	mAttackIndex = 0;
+	mDodgeEnable = true;
+
+	mAnimType = EPlayerAnimType::CoolDown;
 }
+
+void UPlayerAnimInstance::AnimNotify_AttackEnd()
+{
+	mAttackEnable = true;
+	mDodgeEnable = true;
+
+	mAnimType = EPlayerAnimType::Idle;
+}
+
+void UPlayerAnimInstance::AnimNotify_SkillEnd()
+{
+}
+
+void UPlayerAnimInstance::AnimNotify_DodgeCoolDown()
+{
+	mAnimType = EPlayerAnimType::CoolDown;
+	mAttackEnable = true;
+	mDodgeEnable = true;
+	mAttackIndex = 0;
+}
+
+void UPlayerAnimInstance::AnimNotify_DodgeFinish()
+{
+	mAnimType = EPlayerAnimType::Idle;
+
+	mAttackEnable = true;
+	mDodgeEnable = true;
+}
+
