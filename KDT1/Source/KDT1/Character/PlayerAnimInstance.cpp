@@ -10,6 +10,9 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	mAttackEnable = true;
 	mAttackIndex = 0;
 	mDodgeEnable = true;
+	mSprintEnable = true;
+	bIsSprinting = false;
+	mSprintMaxWalkSpeed = 600.f;
 	mAnimType = EPlayerAnimType::Idle;
 }
 
@@ -54,6 +57,49 @@ void UPlayerAnimInstance::PlayAttackMontage()
 		Montage_SetPosition(mAttackMontageArray[mAttackIndex], 0.f);
 		Montage_Play(mAttackMontageArray[mAttackIndex]);
 		mAttackIndex = (mAttackIndex + 1) % mAttackMontageArray.Num();
+	}
+}
+
+void UPlayerAnimInstance::PlaySprint()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("OnSprint"));
+
+	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
+
+	if (IsValid(PlayerCharacter))
+	{
+		UCharacterMovementComponent* Movement = PlayerCharacter->GetCharacterMovement();
+
+		if (IsValid(Movement))
+		{
+			if (!mSprintEnable)
+				return;
+
+			//mAnimType = EPlayerAnimType::Run;
+			bIsSprinting = true;
+			mSprintMaxWalkSpeed = Movement->MaxWalkSpeed;
+			Movement->MaxWalkSpeed = 1000.f;
+		}
+	}
+}
+
+void UPlayerAnimInstance::PlaySprintEnd()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintEnd"));
+
+	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
+
+	if (IsValid(PlayerCharacter))
+	{
+		UCharacterMovementComponent* Movement = PlayerCharacter->GetCharacterMovement();
+
+		if (IsValid(Movement))
+		{
+			bIsSprinting = false;
+
+			//mAnimType = EPlayerAnimType::Idle;
+			Movement->MaxWalkSpeed = mSprintMaxWalkSpeed;
+		}
 	}
 }
 

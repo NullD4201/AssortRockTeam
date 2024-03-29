@@ -52,6 +52,15 @@ void AMainCharacter::PlayAttackMontage()
 	mAnimInst->PlayAttackMontage();
 }
 
+void AMainCharacter::PlaySprint()
+{
+	mAnimInst->PlaySprint();
+}
+void AMainCharacter::PlaySprintEnd()
+{
+	mAnimInst->PlaySprintEnd();
+}
+
 void AMainCharacter::PlayDodgeMontage(int8 index)
 {
 	mAnimInst->PlayDodgeMontage(index);

@@ -32,8 +32,10 @@ void AMainPlayerController::SetupInputComponent()
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Move, ETriggerEvent::Triggered, this, &ThisClass::OnMove);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Look, ETriggerEvent::Triggered, this, &ThisClass::OnLook);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Completed, this, &ThisClass::OnAttack);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Completed, this, &ThisClass::OnSkill);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Sprint, ETriggerEvent::Started, this, &ThisClass::OnSprint);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SprintEnd, ETriggerEvent::Triggered, this, &ThisClass::OnSprintEnd);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Attack, ETriggerEvent::Triggered, this, &ThisClass::OnAttack);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Skill, ETriggerEvent::Triggered, this, &ThisClass::OnSkill);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon1, ETriggerEvent::Completed, this, &ThisClass::ChangeToSword);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->Weapon2, ETriggerEvent::Completed, this, &ThisClass::ChangeToSpear);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeFwd, ETriggerEvent::Triggered, this, &ThisClass::DodgeFwd);
@@ -63,6 +65,19 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	const FVector ActionValue = InputActionValue.Get<FVector>();
 	AddYawInput(ActionValue.X);
 	AddPitchInput(ActionValue.Y);
+}
+
+void AMainPlayerController::OnSprint(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->PlaySprint();
+}
+
+void AMainPlayerController::OnSprintEnd(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+	ControlledPawn->PlaySprintEnd();
 }
 
 void AMainPlayerController::OnAttack(const FInputActionValue& InputActionValue)

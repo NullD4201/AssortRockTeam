@@ -25,6 +25,8 @@ protected:
 protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
+	void OnSprint(const FInputActionValue& InputActionValue);
+	void OnSprintEnd(const FInputActionValue& InputActionValue);
 	void OnAttack(const FInputActionValue& InputActionValue);
 	void OnSkill(const FInputActionValue& InputActionValue);
 	void ChangeToSword(const FInputActionValue& InputActionValue);

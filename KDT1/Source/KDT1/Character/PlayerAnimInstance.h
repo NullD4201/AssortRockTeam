@@ -20,6 +20,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float		mMoveDir;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool	bIsSprinting;
 	
 	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	// float		mOnGround;
@@ -34,9 +37,11 @@ protected:
 	TArray<TObjectPtr<UAnimMontage>>	mDodgeMontageArray;
 
 	int32	mAttackIndex;
+	float   mSprintMaxWalkSpeed;
 
 	bool	mAttackEnable;
 	bool	mDodgeEnable;
+	bool    mSprintEnable;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EPlayerAnimType		mAnimType;
@@ -46,6 +51,8 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	void PlayAttackMontage();
+	void PlaySprint();
+	void PlaySprintEnd();
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 

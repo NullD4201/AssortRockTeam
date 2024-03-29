@@ -41,6 +41,8 @@ public:
 	virtual void NormalAttack();
 
 	void PlayAttackMontage();
+	void PlaySprint();
+	void PlaySprintEnd();
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 
