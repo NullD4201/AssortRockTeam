@@ -29,4 +29,5 @@ public:
 	UInputAction* Skill = nullptr;
 	UInputAction* Weapon1 = nullptr;
 	UInputAction* Weapon2 = nullptr;
+	UInputAction* Interact = nullptr;
 };
