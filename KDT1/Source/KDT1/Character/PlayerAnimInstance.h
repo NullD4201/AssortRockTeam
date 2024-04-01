@@ -23,6 +23,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool	bIsSprinting;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool    bIsTargetLock;
 	
 	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	// float		mOnGround;
@@ -55,6 +58,7 @@ public:
 	void PlaySprintEnd();
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
+	void TargetLock();
 
 	UFUNCTION()
 	void AnimNotify_Attack();

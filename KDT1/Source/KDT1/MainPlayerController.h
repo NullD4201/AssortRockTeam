@@ -35,4 +35,5 @@ protected:
 	void DodgeBwd(const FInputActionValue& InputActionValue);
 	void DodgeRight(const FInputActionValue& InputActionValue);
 	void DodgeLeft(const FInputActionValue& InputActionValue);
+	void OnTargetLock(const FInputActionValue& InputActionValue);
 };

@@ -35,4 +35,5 @@ public:
 	UInputAction* DodgeBwd = nullptr;
 	UInputAction* DodgeRight = nullptr;
 	UInputAction* DodgeLeft = nullptr;
+	UInputAction* TargetLock = nullptr;
 };

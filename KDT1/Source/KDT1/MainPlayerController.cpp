@@ -42,6 +42,7 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeBwd, ETriggerEvent::Triggered, this, &ThisClass::DodgeBwd);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeRight, ETriggerEvent::Triggered, this, &ThisClass::DodgeRight);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeLeft, ETriggerEvent::Triggered, this, &ThisClass::DodgeLeft);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->TargetLock, ETriggerEvent::Started, this, &ThisClass::OnTargetLock);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -137,4 +138,11 @@ void AMainPlayerController::DodgeLeft(const FInputActionValue& InputActionValue)
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->PlayDodgeMontage(3);
+}
+
+void AMainPlayerController::OnTargetLock(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->TargetLock();
 }

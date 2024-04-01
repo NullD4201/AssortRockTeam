@@ -109,4 +109,12 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			DodgeLeft = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_TargetLock.IA_TargetLock'") };
+		if (Asset.Succeeded())
+		{
+			TargetLock = Asset.Object;
+		}
+	}
 }

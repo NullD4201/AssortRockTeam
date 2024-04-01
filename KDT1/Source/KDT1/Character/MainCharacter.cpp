@@ -10,6 +10,9 @@ AMainCharacter::AMainCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	mIdleMaxSpeed = 600.f;
+	mSprintMaxSpeed = 1000.f;
+
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
@@ -24,8 +27,16 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
+	FOnTimelineFloat ProgressUpdate;
+	ProgressUpdate.BindUFunction(this, FName("PlayerSpeedUpdate"));
+	FOnTimelineEvent FinishedEvent;
+	FinishedEvent.BindUFunction(this, FName("PlayerSpeedFinished"));
+
+	PlayerSpeedTimeline.AddInterpFloat(PlayerSpeedCurve, ProgressUpdate);
+	PlayerSpeedTimeline.SetTimelineFinishedFunc(FinishedEvent);
 }
 
 // Called every frame
@@ -33,6 +44,27 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	PlayerSpeedTimeline.TickTimeline(DeltaTime);
+}
+
+void AMainCharacter::PlayerSpeedUpdate(float Alpha)
+{
+	float NewPlayerSpeed = FMath::Lerp(mIdleMaxSpeed, mSprintMaxSpeed, Alpha);
+	GetCharacterMovement()->MaxWalkSpeed = NewPlayerSpeed;
+}
+
+void AMainCharacter::PlayerSpeedFinished()
+{
+}
+
+void AMainCharacter::StartSprinting()
+{
+	PlayerSpeedTimeline.Play();
+}
+
+void AMainCharacter::StopSprinting()
+{
+	PlayerSpeedTimeline.Reverse();
 }
 
 // Called to bind functionality to input
@@ -69,6 +101,11 @@ void AMainCharacter::PlayDodgeMontage(int8 index)
 void AMainCharacter::PlaySkillMontage()
 {
 	mAnimInst->PlaySkillMontage();
+}
+
+void AMainCharacter::TargetLock()
+{
+	mAnimInst->TargetLock();
 }
 
 void AMainCharacter::ChangeToWeaponSword()

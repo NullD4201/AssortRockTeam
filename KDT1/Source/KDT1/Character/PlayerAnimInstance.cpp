@@ -12,6 +12,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	mDodgeEnable = true;
 	mSprintEnable = true;
 	bIsSprinting = false;
+	bIsTargetLock = false;
 	mSprintMaxWalkSpeed = 600.f;
 	mAnimType = EPlayerAnimType::Idle;
 }
@@ -34,7 +35,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (IsValid(Movement))
 		{
 			mMoveSpeed = Movement->Velocity.Length();
-			mMoveSpeed /= Movement->MaxWalkSpeed;
+			//mMoveSpeed /= Movement->MaxWalkSpeed;
 
 			mMoveDir = CalculateDirection(Movement->Velocity, PlayerCharacter->GetActorRotation());
 		}
@@ -62,7 +63,10 @@ void UPlayerAnimInstance::PlayAttackMontage()
 
 void UPlayerAnimInstance::PlaySprint()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("OnSprint"));
+	if (bIsTargetLock == true)
+		return;
+
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("Sprint"));
 
 	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
 
@@ -77,14 +81,20 @@ void UPlayerAnimInstance::PlaySprint()
 
 			//mAnimType = EPlayerAnimType::Run;
 			bIsSprinting = true;
-			mSprintMaxWalkSpeed = Movement->MaxWalkSpeed;
-			Movement->MaxWalkSpeed = 1000.f;
+			//mSprintMaxWalkSpeed = Movement->MaxWalkSpeed;
+			//Movement->MaxWalkSpeed = 1000.f;
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintFunc"));
+
+			PlayerCharacter->StartSprinting();
 		}
 	}
 }
 
 void UPlayerAnimInstance::PlaySprintEnd()
 {
+	if (bIsTargetLock == true)
+		return;
+
 	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintEnd"));
 
 	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
@@ -98,7 +108,10 @@ void UPlayerAnimInstance::PlaySprintEnd()
 			bIsSprinting = false;
 
 			//mAnimType = EPlayerAnimType::Idle;
-			Movement->MaxWalkSpeed = mSprintMaxWalkSpeed;
+			//Movement->MaxWalkSpeed = mSprintMaxWalkSpeed;
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintFunc End"));
+
+			PlayerCharacter->StopSprinting();
 		}
 	}
 }
@@ -130,6 +143,26 @@ void UPlayerAnimInstance::PlaySkillMontage()
 
 		Montage_SetPosition(mSkillMontage, 0.f);
 		Montage_Play(mSkillMontage);
+	}
+}
+
+void UPlayerAnimInstance::TargetLock()
+{
+	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
+	UCharacterMovementComponent* Movement = PlayerCharacter->GetCharacterMovement();
+	
+	// Tap 키 눌렀을 때 움직임 변하도록만 간단히 만듬
+	if (bIsTargetLock == true)
+	{
+		bIsTargetLock = false;
+		Movement->bUseControllerDesiredRotation = false;
+		Movement->bOrientRotationToMovement = true;
+	}
+	else
+	{
+		bIsTargetLock = true;
+		Movement->bUseControllerDesiredRotation = true;
+		Movement->bOrientRotationToMovement = false;
 	}
 }
 
