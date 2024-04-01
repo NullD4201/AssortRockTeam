@@ -3,9 +3,6 @@
 #pragma once
 
 #include "../GameInfo.h"
-#include "AIState.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/Pawn.h"
 #include "AIPawn.generated.h"
 
@@ -24,20 +21,22 @@ public:
 	// Sets default values for this pawn's properties
 	AAIPawn();
 
-protected:
 	UPROPERTY(EditAnywhere)
-	UCapsuleComponent* mCapsule;
+	UCapsuleComponent*		mCapsule;
 
 	UPROPERTY(EditAnywhere)
-	USkeletalMeshComponent* mMesh;
+	USkeletalMeshComponent*	mMesh;
 
 	UPROPERTY(EditAnywhere)
-	UFloatingPawnMovement* mMovement;
+	USkeletalMeshComponent*	mWeaponMesh;
 
 	UPROPERTY(EditAnywhere)
-	class UAIState*		mState;
+	UFloatingPawnMovement*	mMovement;
 
-	FAIInfo* mAIInfo;
+	UPROPERTY(EditAnywhere)
+	class UAIState*			mState;
+
+	FAIInfo*	mAIInfo;
 
 	bool	mAttackEnd;
 
@@ -46,14 +45,15 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TArray<class APatrolPointActor*>	mPatrolArray;
 
-	TArray<FVector>		mPatrolPointArray;
+	TArray<FVector>		mPatrolVectorArray;
 
 	int32	mPatrolIndex;
 	int32	mPatrolDir;
 
 	int32	mAttackPoint;
 	int32	mArmorPoint;
-	
+
+protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -65,7 +65,7 @@ public:
 		return (T*) mAIInfo;
 	}
 
-	template <typename  T>
+	template <typename T>
 	T* GetState()
 	{
 		return Cast<T>(mState);
@@ -75,38 +75,35 @@ public:
 	{
 		mPatrolIndex += mPatrolDir;
 
-		if (mPatrolIndex >= mPatrolPointArray.Num())
+		if (mPatrolIndex >= mPatrolVectorArray.Num())
 		{
 			mPatrolDir = -1;
-
 			mPatrolIndex -= 2;
 		}
-
 		else if (mPatrolIndex < 0)
 		{
 			mPatrolDir = 1;
-
 			mPatrolIndex = 1;
 		}
 	}
 
 	FVector GetPatrolPoint()
 	{
-		return mPatrolPointArray[mPatrolIndex];
+		return mPatrolVectorArray[mPatrolIndex];
 	}
 
 	bool IsPatrolPointEmpty()
 	{
-		return mPatrolPointArray.IsEmpty();
+		return mPatrolVectorArray.IsEmpty();
 	}
 
-	auto SetPatrolArray(const TArray<class APatrolPointActor*>& PatrolArray) -> void;
-
+	void SetPatrolArray(const TArray<class APatrolPointActor*>& PatrolArray);
+	
 	void SetSpawnPoint(class AAISpawnPoint* Point)
 	{
 		mSpawnPoint = Point;
 	}
-
+	
 	void SetAttackEnd(bool End)
 	{
 		mAttackEnd = End;
@@ -116,7 +113,7 @@ public:
 	{
 		return mAttackEnd;
 	}
-	
+
 	float GetHalfHeight()	const
 	{
 		return mCapsule->GetScaledCapsuleHalfHeight();
@@ -130,10 +127,8 @@ public:
 	virtual void ChangeAIAnimType(uint8 AnimType);
 
 	virtual void OnConstruction(const FTransform& Transform) override;
-	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual auto Tick(float DeltaTime) -> void override;
 
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
 };

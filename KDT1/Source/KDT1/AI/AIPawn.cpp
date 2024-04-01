@@ -2,10 +2,9 @@
 
 
 #include "AIPawn.h"
-
 #include "AIController.h"
-#include "AISpawnPoint.h"
 #include "PatrolPointActor.h"
+#include "SoldierAIController.h"
 
 // Sets default values
 AAIPawn::AAIPawn()
@@ -17,7 +16,7 @@ AAIPawn::AAIPawn()
 
 	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Body"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-
+	mWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	mMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
 	mMovement->SetUpdatedComponent(mCapsule);
@@ -25,12 +24,11 @@ AAIPawn::AAIPawn()
 	SetRootComponent(mCapsule);
 
 	mMesh->SetupAttachment(mCapsule);
-	mCapsule->SetRelativeLocation(FVector(0, 0, 0));
+	mWeaponMesh->SetupAttachment(mMesh, "weapon");
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	// TODO BP_DefaultAIController_C
-	static ConstructorHelpers::FClassFinder<AAIController> AIClass(TEXT(""));
+	static ConstructorHelpers::FClassFinder<AAIController>	AIClass(TEXT("/Script/Engine.Blueprint'/Game/Main/AI/BP_SoldierAIController.BP_SoldierAIController_C'"));
 
     if (AIClass.Succeeded())
     {
@@ -38,10 +36,8 @@ AAIPawn::AAIPawn()
     }
 
 	mSpawnPoint = nullptr;
-
 	mPatrolIndex = -1;
 	mPatrolDir = 1;
-
 	mAIInfo = nullptr;
 }
 
@@ -56,12 +52,9 @@ void AAIPawn::BeginPlay()
 void AAIPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-
-	if (mSpawnPoint)
-	{
-		mSpawnPoint->ClearSpawnObject();
-	}
-
+	
+	mSpawnPoint = nullptr;
+	
 	if (mAIInfo)
 	{
 		delete mAIInfo;
@@ -77,13 +70,13 @@ void AAIPawn::SetPatrolArray(const TArray<APatrolPointActor*>& PatrolArray)
 
 	mPatrolArray = PatrolArray;
 
-	FVector StartPoint = GetActorLocation() - FVector(0, 0, GetHalfHeight());
+	FVector StartPoint = GetActorLocation() - FVector(0.0, 0.0, GetHalfHeight());
+	mPatrolVectorArray.Add(StartPoint);
 
-	mPatrolPointArray.Add(StartPoint);
 
 	for (auto Point : mPatrolArray)
 	{
-		mPatrolPointArray.Add(Point->GetActorLocation());
+		mPatrolVectorArray.Add(Point->GetActorLocation());
 	}
 }
 
@@ -96,17 +89,19 @@ void AAIPawn::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 }
 
-// Called every frame
-void AAIPawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 float AAIPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
+	Destroy();
+	
 	return DamageAmount;
+}
+
+// Called every frame
+void AAIPawn::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
 }

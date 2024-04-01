@@ -3,10 +3,9 @@
 
 #include "BTTask_NormalAttack.h"
 
-#include "../AIPawn.h"
-#include "../SoldierAnimInstance.h"
-#include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "KDT1/AI/AIPawn.h"
+#include "KDT1/AI/SoldierAnimInstance.h"
 #include "KDT1/AI/SoldierState.h"
 
 UBTTask_NormalAttack::UBTTask_NormalAttack()
@@ -31,7 +30,7 @@ EBTNodeResult::Type UBTTask_NormalAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 	if (!IsValid(Target))
 	{
 		Controller->StopMovement();
-		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
+		Pawn->ChangeAIAnimType((uint8)ESoldierAnimType::Idle);
 
 		return EBTNodeResult::Failed;
 	}
@@ -44,6 +43,7 @@ EBTNodeResult::Type UBTTask_NormalAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
 
 	AAIController* Controller = OwnerComp.GetAIOwner();
 	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
@@ -59,7 +59,7 @@ void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 		
-		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
+		Pawn->ChangeAIAnimType((uint8)ESoldierAnimType::Idle);
 
 		return;
 	}
@@ -70,19 +70,29 @@ void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 
 		FVector AILocation = Pawn->GetActorLocation();
 		FVector TargetLocation = Target->GetActorLocation();
-
 		FVector Dir = TargetLocation - AILocation;
-		Dir.Z = 0.;
-
+		Dir.Z = 0.0;
 		AILocation.Z = Pawn->GetHalfHeight();
-
 		UCapsuleComponent* TargetCapsule = Cast<UCapsuleComponent>(Target->GetRootComponent());
-		if (!IsValid(TargetCapsule))
+		if (IsValid(TargetCapsule))
 		{
-			TargetLocation.Z = TargetCapsule->GetScaledCapsuleHalfHeight();
+			TargetLocation.Z -= TargetCapsule->GetScaledCapsuleHalfHeight();
 		}
 
-		float	Distance = FVector::Distance(AILocation, TargetLocation);
+		float Distance = FVector::Distance(AILocation, TargetLocation);
 		USoldierState* State = Pawn->GetState<USoldierState>();
+		if (Distance > State->mAttackDistance)
+		{
+			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+			Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
+		}
+		else
+		{
+			FRotator Rot = FRotationMatrix::MakeFromX(Dir).Rotator();
+			Rot.Pitch = 0.0;
+			Rot.Roll = 0.0;
+
+			Pawn->SetActorRotation(Rot);
+		}
 	}
 }

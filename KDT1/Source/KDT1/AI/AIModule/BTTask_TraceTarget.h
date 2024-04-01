@@ -6,6 +6,9 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "BTTask_TraceTarget.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
 class KDT1_API UBTTask_TraceTarget : public UBTTaskNode
 {

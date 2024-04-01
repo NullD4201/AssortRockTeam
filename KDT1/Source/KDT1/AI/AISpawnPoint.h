@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "AIPawn.h"
-#include "PatrolPointActor.h"
-#include "Components/ArrowComponent.h"
+#include "../GameInfo.h"
 #include "GameFramework/Actor.h"
 #include "AISpawnPoint.generated.h"
 
@@ -19,24 +16,21 @@ public:
 	AAISpawnPoint();
 
 protected:
-	USceneComponent*	mRoot;
-
-#if	WITH_EDITORONLY_DATA
-	UArrowComponent*	mDirectionArrow;
-#endif
+	USceneComponent* mRoot;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AAIPawn>	mSpawnClass;
 
-	AAIPawn* mSpawnAIPawn;
+	TSubclassOf<class AAIPawn>	mSpawnClass;
+
+	class AAIPawn* mSpawnAI;
 
 	UPROPERTY(EditAnywhere)
 	float	mSpawnTime;
 
-	float	mAccessTime;
+	float	mAccTime;
 
 	UPROPERTY(EditAnywhere)
-	TArray<APatrolPointActor*>	mPatrolArray;
+	TArray<class APatrolPointActor*> mPatrolArray;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -44,9 +38,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 	void ClearSpawnObject();
 
 private:
 	void Spawn();
-
 };

@@ -4,17 +4,14 @@
 #include "BTTask_Patrol.h"
 
 #include "AIController.h"
-#include "../AIPawn.h"
-#include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "../SoldierAnimInstance.h"
+#include "KDT1/AI/AIPawn.h"
+#include "KDT1/AI/SoldierAnimInstance.h"
 
 UBTTask_Patrol::UBTTask_Patrol()
 {
 	NodeName = TEXT("Patrol");
-
 	bNotifyTick = true;
-
 	bNotifyTaskFinished = true;
 }
 
@@ -28,6 +25,7 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	{
 		return EBTNodeResult::Failed;
 	}
+
 	if (Pawn->IsPatrolPointEmpty())
 	{
 		return EBTNodeResult::Failed;
@@ -38,7 +36,7 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	{
 		Controller->StopMovement();
 		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
-		
+
 		return EBTNodeResult::Failed;
 	}
 
@@ -60,6 +58,7 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 		Controller->StopMovement();
+		
 		return;
 	}
 
@@ -69,25 +68,26 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		Controller->StopMovement();
 		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+
 		return;
 	}
 
-	FVector Dir = Pawn->GetMovementComponent()->Velocity;
+	FVector	Dir = Pawn->GetMovementComponent()->Velocity;
 	Dir.Z = 0.f;
 	Dir.Normalize();
 
-	Pawn->SetActorRotation(FRotator(0., Dir.Rotation().Yaw, 0.));
-
-	FVector AILocation = Pawn->GetActorLocation();
-	FVector TargetLocation = Pawn->GetPatrolPoint();
-	AILocation.Z = Pawn->GetHalfHeight();
-	float Distance = FVector::Distance(AILocation, TargetLocation);
-
+	Pawn->SetActorRotation(FRotator(0.0, Dir.Rotation().Yaw, 0.0));
+	
+	FVector	AILocation = Pawn->GetActorLocation();
+	FVector	TargetLocation = Target->GetActorLocation();
+	AILocation.Z -= Pawn->GetHalfHeight();
+	
+	float	Distance = FVector::Distance(AILocation, TargetLocation);
 	if (Distance <= 50.f)
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		Controller->StopMovement();
-		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
+		Pawn->ChangeAIAnimType((uint8)ESoldierAnimType::Idle);
 		Pawn->NextPatrolPointIndex();
 	}
 }

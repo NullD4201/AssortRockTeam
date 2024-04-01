@@ -7,6 +7,7 @@
 #include "Components/Image.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
+#include "Engine/DataTable.h"
 #include "PlayerHUDWidget.generated.h"
 
 /**

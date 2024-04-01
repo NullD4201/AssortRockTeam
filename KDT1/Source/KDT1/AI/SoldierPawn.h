@@ -10,16 +10,20 @@ struct FSoldierInfo : public FAIInfo
 {
 	int32		mAttackPoint;
 	int32		mArmorPoint;
-	int32		mHp;
-	int32		mHpMax;
+	int32		mHP;
+	int32		mHPMax;
+	int32		mMP;
+	int32		mMPMax;
 	float		mAttackDistance;
 };
+
 
 USTRUCT(BlueprintType)
 struct FSoldierData : public FTableRowBase
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
+public:
 	UPROPERTY(EditAnywhere)
 	int32		mAttackPoint;
 
@@ -27,7 +31,10 @@ struct FSoldierData : public FTableRowBase
 	int32		mArmorPoint;
 
 	UPROPERTY(EditAnywhere)
-	int32		mHpMax;
+	int32		mHPMax;
+
+	UPROPERTY(EditAnywhere)
+	int32		mMPMax;
 
 	UPROPERTY(EditAnywhere)
 	float		mMoveSpeed;
@@ -45,30 +52,33 @@ class KDT1_API ASoldierPawn : public AAIPawn
 	GENERATED_BODY()
 
 protected:
-	static UDataTable* mSoldierDataTable;
+	static UDataTable*	mSoldierDataTable;
 
 public:
-	// static const FSoldierData* FindSoldierData(const FString& Name);
+	static const FSoldierData*	FindSoldierData(const FString& Name);
 
 	ASoldierPawn();
 
-	virtual void ChangeAIAnimType(uint8 AnimType);
-
 protected:
-	class USoldierAnimInstance* mAnimInstance;
+	class USoldierAnimInstance*		mAnimInst;
 	FString		mTableRowName;
-	class USoldierState* mSoldierState;
+	class USoldierState*	mSoldierState;
 	TArray<UMaterialInstanceDynamic*> mMaterialArray;
 
-	bool mHitEnable = false;
-	float mHitTime = 0.f;
-	float mHitDuration = 2.f;
+	bool	mHitEnable = false;
+	float	mHitTime = 0.f;
+	float	mHitDuration = 2.1f;
 
+public:
+	virtual void ChangeAIAnimType(uint8 AnimType) override;
+
+protected:
 	virtual void BeginPlay() override;
 
 public:
 	virtual void OnConstruction(const FTransform& Transform) override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void NormalAttack();
+	virtual void Skill();
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 };

@@ -16,22 +16,28 @@ class KDT1_API USoldierState : public UAIState
 
 public:
 	USoldierState();
-	
+
 	UPROPERTY(EditAnywhere)
 	int32		mAttackPoint;
-	
+
 	UPROPERTY(EditAnywhere)
 	int32		mArmorPoint;
-	
+
 	UPROPERTY(EditAnywhere)
-	int32		mHp;
-	
+	int32		mHP;
+
 	UPROPERTY(EditAnywhere)
-	int32		mHpMax;
-	
+	int32		mHPMax;
+
+	UPROPERTY(EditAnywhere)
+	int32		mMP;
+
+	UPROPERTY(EditAnywhere)
+	int32		mMPMax;
+
 	UPROPERTY(EditAnywhere)
 	float		mAttackDistance;
-	
+
 protected:
 	virtual void BeginPlay() override;
 };

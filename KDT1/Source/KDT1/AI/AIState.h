@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "../GameInfo.h"
 #include "Components/ActorComponent.h"
 #include "AIState.generated.h"
 
@@ -17,10 +17,10 @@ public:
 	UAIState();
 
 	UPROPERTY(EditAnywhere)
-	float	mMoveSpeed;
+	float		mMoveSpeed;
 
 	UPROPERTY(EditAnywhere)
-	float	mTraceDistance;
+	float		mTraceDistance;
 
 	FString		mDataTableRowName;
 

@@ -13,7 +13,8 @@ enum class ESoldierAnimType : uint8
 	Walk,
 	Run,
 	Attack,
-	Death
+	Death,
+	Skill
 };
 
 UCLASS()
@@ -24,15 +25,15 @@ class KDT1_API USoldierAnimInstance : public UAnimInstance
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	ESoldierAnimType	mAnimType;
-
+	
 public:
-	void ChangeAnimTYpe(ESoldierAnimType Type)
+	void ChangeAnimType(ESoldierAnimType AnimType)
 	{
-		mAnimType = Type;
+		mAnimType = AnimType;
 	}
 
-	virtual void NativeInitializeAnimation();
-	virtual void NativeUpdateAnimation(float DeltaSeconds);
+	virtual void NativeInitializeAnimation() override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UFUNCTION()
 	void AnimNotify_Attack();
@@ -42,4 +43,10 @@ public:
 
 	UFUNCTION()
 	void AnimNotify_DeathEnd();
+
+	UFUNCTION()
+	void AnimNotify_Skill();
+
+	UFUNCTION()
+	void AnimNotify_SkillEnd();	
 };

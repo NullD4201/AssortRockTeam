@@ -2,6 +2,7 @@
 
 
 #include "AISpawnPoint.h"
+#include "AIPawn.h"
 
 // Sets default values
 AAISpawnPoint::AAISpawnPoint()
@@ -11,18 +12,12 @@ AAISpawnPoint::AAISpawnPoint()
 
 	mRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-#if WITH_EDITORONLY_DATA
-	// mDirectionArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Root"));
-	
-	// mDirectionArrow->SetupAttachment(mRoot);
-#endif
-
 	SetRootComponent(mRoot);
 
 	mRoot->bVisualizeComponent = true;
 
-	mSpawnAIPawn = nullptr;
-	mAccessTime = 0.f;
+	mSpawnAI = nullptr;
+	mAccTime = 0.f;
 	mSpawnTime = 0.f;
 }
 
@@ -30,7 +25,8 @@ AAISpawnPoint::AAISpawnPoint()
 void AAISpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Spawn();
 }
 
 // Called every frame
@@ -38,11 +34,11 @@ void AAISpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!mSpawnAIPawn)
+	if (!mSpawnAI)
 	{
-		mAccessTime += DeltaTime;
+		mAccTime += DeltaTime;
 
-		if (mAccessTime >= mSpawnTime)
+		if (mAccTime >= mSpawnTime)
 		{
 			Spawn();
 		}
@@ -51,8 +47,8 @@ void AAISpawnPoint::Tick(float DeltaTime)
 
 void AAISpawnPoint::ClearSpawnObject()
 {
-	mSpawnAIPawn = nullptr;
-	mAccessTime = 0.f;
+	mSpawnAI = nullptr;
+	mAccTime = 0.f;
 }
 
 void AAISpawnPoint::Spawn()
@@ -63,22 +59,17 @@ void AAISpawnPoint::Spawn()
 	}
 
 	FActorSpawnParameters	SpawnParameters;
-
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-	AAIPawn* DefaultObject = Cast<AAIPawn>(mSpawnClass.GetDefaultObject());
-
+	AAIPawn* DefaultObj = Cast<AAIPawn>(mSpawnClass.GetDefaultObject());
 	float	HalfHeight = 0.f;
-
-	if (IsValid(DefaultObject))
+	if (IsValid(DefaultObj))
 	{
-		HalfHeight = DefaultObject->GetHalfHeight();
+		HalfHeight = DefaultObj->GetHalfHeight();
 	}
 
-	mSpawnAIPawn = GetWorld()->SpawnActor<AAIPawn>(mSpawnClass, GetActorLocation() + FVector(0., 0., (double) HalfHeight), GetActorRotation(), SpawnParameters);
-
-	mSpawnAIPawn->SetSpawnPoint(this);
-
-	mSpawnAIPawn->SetPatrolArray(mPatrolArray);
+	mSpawnAI = GetWorld()->SpawnActor<AAIPawn>(mSpawnClass, GetActorLocation() + FVector(0.0, 0.0, HalfHeight), GetActorRotation(), SpawnParameters);
+	mSpawnAI->SetSpawnPoint(this);
+	mSpawnAI->SetPatrolArray(mPatrolArray);
 }
 

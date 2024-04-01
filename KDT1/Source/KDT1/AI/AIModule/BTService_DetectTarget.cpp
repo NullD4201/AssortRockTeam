@@ -4,8 +4,8 @@
 #include "BTService_DetectTarget.h"
 
 #include "AIController.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "KDT1/AI/AIPawn.h"
+#include "../AIPawn.h"
+#include "../AIState.h"
 
 UBTService_DetectTarget::UBTService_DetectTarget()
 {
@@ -18,38 +18,47 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	AAIController*	Controller = OwnerComp.GetAIOwner();
+	AAIPawn*		Pawn = Cast<AAIPawn>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		return;
 	}
 
-	FVector AILocation = Pawn->GetActorLocation();
-	AILocation.Z = Pawn->GetHalfHeight();
+	FVector			AILocation	= Pawn->GetActorLocation();
+	AILocation.Z -= Pawn->GetHalfHeight();
 
-	FCollisionQueryParams	param(NAME_None, false, Pawn);
+	FCollisionQueryParams param(NAME_None, false, Pawn);
+
 	UAIState* AIState = Pawn->GetState<UAIState>();
+
 	if (!IsValid(AIState))
 	{
 		return;
 	}
 
-	FHitResult	result;
-	bool IsCollision = GetWorld()->SweepSingleByChannel(result, AILocation, AILocation, FQuat::Identity, ECC_GameTraceChannel4, FCollisionShape::MakeSphere(AIState->mTraceDistance), param);
+	FHitResult result;
+	bool IsCollision = GetWorld()->SweepSingleByChannel(result, AILocation, AILocation, FQuat::Identity, ECC_GameTraceChannel6, FCollisionShape::MakeSphere(AIState->mTraceDistance), param);
 
 #if ENABLE_DRAW_DEBUG
-	FColor DrawColor = IsCollision ? FColor::Red  : FColor::Green;
 
-	DrawDebugSphere(GetWorld(), AILocation, AIState->mTraceDistance, 20, DrawColor, false, 0.35f);
+	// 구를 그린다.
+	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
+
+	DrawDebugSphere(GetWorld(), AILocation, 
+		AIState->mTraceDistance, 20, DrawColor, false,
+		0.35f);
+
 #endif
 
 	if (IsCollision)
 	{
 		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
+		Controller->GetBlackboardComponent()->SetValueAsFloat(TEXT("Random"), FMath::RandRange(0.f, 100.f));
 	}
 	else
 	{
-		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"),
+			nullptr);
 	}
 }
