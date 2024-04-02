@@ -69,6 +69,10 @@ protected:
 	float	mHitTime = 0.f;
 	float	mHitDuration = 2.1f;
 
+	float	HalfAngle;
+	float	DeltaAngle;
+	float	ExternalRadius;
+
 public:
 	virtual void ChangeAIAnimType(uint8 AnimType) override;
 

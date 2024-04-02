@@ -27,4 +27,6 @@ ASwordCharacter::ASwordCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(SwordAnimInstance.Class);
 	}
+
+	GetCapsuleComponent()->SetCollisionProfileName("Player");
 }

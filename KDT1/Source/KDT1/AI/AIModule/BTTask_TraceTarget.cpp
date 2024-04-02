@@ -20,6 +20,8 @@ EBTNodeResult::Type UBTTask_TraceTarget::ExecuteTask(UBehaviorTreeComponent& Own
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
+	UE_LOG(KDT1, Warning, TEXT("Trace Execute"));
+
 	AAIController* Controller = OwnerComp.GetAIOwner();
 	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
 	if (!IsValid(Pawn))
@@ -46,6 +48,8 @@ EBTNodeResult::Type UBTTask_TraceTarget::ExecuteTask(UBehaviorTreeComponent& Own
 void UBTTask_TraceTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	UE_LOG(KDT1, Warning, TEXT("Trace Tick"));
 
 	AAIController* Controller = OwnerComp.GetAIOwner();
 	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());

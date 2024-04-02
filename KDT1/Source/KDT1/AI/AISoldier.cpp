@@ -77,3 +77,17 @@ void AAISoldier::NormalAttack()
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	}
 }
+
+void AAISoldier::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	int32 NumberOfSections = ceil(HalfAngle * 2. / DeltaAngle);
+	float dAngle = (HalfAngle * 2. / NumberOfSections);
+
+	float LCurrentAngle = 0.f;
+	for (int i = 0; i < NumberOfSections; i++)
+	{
+		LCurrentAngle = i * dAngle - HalfAngle;
+	}
+}

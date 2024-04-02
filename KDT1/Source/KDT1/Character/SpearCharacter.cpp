@@ -27,4 +27,6 @@ ASpearCharacter::ASpearCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(SpearAnimInstance.Class);
 	}
+
+	GetCapsuleComponent()->SetCollisionProfileName("Player");
 }

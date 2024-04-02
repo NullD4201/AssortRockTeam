@@ -54,7 +54,6 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	if (IsCollision)
 	{
 		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
-		Controller->GetBlackboardComponent()->SetValueAsFloat(TEXT("Random"), FMath::RandRange(0.f, 100.f));
 	}
 	else
 	{
