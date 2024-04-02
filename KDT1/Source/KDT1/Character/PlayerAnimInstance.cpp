@@ -13,7 +13,6 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	mSprintEnable = true;
 	bIsSprinting = false;
 	bIsTargetLock = false;
-	mSprintMaxWalkSpeed = 600.f;
 	mAnimType = EPlayerAnimType::Idle;
 }
 
@@ -35,7 +34,6 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (IsValid(Movement))
 		{
 			mMoveSpeed = Movement->Velocity.Length();
-			//mMoveSpeed /= Movement->MaxWalkSpeed;
 
 			mMoveDir = CalculateDirection(Movement->Velocity, PlayerCharacter->GetActorRotation());
 		}
@@ -66,8 +64,6 @@ void UPlayerAnimInstance::PlaySprint()
 	if (bIsTargetLock == true)
 		return;
 
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("Sprint"));
-
 	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
 
 	if (IsValid(PlayerCharacter))
@@ -79,13 +75,7 @@ void UPlayerAnimInstance::PlaySprint()
 			if (!mSprintEnable)
 				return;
 
-			//mAnimType = EPlayerAnimType::Run;
 			bIsSprinting = true;
-			//mSprintMaxWalkSpeed = Movement->MaxWalkSpeed;
-			//Movement->MaxWalkSpeed = 1000.f;
-			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintFunc"));
-
-			PlayerCharacter->StartSprinting();
 		}
 	}
 }
@@ -94,8 +84,6 @@ void UPlayerAnimInstance::PlaySprintEnd()
 {
 	if (bIsTargetLock == true)
 		return;
-
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintEnd"));
 
 	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
 
@@ -106,12 +94,7 @@ void UPlayerAnimInstance::PlaySprintEnd()
 		if (IsValid(Movement))
 		{
 			bIsSprinting = false;
-
-			//mAnimType = EPlayerAnimType::Idle;
-			//Movement->MaxWalkSpeed = mSprintMaxWalkSpeed;
-			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SprintFunc End"));
-
-			PlayerCharacter->StopSprinting();
+			mAnimType = EPlayerAnimType::Idle;
 		}
 	}
 }

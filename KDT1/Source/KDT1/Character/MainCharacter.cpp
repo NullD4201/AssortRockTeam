@@ -8,10 +8,11 @@
 AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	mIdleMaxSpeed = 600.f;
 	mSprintMaxSpeed = 1000.f;
+	mIsSprinting = false;
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -30,13 +31,7 @@ void AMainCharacter::BeginPlay()
 
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 
-	FOnTimelineFloat ProgressUpdate;
-	ProgressUpdate.BindUFunction(this, FName("PlayerSpeedUpdate"));
-	FOnTimelineEvent FinishedEvent;
-	FinishedEvent.BindUFunction(this, FName("PlayerSpeedFinished"));
-
-	PlayerSpeedTimeline.AddInterpFloat(PlayerSpeedCurve, ProgressUpdate);
-	PlayerSpeedTimeline.SetTimelineFinishedFunc(FinishedEvent);
+	mCurrentMaxWalkSpeed = mIdleMaxSpeed;
 }
 
 // Called every frame
@@ -44,27 +39,31 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	PlayerSpeedTimeline.TickTimeline(DeltaTime);
-}
+	mCurrentSpeed = GetCharacterMovement()->Velocity.Length();
+	if (mCurrentSpeed < 10.f)
+		mCurrentMaxWalkSpeed = mIdleMaxSpeed;
 
-void AMainCharacter::PlayerSpeedUpdate(float Alpha)
-{
-	float NewPlayerSpeed = FMath::Lerp(mIdleMaxSpeed, mSprintMaxSpeed, Alpha);
-	GetCharacterMovement()->MaxWalkSpeed = NewPlayerSpeed;
-}
+	if (mIsSprinting == true && mCurrentMaxWalkSpeed < mSprintMaxSpeed && mCurrentSpeed > 10.f)
+	{
+		mSpeedTime += DeltaTime;
 
-void AMainCharacter::PlayerSpeedFinished()
-{
-}
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed += 50.f;
+		}
+	}
+	if (mIsSprinting == false && mCurrentMaxWalkSpeed > mIdleMaxSpeed)
+	{
+		mSpeedTime += DeltaTime;
 
-void AMainCharacter::StartSprinting()
-{
-	PlayerSpeedTimeline.Play();
-}
-
-void AMainCharacter::StopSprinting()
-{
-	PlayerSpeedTimeline.Reverse();
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed -= 50.f;
+		}
+	}
+	GetCharacterMovement()->MaxWalkSpeed = mCurrentMaxWalkSpeed;
 }
 
 // Called to bind functionality to input
@@ -86,10 +85,16 @@ void AMainCharacter::PlayAttackMontage()
 
 void AMainCharacter::PlaySprint()
 {
+	mIsSprinting = true;
+	mSpeedTime = 0.f;
+
 	mAnimInst->PlaySprint();
 }
 void AMainCharacter::PlaySprintEnd()
 {
+	mIsSprinting = false;
+	mSpeedTime = 0.f;
+
 	mAnimInst->PlaySprintEnd();
 }
 

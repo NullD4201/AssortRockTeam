@@ -7,7 +7,6 @@
 #include "Components/TimelineComponent.h"
 #include "MainCharacter.generated.h"
 
-class UCurveFloat;
 
 UCLASS()
 class KDT1_API AMainCharacter : public ACharacter
@@ -30,22 +29,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* mMesh;
 
-	FTimeline PlayerSpeedTimeline;
-
-	UFUNCTION()
-	void PlayerSpeedUpdate(float Alpha);
-	UFUNCTION()
-	void PlayerSpeedFinished();
-
 	float mIdleMaxSpeed;
 	float mSprintMaxSpeed;
-	
-public :
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "TimeLine")
-	UCurveFloat* PlayerSpeedCurve = nullptr;
+	float mCurrentMaxWalkSpeed;
+	bool  mIsSprinting;
+	float mCurrentSpeed;
 
-	void StartSprinting();
-	void StopSprinting();
+	float mSpeedTime = 0.f;
+	float mDuration = 0.1f;
 
 protected:
 	// Called when the game starts or when spawned

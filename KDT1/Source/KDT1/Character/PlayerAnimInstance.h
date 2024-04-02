@@ -40,7 +40,6 @@ protected:
 	TArray<TObjectPtr<UAnimMontage>>	mDodgeMontageArray;
 
 	int32	mAttackIndex;
-	float   mSprintMaxWalkSpeed;
 
 	bool	mAttackEnable;
 	bool	mDodgeEnable;
