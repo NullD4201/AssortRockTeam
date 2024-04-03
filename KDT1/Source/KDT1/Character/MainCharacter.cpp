@@ -3,6 +3,8 @@
 
 #include "MainCharacter.h"
 #include "PlayerAnimInstance.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -13,6 +15,7 @@ AMainCharacter::AMainCharacter()
 	mIdleMaxSpeed = 600.f;
 	mSprintMaxSpeed = 1000.f;
 	mIsSprinting = false;
+	mIsTargetLocked = false;
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -64,6 +67,14 @@ void AMainCharacter::Tick(float DeltaTime)
 		}
 	}
 	GetCharacterMovement()->MaxWalkSpeed = mCurrentMaxWalkSpeed;
+
+	if (mIsTargetLocked)
+	{
+		FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetActor->GetActorLocation() - GetActorLocation()).Rotator();
+		//PlayerRot.Pitch += 100;
+		GetController()->SetControlRotation(PlayerRot);
+		//SetActorRotation(PlayerRot);
+	}
 }
 
 // Called to bind functionality to input
@@ -110,7 +121,43 @@ void AMainCharacter::PlaySkillMontage()
 
 void AMainCharacter::TargetLock()
 {
-	mAnimInst->TargetLock();
+	if (mIsTargetLocked)
+	{
+		mIsTargetLocked = false;
+
+		mAnimInst->TargetLock();
+
+		return;
+	}
+
+	FCollisionQueryParams	param(NAME_None, false, this);
+
+	FVector StartLocation = GetActorLocation();
+	FVector EndLocation = GetActorLocation() + GetActorForwardVector() * 1000.f;
+	FHitResult	result;
+
+	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation,
+		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(100.f),
+		param);
+
+#if ENABLE_DRAW_DEBUG
+
+	// 구를 그린다.
+	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
+
+	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
+		1000.f, 100.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+		DrawColor, false, 3.f);
+
+#endif
+	if (IsCollision)
+	{
+		TargetActor = result.GetActor();
+
+		mIsTargetLocked = true;
+
+		mAnimInst->TargetLock();
+	}
 }
 
 void AMainCharacter::ChangeToWeaponSword()

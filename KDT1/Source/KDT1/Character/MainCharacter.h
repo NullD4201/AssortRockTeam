@@ -34,6 +34,8 @@ protected:
 	float mCurrentMaxWalkSpeed;
 	bool  mIsSprinting;
 	float mCurrentSpeed;
+	bool mIsTargetLocked;
+	AActor* TargetActor = nullptr;
 
 	float mSpeedTime = 0.f;
 	float mDuration = 0.1f;
