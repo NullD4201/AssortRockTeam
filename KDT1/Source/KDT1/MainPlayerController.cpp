@@ -63,9 +63,15 @@ void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
 
 void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 {
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 	const FVector ActionValue = InputActionValue.Get<FVector>();
-	AddYawInput(ActionValue.X);
-	AddPitchInput(ActionValue.Y);
+
+	if (!ControlledPawn->GetboolTargetLocked())
+	{
+		AddYawInput(ActionValue.X);
+		AddPitchInput(ActionValue.Y);
+	}
+
 }
 
 void AMainPlayerController::OnSprint(const FInputActionValue& InputActionValue)

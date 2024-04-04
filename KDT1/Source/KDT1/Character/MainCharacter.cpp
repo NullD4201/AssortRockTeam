@@ -70,9 +70,29 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	if (mIsTargetLocked)
 	{
-		FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetActor->GetActorLocation() - GetActorLocation()).Rotator();
-		//PlayerRot.Pitch += 100;
-		GetController()->SetControlRotation(PlayerRot);
+		FVector TargetVec = TargetActor->GetActorLocation();
+		FRotator TargetRot = TargetActor->GetActorRotation();
+
+		FVector ActorVec = GetActorLocation();
+		FRotator ActorRot = GetActorRotation();
+		ActorVec.Z += 100.f;
+
+		//FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
+		FRotator PlayerFindRot = UKismetMathLibrary::FindLookAtRotation(ActorVec, TargetVec);
+
+		//PlayerRot.Roll = GetActorRotation().Roll;
+		//PlayerRot.Pitch = GetActorRotation().Pitch;
+		//PlayerRot.Yaw = GetActorRotation().Yaw;
+
+		FRotator StartLoc = mCamera->GetComponentRotation();
+
+		FRotator RInterp = UKismetMathLibrary::RInterpTo(ActorRot, PlayerFindRot, DeltaTime, 5.f);
+
+		RInterp.Roll = GetActorRotation().Roll;
+		//GetController()->SetControlRotation(PlayerRot);
+		GetController()->SetControlRotation(RInterp);
+
+		//GetController()->setignore
 		//SetActorRotation(PlayerRot);
 	}
 }
@@ -132,12 +152,16 @@ void AMainCharacter::TargetLock()
 
 	FCollisionQueryParams	param(NAME_None, false, this);
 
-	FVector StartLocation = GetActorLocation();
-	FVector EndLocation = GetActorLocation() + GetActorForwardVector() * 1000.f;
+	//FVector StartLocation = GetActorLocation();
+	//FVector EndLocation = GetActorLocation() + GetActorForwardVector() * 1000.f;
+
+	FVector StartLocation = GetActorLocation() + mCamera->GetForwardVector() * 300.f;
+	FVector EndLocation = StartLocation + mCamera->GetForwardVector() * 1000.f;
+
 	FHitResult	result;
 
 	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation,
-		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(100.f),
+		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(500.f),
 		param);
 
 #if ENABLE_DRAW_DEBUG
@@ -146,7 +170,7 @@ void AMainCharacter::TargetLock()
 	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
 
 	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
-		1000.f, 100.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+		1000.f, 500.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
 		DrawColor, false, 3.f);
 
 #endif

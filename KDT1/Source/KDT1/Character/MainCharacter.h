@@ -59,6 +59,10 @@ public:
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 	void TargetLock();
+	bool GetboolTargetLocked()
+	{
+		return mIsTargetLocked;
+	}
 
 	void ChangeToWeaponSword();
 	void ChangeToWeaponSpear();
