@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
+#include "PaperSpriteComponent.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -26,6 +27,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* mMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPaperSpriteComponent* mPaperSprite;
 
 protected:
 	// Called when the game starts or when spawned

@@ -16,4 +16,5 @@ class KDT1_API ASwordCharacter : public AMainCharacter
 
 public:
 	ASwordCharacter();
+
 };
