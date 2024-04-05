@@ -40,6 +40,8 @@ protected:
 	float mSpeedTime = 0.f;
 	float mDuration = 0.1f;
 
+	void CheckPlayerCameraAngle();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

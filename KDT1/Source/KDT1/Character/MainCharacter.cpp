@@ -70,30 +70,28 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	if (mIsTargetLocked)
 	{
-		FVector TargetVec = TargetActor->GetActorLocation();
+		FVector  TargetVec = TargetActor->GetActorLocation();
 		FRotator TargetRot = TargetActor->GetActorRotation();
 
-		FVector ActorVec = GetActorLocation();
+		FVector  ActorVec = GetActorLocation();
 		FRotator ActorRot = GetActorRotation();
-		ActorVec.Z += 100.f;
 
-		//FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
-		FRotator PlayerFindRot = UKismetMathLibrary::FindLookAtRotation(ActorVec, TargetVec);
+		FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
+		//FRotator PlayerFindRot = UKismetMathLibrary::FindLookAtRotation(ActorVec, TargetVec);
 
-		//PlayerRot.Roll = GetActorRotation().Roll;
-		//PlayerRot.Pitch = GetActorRotation().Pitch;
-		//PlayerRot.Yaw = GetActorRotation().Yaw;
+		//PlayerRot.Pitch = GetController()->K2_GetActorRotation().Pitch;
 
-		FRotator StartLoc = mCamera->GetComponentRotation();
+		FRotator RInterp = UKismetMathLibrary::RInterpTo(ActorRot, PlayerRot, DeltaTime, 5.f);
+		RInterp.Roll = GetController()->K2_GetActorRotation().Roll;
 
-		FRotator RInterp = UKismetMathLibrary::RInterpTo(ActorRot, PlayerFindRot, DeltaTime, 5.f);
-
-		RInterp.Roll = GetActorRotation().Roll;
-		//GetController()->SetControlRotation(PlayerRot);
 		GetController()->SetControlRotation(RInterp);
 
-		//GetController()->setignore
-		//SetActorRotation(PlayerRot);
+		CheckPlayerCameraAngle();
+	}
+	else
+	{
+		GetCharacterMovement()->bUseControllerDesiredRotation = false;
+		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
 }
 
@@ -161,7 +159,7 @@ void AMainCharacter::TargetLock()
 	FHitResult	result;
 
 	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation,
-		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(500.f),
+		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(300.f),
 		param);
 
 #if ENABLE_DRAW_DEBUG
@@ -170,7 +168,7 @@ void AMainCharacter::TargetLock()
 	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
 
 	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
-		1000.f, 500.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+		1000.f, 300.f, FRotationMatrix::MakeFromZ(mCamera->GetForwardVector()).ToQuat(),
 		DrawColor, false, 3.f);
 
 #endif
@@ -181,6 +179,31 @@ void AMainCharacter::TargetLock()
 		mIsTargetLocked = true;
 
 		mAnimInst->TargetLock();
+	}
+}
+
+void AMainCharacter::CheckPlayerCameraAngle()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("CheckAngle"));
+
+	FVector ActorVec = GetActorForwardVector();
+	FVector CameraVec = mCamera->GetForwardVector() - GetActorForwardVector();
+
+	float DotValue = (float)FVector::DotProduct(ActorVec, CameraVec);
+
+	if (DotValue >= 0.f && DotValue <= 0.3f)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Value Under 0.3"));
+
+		GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Value Over 0.3"));
+
+		GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
 }
 

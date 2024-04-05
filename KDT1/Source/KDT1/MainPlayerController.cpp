@@ -51,8 +51,8 @@ void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
 
 	const FRotator Rotation = K2_GetActorRotation();
 	const FRotator YawRotation = FRotator(0.0, Rotation.Yaw, 0.0);
-	const FVector ForwardVector = YawRotation.Vector();
-	const FVector RightVector = FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y);
+	const FVector  ForwardVector = YawRotation.Vector();
+	const FVector  RightVector = FRotationMatrix(YawRotation).GetScaledAxis(EAxis::Y);
 
 	// 앞 뒤 이동
 	const FVector ActionValue = InputActionValue.Get<FVector>();
@@ -70,8 +70,8 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	{
 		AddYawInput(ActionValue.X);
 		AddPitchInput(ActionValue.Y);
-	}
 
+	}
 }
 
 void AMainPlayerController::OnSprint(const FInputActionValue& InputActionValue)
