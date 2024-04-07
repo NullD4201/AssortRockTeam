@@ -94,6 +94,7 @@ void UPlayerAnimInstance::PlaySprintEnd()
 		if (IsValid(Movement))
 		{
 			bIsSprinting = false;
+
 			mAnimType = EPlayerAnimType::Idle;
 		}
 	}

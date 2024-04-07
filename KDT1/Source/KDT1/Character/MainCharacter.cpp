@@ -42,57 +42,35 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	mCurrentSpeed = GetCharacterMovement()->Velocity.Length();
-	if (mCurrentSpeed < 10.f)
-		mCurrentMaxWalkSpeed = mIdleMaxSpeed;
+	PlayerWalkSpeedUpSmoothly(DeltaTime);
 
-	if (mIsSprinting == true && mCurrentMaxWalkSpeed < mSprintMaxSpeed && mCurrentSpeed > 10.f)
-	{
-		mSpeedTime += DeltaTime;
+	CheckTargetInRadius(DeltaTime);
 
-		if (mSpeedTime >= mDuration)
-		{
-			mSpeedTime = 0.f;
-			mCurrentMaxWalkSpeed += 50.f;
-		}
-	}
-	if (mIsSprinting == false && mCurrentMaxWalkSpeed > mIdleMaxSpeed)
-	{
-		mSpeedTime += DeltaTime;
+	//if (mIsTargetLocked)
+	//{
+	//	FVector  TargetVec = TargetActor->GetActorLocation();
+	//	FRotator TargetRot = TargetActor->GetActorRotation();
 
-		if (mSpeedTime >= mDuration)
-		{
-			mSpeedTime = 0.f;
-			mCurrentMaxWalkSpeed -= 50.f;
-		}
-	}
-	GetCharacterMovement()->MaxWalkSpeed = mCurrentMaxWalkSpeed;
+	//	FVector  ActorVec = GetActorLocation();
+	//	FRotator ActorRot = GetActorRotation();
 
-	if (mIsTargetLocked)
-	{
-		FVector  TargetVec = TargetActor->GetActorLocation();
-		FRotator TargetRot = TargetActor->GetActorRotation();
+	//	FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
+	//	//FRotator PlayerFindRot = UKismetMathLibrary::FindLookAtRotation(ActorVec, TargetVec);
 
-		FVector  ActorVec = GetActorLocation();
-		FRotator ActorRot = GetActorRotation();
+	//	//PlayerRot.Pitch = GetController()->K2_GetActorRotation().Pitch;
 
-		FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
-		//FRotator PlayerFindRot = UKismetMathLibrary::FindLookAtRotation(ActorVec, TargetVec);
+	//	FRotator RInterp = UKismetMathLibrary::RInterpTo(ActorRot, PlayerRot, DeltaTime, 5.f);
+	//	RInterp.Roll = GetController()->K2_GetActorRotation().Roll;
 
-		//PlayerRot.Pitch = GetController()->K2_GetActorRotation().Pitch;
+	//	GetController()->SetControlRotation(RInterp);
 
-		FRotator RInterp = UKismetMathLibrary::RInterpTo(ActorRot, PlayerRot, DeltaTime, 5.f);
-		RInterp.Roll = GetController()->K2_GetActorRotation().Roll;
-
-		GetController()->SetControlRotation(RInterp);
-
-		CheckPlayerCameraAngle();
-	}
-	else
-	{
-		GetCharacterMovement()->bUseControllerDesiredRotation = false;
-		GetCharacterMovement()->bOrientRotationToMovement = true;
-	}
+	//	CheckPlayerCameraAngle();
+	//}
+	//else
+	//{
+	//	GetCharacterMovement()->bUseControllerDesiredRotation = false;
+	//	GetCharacterMovement()->bOrientRotationToMovement = true;
+	//}
 }
 
 // Called to bind functionality to input
@@ -135,6 +113,35 @@ void AMainCharacter::PlayDodgeMontage(int8 index)
 void AMainCharacter::PlaySkillMontage()
 {
 	mAnimInst->PlaySkillMontage();
+}
+
+void AMainCharacter::PlayerWalkSpeedUpSmoothly(float DeltaTime)
+{
+	mCurrentSpeed = GetCharacterMovement()->Velocity.Length();
+	if (mCurrentSpeed < 10.f)
+		mCurrentMaxWalkSpeed = mIdleMaxSpeed;
+
+	if (mIsSprinting == true && mCurrentMaxWalkSpeed < mSprintMaxSpeed && mCurrentSpeed > 10.f)
+	{
+		mSpeedTime += DeltaTime;
+
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed += 50.f;
+		}
+	}
+	if (mIsSprinting == false && mCurrentMaxWalkSpeed > mIdleMaxSpeed)
+	{
+		mSpeedTime += DeltaTime;
+
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed -= 50.f;
+		}
+	}
+	GetCharacterMovement()->MaxWalkSpeed = mCurrentMaxWalkSpeed;
 }
 
 void AMainCharacter::TargetLock()
@@ -182,28 +189,60 @@ void AMainCharacter::TargetLock()
 	}
 }
 
+void AMainCharacter::CheckTargetInRadius(float DeltaTime)
+{
+	FCollisionQueryParams	param(NAME_None, false, this);
+
+	FVector StartLocation = GetActorLocation();
+	FVector EndLocation = GetActorLocation() + 1.f;
+
+	FHitResult	result;
+
+	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation,
+		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(1000.f),
+		param);
+
+	if (IsCollision)
+	{	
+		FVector CameraForwardVec = mCamera->GetForwardVector();
+		FVector ToTargetVec = result.GetActor()->GetActorLocation() - GetActorLocation();
+		ToTargetVec.Normalize();
+
+		//UKismetMathLibrary::Vector_Normalize(ToTargetVec, 0.0001f);
+
+		FVector TargetVec = ToTargetVec - GetActorForwardVector();
+
+		//UKismetMathLibrary::Vector_Normalize(TargetVec, 0.0001f);
+
+		float DotValue = FVector::DotProduct(CameraForwardVec, TargetVec);
+
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::SanitizeFloat(DotValue));
+
+	}
+}
+
 void AMainCharacter::CheckPlayerCameraAngle()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("CheckAngle"));
+	FVector CameraForwardVec = mCamera->GetForwardVector();
+	FVector TargetVec = TargetActor->GetActorLocation() - GetActorForwardVector();
 
-	FVector ActorVec = GetActorForwardVector();
-	FVector CameraVec = mCamera->GetForwardVector() - GetActorForwardVector();
+	UKismetMathLibrary::Vector_Normalize(TargetVec, 0.0001f);
 
-	float DotValue = (float)FVector::DotProduct(ActorVec, CameraVec);
+	float DotValue = (float)FVector::DotProduct(CameraForwardVec, TargetVec);
 
 	if (DotValue >= 0.f && DotValue <= 0.3f)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Value Under 0.3"));
 
-		GetCharacterMovement()->bUseControllerDesiredRotation = true;
-		GetCharacterMovement()->bOrientRotationToMovement = false;
+		//GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		//GetCharacterMovement()->bOrientRotationToMovement = false;
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Value Over 0.3"));
 
-		GetCharacterMovement()->bUseControllerDesiredRotation = true;
-		GetCharacterMovement()->bOrientRotationToMovement = true;
+		//GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		//GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
 }
 
