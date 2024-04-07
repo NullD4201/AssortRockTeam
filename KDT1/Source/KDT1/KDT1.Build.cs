@@ -20,7 +20,6 @@ public class KDT1 : ModuleRules
 			, "NavigationSystem"
 			, "Niagara"
 			, "LevelSequence"
-			, "Paper2D"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

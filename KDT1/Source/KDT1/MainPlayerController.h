@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+	// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -17,6 +17,11 @@ class KDT1_API AMainPlayerController : public APlayerController
 	
 public :
 	AMainPlayerController();
+
+private:
+	TSubclassOf<UUserWidget>	mMainWidgetClass;
+	UUserWidget* mMainWidget; // 실제생성된 위젯객체의 메모리주소를 저장할 용도의 포인터변수
+
 
 protected:
 	virtual void BeginPlay() override;

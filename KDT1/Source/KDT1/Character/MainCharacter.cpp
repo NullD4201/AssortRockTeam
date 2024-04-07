@@ -15,7 +15,6 @@ AMainCharacter::AMainCharacter()
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
-	mPaperSprite = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerIndicator"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);

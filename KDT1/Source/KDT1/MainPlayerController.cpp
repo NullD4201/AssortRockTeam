@@ -6,10 +6,16 @@
 #include "EnhancedInputComponent.h"
 #include "Data/BasicInputDataConfig.h"
 #include "Character/MainCharacter.h"
+#include "Blueprint/UserWidget.h"
 
 AMainPlayerController::AMainPlayerController()
 {
+	static ConstructorHelpers::FClassFinder<UUserWidget>
+		MainWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Main/UI/PlayerHUD.PlayerHUD_C'"));
 
+	if (MainWidgetClass.Succeeded()) // 성공했따면
+		mMainWidgetClass = MainWidgetClass.Class; // 클래스정보를 저장한다.
+	
 }
 
 void AMainPlayerController::BeginPlay()
@@ -19,6 +25,14 @@ void AMainPlayerController::BeginPlay()
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	Subsystem->AddMappingContext(MainInputDataConfig->DefaultContext, 0);
+
+	// 위젯을 생성한다.
+
+	// 생성한 위젯을 이 메인위젯 포인터에 저장
+	mMainWidget = CreateWidget<UUserWidget>(GetWorld(), mMainWidgetClass); 
+	// 인자가 int32 타입으로 ZOrder z순서로 고를수있음 [겹쳐지는거] 여기선 화면에 꽉차게 그려내갰다는말
+	mMainWidget->AddToViewport();
+
 
 }
 
