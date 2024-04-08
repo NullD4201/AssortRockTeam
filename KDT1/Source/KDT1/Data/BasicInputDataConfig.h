@@ -25,9 +25,15 @@ public:
 public:
 	UInputAction* Move = nullptr;
 	UInputAction* Look = nullptr;
+	UInputAction* Sprint = nullptr;
+	UInputAction* SprintEnd = nullptr;
 	UInputAction* Attack = nullptr;
 	UInputAction* Skill = nullptr;
 	UInputAction* Weapon1 = nullptr;
 	UInputAction* Weapon2 = nullptr;
-	UInputAction* Interact = nullptr;
+	UInputAction* DodgeFwd = nullptr;
+	UInputAction* DodgeBwd = nullptr;
+	UInputAction* DodgeRight = nullptr;
+	UInputAction* DodgeLeft = nullptr;
+	UInputAction* TargetLock = nullptr;
 };

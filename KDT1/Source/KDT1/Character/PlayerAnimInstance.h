@@ -20,6 +20,12 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float		mMoveDir;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool	bIsSprinting;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool    bIsTargetLock;
 	
 	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	// float		mOnGround;
@@ -30,9 +36,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UAnimMontage>>	mAttackMontageArray;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TObjectPtr<UAnimMontage>>	mDodgeMontageArray;
+
 	int32	mAttackIndex;
 
 	bool	mAttackEnable;
+	bool	mDodgeEnable;
+	bool    mSprintEnable;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EPlayerAnimType		mAnimType;
@@ -42,8 +53,15 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	void PlayAttackMontage();
-	void PlayDodgeMontage();
+	void PlaySprint();
+	void PlaySprintEnd();
+	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
+	void TargetLock();
+	EPlayerAnimType GetAnimType()
+	{
+		return mAnimType;
+	}
 
 	UFUNCTION()
 	void AnimNotify_Attack();
@@ -55,5 +73,14 @@ public:
 	void AnimNotify_AttackEnd();
 
 	UFUNCTION()
-	void AnimNotify_CoolDown();
+	void AnimNotify_SkillEnd();
+
+	UFUNCTION()
+	void AnimNotify_AttackCoolDown();
+
+	UFUNCTION()
+	void AnimNotify_DodgeCoolDown();
+
+	UFUNCTION()
+	void AnimNotify_DodgeFinish();
 };

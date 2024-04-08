@@ -15,20 +15,26 @@ UENUM(BlueprintType)
 enum class EPlayerAnimType : uint8
 {
 	Idle,
-	Walk,
 	Run,
-	Death,
 	Dodge,
 	Attack,
-	Skill
+	Skill,
+	CoolDown,
+	Death
 };
 
 UENUM(BlueprintType)
 enum class EPlayerWeaponType : uint8
 {
 	Sword,
-	Spear,
-	Bow
+	Spear
+};
+
+UENUM(BlueprintType)
+enum class ESoldierType : uint8
+{
+	Hwando,		// 환도
+	Woldo		// 월도
 };
 
 UCLASS()

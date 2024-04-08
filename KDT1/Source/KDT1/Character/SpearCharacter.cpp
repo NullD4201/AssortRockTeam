@@ -9,6 +9,8 @@ ASpearCharacter::ASpearCharacter()
 	
 	GetMesh()->SetRelativeLocation(FVector(0., 0., -96.));
 	GetMesh()->SetRelativeRotation(FRotator(0., -90., 0.));
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 	
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SpearAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/SpearAnimation/Demo/Character/Mesh/Weapom_Spear.Weapom_Spear'"));
 	if (SpearAsset.Succeeded())

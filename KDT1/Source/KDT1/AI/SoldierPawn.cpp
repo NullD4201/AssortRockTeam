@@ -21,7 +21,7 @@ ASoldierPawn::ASoldierPawn()
 
 	mSoldierState = Cast<USoldierState>(mState);
 
-	mCapsule->SetCollisionProfileName(TEXT("Soldier"));
+	mCapsule->SetCollisionProfileName(TEXT("Enemy"));
 
 	static ConstructorHelpers::FObjectFinder<UDataTable> SoldierTable(TEXT("/Script/Engine.DataTable'/Game/Main/DT_SoldierData.DT_SoldierData'"));
 
@@ -29,6 +29,19 @@ ASoldierPawn::ASoldierPawn()
 	{
 		mSoldierDataTable = SoldierTable.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Mesh(TEXT("/Script/Engine.SkeletalMesh'/Game/KoreanTraditionalMartialArts/Meshs/Characters/Meshs/SKM_Soldier_1.SKM_Soldier_1'"));
+	if (Mesh.Succeeded())
+	{
+		mMesh->SetSkeletalMesh(Mesh.Object);
+	}
+
+	mMesh->SetRelativeLocation(FVector(0.0, 0.0, -90.0));
+	mMesh->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
+
+	mCapsule->SetCapsuleHalfHeight(90.f);
+	mCapsule->SetCapsuleRadius(30.f);
+
 }
 
 void ASoldierPawn::ChangeAIAnimType(uint8 AnimType)
