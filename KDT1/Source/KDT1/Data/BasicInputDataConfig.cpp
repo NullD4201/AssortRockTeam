@@ -61,4 +61,12 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			Weapon2 = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Interact.IA_Interact'") };
+		if (Asset.Succeeded())
+		{
+			Interact = Asset.Object;
+		}
+	}
 }

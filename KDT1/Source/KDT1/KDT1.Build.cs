@@ -20,7 +20,7 @@ public class KDT1 : ModuleRules
 			, "NavigationSystem"
 			, "Niagara"
 			, "LevelSequence"
-        });
+		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
