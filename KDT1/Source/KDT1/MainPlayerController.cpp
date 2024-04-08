@@ -70,7 +70,6 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	{
 		AddYawInput(ActionValue.X);
 		AddPitchInput(ActionValue.Y);
-
 	}
 }
 

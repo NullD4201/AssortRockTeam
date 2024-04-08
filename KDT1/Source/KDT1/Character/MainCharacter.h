@@ -35,15 +35,15 @@ protected:
 	bool  mIsSprinting;
 	float mCurrentSpeed;
 	bool mIsTargetLocked;
+
 	AActor* TargetActor = nullptr;
 
 	float mSpeedTime = 0.f;
 	float mDuration = 0.1f;
-	float TestSphereTime = 0.f;
-	float TestSphereDuration = 1.0f;
 
-	void CheckTargetInRadius(float DeltaTime);
+	void CheckDotValueInRadius(float DeltaTime);
 	void PlayerWalkSpeedUpSmoothly(float DeltaTime);
+	void PlayerTargetLocked(float DeltaTime);
 	void CheckPlayerCameraAngle();
 
 protected:

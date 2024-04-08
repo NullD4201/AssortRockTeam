@@ -132,23 +132,13 @@ void UPlayerAnimInstance::PlaySkillMontage()
 
 void UPlayerAnimInstance::TargetLock()
 {
-	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
-	UCharacterMovementComponent* Movement = PlayerCharacter->GetCharacterMovement();
-	
-	//  bUseControllerDesiredRotation (컨트롤러 선호 회전 사용)
-	//  bOrientRotationToMovement (무브먼트 방향으로 회전 조정)
-
 	if (bIsTargetLock == true)
 	{
 		bIsTargetLock = false;
-		//Movement->bUseControllerDesiredRotation = false;
-		//Movement->bOrientRotationToMovement = true;
 	}
 	else
 	{
 		bIsTargetLock = true;
-		//Movement->bUseControllerDesiredRotation = true;
-		//Movement->bOrientRotationToMovement = false;
 	}
 }
 
