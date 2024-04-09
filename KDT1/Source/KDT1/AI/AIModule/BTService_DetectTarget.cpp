@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "../AIPawn.h"
 #include "../AIState.h"
+#include "KDT1/AI/AISoldier.h"
+#include "KDT1/AI/SoldierAIController.h"
 
 UBTService_DetectTarget::UBTService_DetectTarget()
 {
@@ -18,19 +20,23 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	AAIController*	Controller = OwnerComp.GetAIOwner();
-	AAIPawn*		Pawn = Cast<AAIPawn>(Controller->GetPawn());
-	if (!IsValid(Pawn))
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	if (!IsValid(Controller))
+	{
+		return;
+	}
+	AAISoldier*		Soldier = Cast<AAISoldier>(Controller->GetPawn());
+	if (!IsValid(Soldier))
 	{
 		return;
 	}
 
-	FVector			AILocation	= Pawn->GetActorLocation();
-	AILocation.Z -= Pawn->GetHalfHeight();
+	FVector			AILocation	= Soldier->GetActorLocation();
+	AILocation.Z -= Soldier->GetHalfHeight();
 
-	FCollisionQueryParams param(NAME_None, false, Pawn);
+	FCollisionQueryParams param(NAME_None, false, Soldier);
 
-	UAIState* AIState = Pawn->GetState<UAIState>();
+	UAIState* AIState = Soldier->GetState<UAIState>();
 
 	if (!IsValid(AIState))
 	{

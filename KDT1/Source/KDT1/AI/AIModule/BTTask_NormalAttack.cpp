@@ -5,6 +5,8 @@
 
 #include "AIController.h"
 #include "KDT1/AI/AIPawn.h"
+#include "KDT1/AI/AISoldier.h"
+#include "KDT1/AI/SoldierAIController.h"
 #include "KDT1/AI/SoldierAnimInstance.h"
 #include "KDT1/AI/SoldierState.h"
 
@@ -21,8 +23,8 @@ EBTNodeResult::Type UBTTask_NormalAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 
 	UE_LOG(KDT1, Warning, TEXT("Normal Execute"));
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	AAISoldier* Pawn = Cast<AAISoldier>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		return EBTNodeResult::Failed;
@@ -48,8 +50,8 @@ void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 
 	UE_LOG(KDT1, Warning, TEXT("Normal Tick"));
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	AAISoldier* Pawn = Cast<AAISoldier>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);

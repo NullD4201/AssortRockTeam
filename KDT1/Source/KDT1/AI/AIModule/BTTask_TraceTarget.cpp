@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "KDT1/AI/AIPawn.h"
+#include "KDT1/AI/AISoldier.h"
+#include "KDT1/AI/SoldierAIController.h"
 #include "KDT1/AI/SoldierAnimInstance.h"
 #include "KDT1/AI/SoldierState.h"
 
@@ -22,8 +24,8 @@ EBTNodeResult::Type UBTTask_TraceTarget::ExecuteTask(UBehaviorTreeComponent& Own
 
 	UE_LOG(KDT1, Warning, TEXT("Trace Execute"));
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	AAISoldier* Pawn = Cast<AAISoldier>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		return EBTNodeResult::Failed;
@@ -49,10 +51,8 @@ void UBTTask_TraceTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 
-	UE_LOG(KDT1, Warning, TEXT("Trace Tick"));
-
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	AAISoldier* Pawn = Cast<AAISoldier>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);

@@ -21,6 +21,7 @@ ASoldierPawn::ASoldierPawn()
 	mState = CreateDefaultSubobject<USoldierState>(TEXT("SoldierState"));
 
 	mSoldierState = Cast<USoldierState>(mState);
+	mAnimInst = Cast<USoldierAnimInstance>(mMesh->GetAnimInstance());
 
 	AIControllerClass = ASoldierAIController::StaticClass();
 

@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "KDT1/AI/AIPawn.h"
+#include "KDT1/AI/AISoldier.h"
+#include "KDT1/AI/SoldierAIController.h"
 #include "KDT1/AI/SoldierAnimInstance.h"
 
 UBTTask_Patrol::UBTTask_Patrol()
@@ -21,8 +23,8 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 	UE_LOG(KDT1, Warning, TEXT("Patrol Execute"));
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
-	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
+	AAISoldier* Pawn = Cast<AAISoldier>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
 		return EBTNodeResult::Failed;
@@ -44,6 +46,7 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 
 	FVector Point = Pawn->GetPatrolPoint();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, Point);
+	// Controller->MoveToLocation(Point, -1., false, true);
 
 	Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Walk);
 
@@ -56,7 +59,7 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	UE_LOG(KDT1, Warning, TEXT("Patrol Tick"));
 
-	AAIController* Controller = OwnerComp.GetAIOwner();
+	ASoldierAIController* Controller = Cast<ASoldierAIController>(OwnerComp.GetAIOwner());
 	AAIPawn* Pawn = Cast<AAIPawn>(Controller->GetPawn());
 	if (!IsValid(Pawn))
 	{
@@ -83,7 +86,7 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	Pawn->SetActorRotation(FRotator(0.0, Dir.Rotation().Yaw, 0.0));
 	
 	FVector	AILocation = Pawn->GetActorLocation();
-	FVector	TargetLocation = Target->GetActorLocation();
+	FVector	TargetLocation = Pawn->GetPatrolPoint();
 	AILocation.Z -= Pawn->GetHalfHeight();
 	
 	float	Distance = FVector::Distance(AILocation, TargetLocation);
