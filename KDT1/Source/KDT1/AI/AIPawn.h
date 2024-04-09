@@ -35,8 +35,16 @@ protected:
 	UFloatingPawnMovement* mMovement;
 
 	UPROPERTY(EditAnywhere)
+<<<<<<< Updated upstream
 	class UAIState*		mState;
 
+=======
+	UFloatingPawnMovement* mMovement;
+
+	UPROPERTY(EditAnywhere)
+	class UAIState*		mState;
+
+>>>>>>> Stashed changes
 	FAIInfo* mAIInfo;
 
 	bool	mAttackEnd;

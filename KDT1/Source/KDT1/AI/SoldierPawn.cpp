@@ -20,6 +20,10 @@ ASoldierPawn::ASoldierPawn()
 	mState = CreateDefaultSubobject<USoldierState>(TEXT("SoldierState"));
 
 	mSoldierState = Cast<USoldierState>(mState);
+<<<<<<< Updated upstream
+=======
+	mAnimInstance = Cast<USoldierAnimInstance>(mMesh->GetAnimInstance());
+>>>>>>> Stashed changes
 
 	mCapsule->SetCollisionProfileName(TEXT("Soldier"));
 
@@ -33,7 +37,11 @@ ASoldierPawn::ASoldierPawn()
 
 void ASoldierPawn::ChangeAIAnimType(uint8 AnimType)
 {
+<<<<<<< Updated upstream
 	mAnimInstance->ChangeAnimTYpe((ESoldierAnimType) AnimType);
+=======
+	// mAnimInstance->ChangeAnimType((ESoldierAnimType) AnimType);
+>>>>>>> Stashed changes
 }
 
 void ASoldierPawn::BeginPlay()
@@ -46,6 +54,7 @@ void ASoldierPawn::BeginPlay()
 
 	// const FSoldierData* Data = FindSoldierData(mTableRowName);
 
+<<<<<<< Updated upstream
 	// mAttackPoint = Data->mAttackPoint;
 	//
 	// SoldierInfo->mAttackPoint = Data->mArmorPoint;
@@ -55,6 +64,15 @@ void ASoldierPawn::BeginPlay()
 	// SoldierInfo->mMoveSpeed = Data->mMoveSpeed;
 	// SoldierInfo->mAttackDistance = Data->mAttackDistance;
 	// SoldierInfo->mTraceDistance = Data->mTraceDistance;
+=======
+	SoldierInfo->mAttackPoint = Data->mAttackPoint;
+	SoldierInfo->mArmorPoint = Data->mArmorPoint;
+	SoldierInfo->mHp = Data->mHpMax;
+	SoldierInfo->mHpMax = Data->mHpMax;
+	SoldierInfo->mMoveSpeed = Data->mMoveSpeed;
+	SoldierInfo->mAttackDistance = Data->mAttackDistance;
+	SoldierInfo->mTraceDistance = Data->mTraceDistance;
+>>>>>>> Stashed changes
 
 	mMovement->MaxSpeed = SoldierInfo->mMoveSpeed;
 
@@ -100,7 +118,11 @@ void ASoldierPawn::Tick(float DeltaSeconds)
 
 void ASoldierPawn::NormalAttack()
 {
+<<<<<<< Updated upstream
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("병사 공격"));
+=======
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("NormalAttack"));
+>>>>>>> Stashed changes
 }
 
 float ASoldierPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
@@ -114,7 +136,11 @@ float ASoldierPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 	{
 		if (mSoldierState->mHp <= 0)
 		{
+<<<<<<< Updated upstream
 			mAnimInstance->ChangeAnimTYpe(ESoldierAnimType::Death);
+=======
+			mAnimInstance->ChangeAnimType(ESoldierAnimType::Death);
+>>>>>>> Stashed changes
 		}
 
 		mHitEnable = true;

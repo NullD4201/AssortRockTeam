@@ -15,6 +15,7 @@ void USoldierState::BeginPlay()
 
 	// const FSoldierData* Data = ASoldierPawn::FindSoldierData(mDataTableRowName);
 
+<<<<<<< Updated upstream
 	// if (Data)
 	// {
 	// 	mMoveSpeed = Data->mMoveSpeed;
@@ -25,4 +26,16 @@ void USoldierState::BeginPlay()
 	// 	mHpMax = Data->mHpMax;
 	// 	mAttackDistance = Data->mAttackDistance;
 	// }
+=======
+	if (Data)
+	{
+		mMoveSpeed = Data->mMoveSpeed;
+		mTraceDistance = Data->mTraceDistance;
+		mAttackPoint = Data->mAttackPoint;
+		mArmorPoint = Data->mArmorPoint;
+		mHp = Data->mHpMax;
+		mHpMax = Data->mHpMax;
+		mAttackDistance = Data->mAttackDistance;
+	}
+>>>>>>> Stashed changes
 }

@@ -31,6 +31,22 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Sprint.IA_Sprint'") };
+		if (Asset.Succeeded())
+		{
+			Sprint = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Sprint.IA_Sprint'") };
+		if (Asset.Succeeded())
+		{
+			SprintEnd = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
 		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Attack.IA_Attack'") };
 		if (Asset.Succeeded())
 		{
@@ -43,6 +59,73 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 		if (Asset.Succeeded())
 		{
 			Skill = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change1.IA_Change1'") };
+		if (Asset.Succeeded())
+		{
+			Weapon1 = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change2.IA_Change2'") };
+		if (Asset.Succeeded())
+		{
+			Weapon2 = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+<<<<<<< Updated upstream
+=======
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeFwd.IA_DodgeFwd'") };
+		if (Asset.Succeeded())
+		{
+			DodgeFwd = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeBwd.IA_DodgeBwd'") };
+		if (Asset.Succeeded())
+		{
+			DodgeBwd = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeRight.IA_DodgeRight'") };
+		if (Asset.Succeeded())
+		{
+			DodgeRight = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeLeft.IA_DodgeLeft'") };
+		if (Asset.Succeeded())
+		{
+			DodgeLeft = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_TargetLock.IA_TargetLock'") };
+		if (Asset.Succeeded())
+		{
+			TargetLock = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+>>>>>>> Stashed changes
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Interact.IA_Interact'") };
+		if (Asset.Succeeded())
+		{
+			Interact = Asset.Object;
 		}
 	}
 }

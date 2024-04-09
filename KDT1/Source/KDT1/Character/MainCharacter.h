@@ -4,7 +4,9 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
+#include "Components/TimelineComponent.h"
 #include "MainCharacter.generated.h"
+
 
 UCLASS()
 class KDT1_API AMainCharacter : public ACharacter
@@ -27,11 +29,26 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* mMesh;
 
+	float mIdleMaxSpeed;
+	float mSprintMaxSpeed;
+	float mCurrentMaxWalkSpeed;
+	bool  mIsSprinting;
+	float mCurrentSpeed;
+	bool mIsTargetLocked;
+	AActor* TargetActor = nullptr;
+
+	float mSpeedTime = 0.f;
+	float mDuration = 0.1f;
+	float TestSphereTime = 0.f;
+	float TestSphereDuration = 1.0f;
+
+	void PlayerWalkSpeedUpSmoothly(float DeltaTime);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -41,7 +58,17 @@ public:
 	virtual void NormalAttack();
 
 	void PlayAttackMontage();
-	void PlayDodgeMontage();
+	void PlaySprint();
+	void PlaySprintEnd();
+	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
+	void TargetLock();
+	bool GetboolTargetLocked()
+	{
+		return mIsTargetLocked;
+	}
+
+	void ChangeToWeaponSword();
+	void ChangeToWeaponSpear();
 
 };

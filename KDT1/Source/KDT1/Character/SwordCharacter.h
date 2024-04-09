@@ -3,19 +3,18 @@
 #pragma once
 
 #include "../GameInfo.h"
-#include "GameFramework/GameModeBase.h"
-#include "MainGameModeBase.generated.h"
+#include "MainCharacter.h"
+#include "SwordCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class KDT1_API AMainGameModeBase : public AGameModeBase
+class KDT1_API ASwordCharacter : public AMainCharacter
 {
 	GENERATED_BODY()
-	
-public :
-	AMainGameModeBase();
 
+public:
+	ASwordCharacter();
 
 };

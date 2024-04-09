@@ -3,12 +3,24 @@
 
 #include "MainCharacter.h"
 #include "PlayerAnimInstance.h"
+<<<<<<< Updated upstream
+#include "../MainPlayerController.h"
+
+=======
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+>>>>>>> Stashed changes
 
 // Sets default values
 AMainCharacter::AMainCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	mIdleMaxSpeed = 600.f;
+	mSprintMaxSpeed = 1000.f;
+	mIsSprinting = false;
+	mIsTargetLocked = false;
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -18,33 +30,28 @@ AMainCharacter::AMainCharacter()
 	mCamera->SetupAttachment(mCameraArm);
 
 	mMesh->SetupAttachment(GetMesh(), "weapon");
-	
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> SwordAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/InfinityBladeWeapons/Weapons/Blade/Swords/Blade_BlackKnight/SK_Blade_BlackKnight.SK_Blade_BlackKnight'"));
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> SpearAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/SpearAnimation/Demo/Character/Mesh/Weapom_Spear.Weapom_Spear'"));
-
-	if (SwordAsset.Succeeded())
-	{
-		mMesh->SetSkeletalMeshAsset(SwordAsset.Object);
-	}
-	if (SpearAsset.Succeeded())
-	{
-		// mMesh->SetSkeletalMeshAsset(SpearAsset.Object);
-	}
 }
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
+
+	mCurrentMaxWalkSpeed = mIdleMaxSpeed;
 }
 
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+<<<<<<< Updated upstream
+=======
 
+	PlayerWalkSpeedUpSmoothly(DeltaTime);
+
+>>>>>>> Stashed changes
 }
 
 // Called to bind functionality to input
@@ -56,7 +63,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AMainCharacter::NormalAttack()
 {
-	
+	// TODO NormalAttack()
 }
 
 void AMainCharacter::PlayAttackMontage()
@@ -64,14 +71,82 @@ void AMainCharacter::PlayAttackMontage()
 	mAnimInst->PlayAttackMontage();
 }
 
-void AMainCharacter::PlayDodgeMontage()
+void AMainCharacter::PlaySprint()
 {
-	mAnimInst->PlayDodgeMontage();
+	mIsSprinting = true;
+	mSpeedTime = 0.f;
+
+	mAnimInst->PlaySprint();
+}
+void AMainCharacter::PlaySprintEnd()
+{
+	mIsSprinting = false;
+	mSpeedTime = 0.f;
+
+	mAnimInst->PlaySprintEnd();
+}
+
+void AMainCharacter::PlayDodgeMontage(int8 index)
+{
+	mAnimInst->PlayDodgeMontage(index);
 }
 
 void AMainCharacter::PlaySkillMontage()
 {
 	mAnimInst->PlaySkillMontage();
+}
+
+void AMainCharacter::TargetLock()
+{
+	if (mIsTargetLocked == true)
+	{
+		mIsTargetLocked = false;
+		mAnimInst->TargetLock();
+	}
+	else
+	{
+		mIsTargetLocked = true;
+		mAnimInst->TargetLock();
+	}
+}
+
+void AMainCharacter::PlayerWalkSpeedUpSmoothly(float DeltaTime)
+{
+	mCurrentSpeed = GetCharacterMovement()->Velocity.Length();
+	if (mCurrentSpeed < 10.f)
+		mCurrentMaxWalkSpeed = mIdleMaxSpeed;
+
+	if (mIsSprinting == true && mCurrentMaxWalkSpeed < mSprintMaxSpeed && mCurrentSpeed > 10.f)
+	{
+		mSpeedTime += DeltaTime;
+
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed += 100.f;
+		}
+	}
+	if (mIsSprinting == false && mCurrentMaxWalkSpeed > mIdleMaxSpeed)
+	{
+		mSpeedTime += DeltaTime;
+
+		if (mSpeedTime >= mDuration)
+		{
+			mSpeedTime = 0.f;
+			mCurrentMaxWalkSpeed -= 100.f;
+		}
+	}
+	GetCharacterMovement()->MaxWalkSpeed = mCurrentMaxWalkSpeed;
+}
+
+void AMainCharacter::ChangeToWeaponSword()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
+}
+
+void AMainCharacter::ChangeToWeaponSpear()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
 }
 
 
