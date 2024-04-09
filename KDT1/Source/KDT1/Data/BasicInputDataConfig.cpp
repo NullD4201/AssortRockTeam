@@ -116,5 +116,21 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 		{
 			TargetLock = Asset.Object;
 		}
+	} 
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwitchLeft.IA_SwitchLeft'") };
+		if (Asset.Succeeded())
+		{
+			SwitchLeft = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwitchRight.IA_SwitchRight'") };
+		if (Asset.Succeeded())
+		{
+			SwitchRight = Asset.Object;
+		}
 	}
 }

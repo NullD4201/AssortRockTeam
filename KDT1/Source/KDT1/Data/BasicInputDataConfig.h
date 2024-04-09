@@ -36,4 +36,6 @@ public:
 	UInputAction* DodgeRight = nullptr;
 	UInputAction* DodgeLeft = nullptr;
 	UInputAction* TargetLock = nullptr;
+	UInputAction* SwitchLeft = nullptr;
+	UInputAction* SwitchRight = nullptr;
 };

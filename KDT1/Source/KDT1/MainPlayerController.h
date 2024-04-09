@@ -36,4 +36,6 @@ protected:
 	void DodgeRight(const FInputActionValue& InputActionValue);
 	void DodgeLeft(const FInputActionValue& InputActionValue);
 	void OnTargetLock(const FInputActionValue& InputActionValue);
+	void OnSwitchLeft(const FInputActionValue& InputActionValue);
+	void OnSwitchRight(const FInputActionValue& InputActionValue);
 };

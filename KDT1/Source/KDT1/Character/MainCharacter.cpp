@@ -16,15 +16,25 @@ AMainCharacter::AMainCharacter()
 	mSprintMaxSpeed = 1000.f;
 	mIsSprinting = false;
 	mIsTargetLocked = false;
+	mIsAngleLocked = false;
 
 	mCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
+	mCheckRadius = CreateDefaultSubobject<USphereComponent>(TEXT("CheckRadius"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
 
+	mCheckRadius->SetupAttachment(GetCapsuleComponent());
+	mCheckRadius->SetSphereRadius(1500.f);
+	mCheckRadius->SetCollisionProfileName(TEXT("EnemyTrace"));
+
 	mMesh->SetupAttachment(GetMesh(), "weapon");
+
+	mCheckRadius->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::OnActiveRadiusBeginOverlap);
+	mCheckRadius->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::OnActiveRadiusEndOverlap);
+
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +55,8 @@ void AMainCharacter::Tick(float DeltaTime)
 	PlayerWalkSpeedUpSmoothly(DeltaTime);
 
 	PlayerTargetLocked(DeltaTime);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::SanitizeFloat(mTargetArray.Num()));
 }
 
 // Called to bind functionality to input
@@ -66,8 +78,11 @@ void AMainCharacter::PlayAttackMontage()
 void AMainCharacter::PlaySprint()
 {
 	if (mAnimInst->GetAnimType() == EPlayerAnimType::Dodge || mAnimInst->GetAnimType() == EPlayerAnimType::Attack
-		|| mAnimInst->GetAnimType() == EPlayerAnimType::Skill)
+		|| mAnimInst->GetAnimType() == EPlayerAnimType::Skill || mAnimInst->GetAnimType() == EPlayerAnimType::CoolDown)
+	{
 		return;
+	}
+	// 변화 없음
 
 	mIsSprinting = true;
 	mSpeedTime = 0.f;
@@ -76,6 +91,12 @@ void AMainCharacter::PlaySprint()
 }
 void AMainCharacter::PlaySprintEnd()
 {
+	if (mAnimInst->GetAnimType() == EPlayerAnimType::Dodge || mAnimInst->GetAnimType() == EPlayerAnimType::Attack
+		|| mAnimInst->GetAnimType() == EPlayerAnimType::Skill || mAnimInst->GetAnimType() == EPlayerAnimType::CoolDown)
+	{
+		return;
+	}
+
 	mIsSprinting = false;
 	mSpeedTime = 0.f;
 
@@ -95,6 +116,7 @@ void AMainCharacter::PlaySkillMontage()
 void AMainCharacter::PlayerWalkSpeedUpSmoothly(float DeltaTime)
 {
 	mCurrentSpeed = GetCharacterMovement()->Velocity.Length();
+
 	if (mCurrentSpeed < 10.f)
 		mCurrentMaxWalkSpeed = mIdleMaxSpeed;
 
@@ -126,6 +148,7 @@ void AMainCharacter::TargetLock()
 	if (mIsTargetLocked)
 	{
 		mIsTargetLocked = false;
+		mIsAngleLocked = false;
 
 		mAnimInst->TargetLock();
 
@@ -199,6 +222,12 @@ void AMainCharacter::PlayerTargetLocked(float DeltaTime)
 
 void AMainCharacter::CheckPlayerCameraAngle()
 {
+	if (mIsAngleLocked)
+	{
+		GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+		return;
+	}
 	FVector CameraForwardVec = mCamera->GetForwardVector();
 
 	FVector ToTargetVec = TargetActor->GetActorLocation() - GetActorLocation();
@@ -211,6 +240,7 @@ void AMainCharacter::CheckPlayerCameraAngle()
 
 	if (DotValue >= -0.1f && DotValue <= 0.3f)
 	{
+		mIsAngleLocked = true;
 		GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		GetCharacterMovement()->bOrientRotationToMovement = false;
 	}
@@ -219,6 +249,47 @@ void AMainCharacter::CheckPlayerCameraAngle()
 		GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
+}
+
+void AMainCharacter::SwitchLeft()
+{
+	// 지금 Target Lock 된 Actor 가 아닐 경우 실행
+	// Closest Right AI 변수 하나 만들어놓고 한번 초기화 시켜주고
+	// 반복문을 돌면서 , (mTargetArray .Num 만큼)
+	// Target이랑 Array AI 랑 Actor Right Vec 이랑 내적 값 잡아서
+	// RIght 가져오고, 그 중에서 값 비교해서 가장 오른쪽 AI 변수에 넣어주고
+	// Target 변경 해주기
+
+	for (int32 i = 0; i < mTargetArray.Num(); ++i)
+	{
+		if (mTargetArray[i] == TargetActor)
+			return;
+
+		FVector ToTargetVec = TargetActor->GetActorLocation() - mTargetArray[i]->GetActorLocation();
+		ToTargetVec.Normalize();
+
+		FVector CameraRightVec = mCamera->GetRightVector();
+
+		float DotValue = FVector::DotProduct(ToTargetVec, CameraRightVec);
+		if (DotValue > 0)
+		{
+			mLeftAIArray.Add(mTargetArray[i]);
+		}
+	}
+
+	// LeftArray 배열 중에서 가장 Target과 가까운 놈 찾아내기
+	for (int32 i = 0; i < mLeftAIArray.Num(); ++i)
+	{
+		FVector::Distance(TargetActor->GetActorLocation(), mLeftAIArray[i]->GetActorLocation());
+
+	}
+
+}
+
+void AMainCharacter::SwitchRight()
+{
+
+
 }
 
 void AMainCharacter::CheckDotValueInRadius(float DeltaTime)
@@ -248,6 +319,17 @@ void AMainCharacter::CheckDotValueInRadius(float DeltaTime)
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::SanitizeFloat(DotValue));
 
 	}
+}
+
+void AMainCharacter::OnActiveRadiusBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	mTargetArray.Add(Other);
+
+}
+
+void AMainCharacter::OnActiveRadiusEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	mTargetArray.Remove(Other);
 }
 
 void AMainCharacter::ChangeToWeaponSword()

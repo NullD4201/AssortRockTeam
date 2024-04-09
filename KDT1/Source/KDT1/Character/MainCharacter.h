@@ -29,14 +29,23 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* mMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USphereComponent* mCheckRadius = nullptr;
+
 	float mIdleMaxSpeed;
 	float mSprintMaxSpeed;
 	float mCurrentMaxWalkSpeed;
 	bool  mIsSprinting;
 	float mCurrentSpeed;
 	bool mIsTargetLocked;
+	bool mIsAngleLocked;
 
 	AActor* TargetActor = nullptr;
+	TArray<AActor*>	mTargetArray;
+	TArray<AActor*> mRightAIArray;
+	TArray<AActor*> mLeftAIArray;
+	AActor* ClosestRightAI = nullptr;
+	AActor* ClosestLeftAI = nullptr;
 
 	float mSpeedTime = 0.f;
 	float mDuration = 0.1f;
@@ -65,10 +74,19 @@ public:
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 	void TargetLock();
+	void SwitchLeft();
+	void SwitchRight();
+
 	bool GetboolTargetLocked()
 	{
 		return mIsTargetLocked;
 	}
+
+	UFUNCTION()
+	void OnActiveRadiusBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnActiveRadiusEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	void ChangeToWeaponSword();
 	void ChangeToWeaponSpear();

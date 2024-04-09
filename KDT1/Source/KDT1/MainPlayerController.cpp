@@ -43,6 +43,8 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeRight, ETriggerEvent::Triggered, this, &ThisClass::DodgeRight);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->DodgeLeft, ETriggerEvent::Triggered, this, &ThisClass::DodgeLeft);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->TargetLock, ETriggerEvent::Started, this, &ThisClass::OnTargetLock);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchLeft, ETriggerEvent::Started, this, &ThisClass::OnSwitchLeft);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchRight, ETriggerEvent::Started, this, &ThisClass::OnSwitchRight);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -150,4 +152,18 @@ void AMainPlayerController::OnTargetLock(const FInputActionValue& InputActionVal
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->TargetLock();
+}
+
+void AMainPlayerController::OnSwitchLeft(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->SwitchLeft();
+}
+
+void AMainPlayerController::OnSwitchRight(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->SwitchRight();
 }
