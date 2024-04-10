@@ -4,13 +4,11 @@
 
 |기간|내용|
 |:--|:--|
-|2024.03.21~2024.03.28|+ 김원종 : 창 에셋 데이터 활용해서 공격 콤보 적용하고 데미지 콜리전 작성 <br> + 민재홍 : 검 에셋 활용해서 공격 콤보 적용, 데미지 콜리전 작성 <br> + 배지훈 : 믹사모 내 활쏘는 애니메이션 다운로드 후 블렌더 활용하여 베이스 수정 및 적용|
-|~2024.03.29|전투형 콘텐츠 레벨 수정 및 작성|
-|~2024.04.02|잠입형 콘텐츠 레벨 작성|
-|~2024.04.05|병사 AI 작성 - 공격모션 적용, 범위 내 플레이어 쫓아감|
-|~2024.04.12|콘텐츠별 병사 AI 클래스 생성 및 적용|
-|~2024.04.16|버그수정 작업|
-|~이후 일정 미정||
+|2024.03.21~2024.03.27|+ 김원종 : 창 에셋 데이터 활용해서 공격 콤보 적용하고 데미지 콜리전 작성 <br> + 민재홍 : 검 에셋 활용해서 공격 콤보 적용, 데미지 콜리전 작성 <br> + 배지훈 : 믹사모 내 활쏘는 애니메이션 다운로드 후 블렌더 활용하여 베이스 수정 및 적용|
+|~2024.04.10|- AI 마무리 <br>- 잡입 맵 AI 배치, 부적 배치 <br>- Player의 AI Target 시 움직임, AI 시야 기능|
+|~2024.04.16|- 전투맵 구현<br>- AI 보스 구현 <br>- Player 스태미너, HP 등 UI 구현 <br>- Player 데미지 설정 및 회피 기능 설정|
+|~2024.04.18|버그수정 작업|
+|||
 
 ## 콘셉트
 ```
@@ -25,13 +23,11 @@
 ## 임무 목록
 - 전투 
 - 잠입 
-- 호위
 
 ## 레벨 목록
 - 사무실
 - 목탑(타겟 - 황룡사 9층목탑) : 전투형
 - 몽유도원도[임시] : 잠입형
-- 000 : 호위형
 
 ## 사무실 구성요소
 - 진행상황판
@@ -45,30 +41,19 @@
 # 임무별 구성요소
 
 ## 전투형
-- 잡몹 : 일반병사 ~~/ 몬스터류~~
-- 보스 : 장군 ~~/ 호랑이(모델 구할 수 있으면)~~
+- 잡몹 : 일반병사
 
 ## 잠입형
 - 일정 위치를 반복해서 이동하는 병사
 - 병사 시야범위 체크용 데칼
 - 시야 거리별 위험도
-- 벽에 부적을 던지면 시간이 표시되고 그 시간동안 벽 뒤 움직임 보임
 
-<br>
-
-```
-## 호위형
-
-- 호위 오브젝트
-- 일정 거리 이상 떨어지면 안내문구 > 오브젝트 이동에 따라
-- 랜덤 1회 ~ 3회 산적 등장
-```
 
 ---
 <br><br>
 
 # 기존 프로젝트 파일에 구현된 요소
-- [전투형] 레벨 (레벨만)
+- [**전투형**] 레벨 (레벨만)
 - 사무실
 - 박물관
 - 진행상황판
@@ -99,10 +84,22 @@
 ---
 <br><br><br><br>
 
-### 정말 시간이 남아돈다 싶으면 할거
-```
-- 배그처럼 벽뒤에서 고개만 숙여서 오른쪽 왼쪽 시야 넓히기
-- 병사, 장군 패턴 추가
-- 병사, 장군 AI 개선
-- 전우치 주먹액션 추가
-```
+### 별도 다운로드 필요 에셋
+> 폴더 경로를 그대로 설정할 것
+
+<br>
+
+./Content/Characters/ | ./Content/ThirdPerson/ | ./Content/StarterContent/<br>
+> UE5 Default StarterContent 
+
+- [./Content/BasicInteraction/](https://www.unrealengine.com/marketplace/ko/product/basic-interaction-widgets-notes)
+
+- [./Content/SpearAnimation/](https://www.unrealengine.com/marketplace/ko/product/spear-glaive-animation)
+
+- [./Content/SwordBasicAnimation/](https://www.unrealengine.com/marketplace/ko/product/sword-basic-animation)
+
+- [./Content/InfinityBladeWeapons/](https://www.unrealengine.com/marketplace/ko/product/infinity-blade-weapons)
+
+- [./Content/HouseOfChangwon/](https://www.unrealengine.com/marketplace/ko/product/house-of-changwon)
+
+- [./Content/KoreanTraditionalMartialArts/](https://www.unrealengine.com/marketplace/ko/product/korean-traditional-martial-arts)
