@@ -17,7 +17,7 @@ AAIPawn::AAIPawn()
 
 	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Body"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-
+	mWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	mMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
 	mMovement->SetUpdatedComponent(mCapsule);
@@ -26,10 +26,7 @@ AAIPawn::AAIPawn()
 
 	mMesh->SetupAttachment(mCapsule);
 	mCapsule->SetRelativeLocation(FVector(0, 0, 0));
-<<<<<<< Updated upstream
-=======
 	mWeaponMesh->SetupAttachment(mMesh, "weapon");
->>>>>>> Stashed changes
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 

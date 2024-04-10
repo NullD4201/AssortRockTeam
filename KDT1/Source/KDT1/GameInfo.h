@@ -5,6 +5,10 @@
 #include "EngineMinimal.h"
 #include "Engine.h"
 
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
@@ -29,8 +33,6 @@ enum class EPlayerWeaponType : uint8
 	Sword,
 	Spear,
 	Bow
-<<<<<<< Updated upstream
-=======
 };
 
 UENUM(BlueprintType)
@@ -38,7 +40,6 @@ enum class ESoldierType : uint8
 {
 	Hwando,		// 환도
 	Woldo		// 월도
->>>>>>> Stashed changes
 };
 
 UCLASS()

@@ -73,7 +73,17 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
+KDT1/Content/BasicInteraction/*
+KDT1/Content/Characters/*
+KDT1/Content/Collections/*
+KDT1/Content/Developers/*
+KDT1/Content/HouseOfChangwon/*
+KDT1/Content/InfinityBladeWeapons/*
+KDT1/Content/KoreanTraditionalMartialArts/*
+KDT1/Content/SpearAnimation/*
 KDT1/Content/StarterContent/*
+KDT1/Content/SwordBasicAnimation/*
+KDT1/Content/ThirdPerson/*
 KDT1/Saved/*
 KDT1/Intermediate/*
 KDT1/Content/*/Demo/*.mp4

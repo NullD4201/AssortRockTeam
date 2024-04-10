@@ -81,13 +81,18 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	FVector AILocation = Pawn->GetActorLocation();
 	FVector TargetLocation = Pawn->GetPatrolPoint();
 	AILocation.Z = Pawn->GetHalfHeight();
+	TargetLocation.Z = Pawn->GetHalfHeight();
 	float Distance = FVector::Distance(AILocation, TargetLocation);
 
-	if (Distance <= 50.f)
+	if (Distance <= 65.f)
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		Controller->StopMovement();
 		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
 		Pawn->NextPatrolPointIndex();
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::FromInt(Distance));
 	}
 }

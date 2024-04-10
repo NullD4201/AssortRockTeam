@@ -32,19 +32,14 @@ protected:
 	USkeletalMeshComponent* mMesh;
 
 	UPROPERTY(EditAnywhere)
-	UFloatingPawnMovement* mMovement;
+	USkeletalMeshComponent* mWeaponMesh;
 
 	UPROPERTY(EditAnywhere)
-<<<<<<< Updated upstream
-	class UAIState*		mState;
-
-=======
 	UFloatingPawnMovement* mMovement;
 
 	UPROPERTY(EditAnywhere)
 	class UAIState*		mState;
-
->>>>>>> Stashed changes
+	
 	FAIInfo* mAIInfo;
 
 	bool	mAttackEnd;
@@ -73,7 +68,7 @@ public:
 		return (T*) mAIInfo;
 	}
 
-	template <typename  T>
+	template <typename T>
 	T* GetState()
 	{
 		return Cast<T>(mState);

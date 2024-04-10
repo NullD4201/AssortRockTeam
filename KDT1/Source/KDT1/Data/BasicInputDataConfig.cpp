@@ -79,8 +79,6 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
-<<<<<<< Updated upstream
-=======
 		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_DodgeFwd.IA_DodgeFwd'") };
 		if (Asset.Succeeded())
 		{
@@ -118,14 +116,21 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 		{
 			TargetLock = Asset.Object;
 		}
+	} 
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwitchLeft.IA_SwitchLeft'") };
+		if (Asset.Succeeded())
+		{
+			SwitchLeft = Asset.Object;
+		}
 	}
 	{
 		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
->>>>>>> Stashed changes
-		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Interact.IA_Interact'") };
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_SwitchRight.IA_SwitchRight'") };
 		if (Asset.Succeeded())
 		{
-			Interact = Asset.Object;
+			SwitchRight = Asset.Object;
 		}
 	}
 }

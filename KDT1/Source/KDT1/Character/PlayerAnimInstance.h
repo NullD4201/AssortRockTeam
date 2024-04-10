@@ -58,6 +58,10 @@ public:
 	void PlayDodgeMontage(int8 index);
 	void PlaySkillMontage();
 	void TargetLock();
+	EPlayerAnimType GetAnimType()
+	{
+		return mAnimType;
+	}
 
 	UFUNCTION()
 	void AnimNotify_Attack();

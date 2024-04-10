@@ -26,11 +26,7 @@ protected:
 	ESoldierAnimType	mAnimType;
 
 public:
-<<<<<<< Updated upstream
-	void ChangeAnimTYpe(ESoldierAnimType Type)
-=======
 	void ChangeAnimType(ESoldierAnimType Type)
->>>>>>> Stashed changes
 	{
 		mAnimType = Type;
 	}

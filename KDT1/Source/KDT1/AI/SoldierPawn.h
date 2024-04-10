@@ -48,11 +48,7 @@ protected:
 	static UDataTable* mSoldierDataTable;
 
 public:
-<<<<<<< Updated upstream
-	// static const FSoldierData* FindSoldierData(const FString& Name);
-=======
 	static const FSoldierData* FindSoldierData(const FString& Name);
->>>>>>> Stashed changes
 
 	ASoldierPawn();
 
@@ -68,13 +64,10 @@ protected:
 	float mHitTime = 0.f;
 	float mHitDuration = 2.f;
 
-<<<<<<< Updated upstream
-=======
 	float	HalfAngle;
 	float	DeltaAngle;
 	float	ExternalRadius;
 
->>>>>>> Stashed changes
 	virtual void BeginPlay() override;
 
 public:
