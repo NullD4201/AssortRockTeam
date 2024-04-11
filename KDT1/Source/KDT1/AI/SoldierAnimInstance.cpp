@@ -3,6 +3,7 @@
 
 #include "SoldierAnimInstance.h"
 
+#include "AISoldier.h"
 #include "SoldierPawn.h"
 
 void USoldierAnimInstance::NativeInitializeAnimation()
@@ -15,6 +16,18 @@ void USoldierAnimInstance::NativeInitializeAnimation()
 void USoldierAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	AAISoldier* AISoldier = Cast<AAISoldier>(TryGetPawnOwner());
+
+	if (AISoldier)
+	{
+		UPawnMovementComponent* MovementComponent = AISoldier->GetMovementComponent();
+
+		if (MovementComponent)
+		{
+			mMoveDir = CalculateDirection(MovementComponent->Velocity, AISoldier->GetActorRotation());
+		}
+	}
 }
 
 void USoldierAnimInstance::AnimNotify_Attack()

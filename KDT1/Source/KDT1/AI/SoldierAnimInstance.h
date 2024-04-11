@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	ESoldierAnimType	mAnimType;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float		mMoveDir;
+
 public:
 	void ChangeAnimType(ESoldierAnimType Type)
 	{
