@@ -35,7 +35,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		{
 			mMoveSpeed = Movement->Velocity.Length();
 
-			mMoveDir = CalculateDirection(Movement->Velocity, PlayerCharacter->GetActorRotation());
+			mMoveDir = UKismetAnimationLibrary::CalculateDirection(Movement->Velocity, PlayerCharacter->GetActorRotation());
 		}
 	}
 }

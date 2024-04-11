@@ -25,7 +25,7 @@ void USoldierAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 		if (MovementComponent)
 		{
-			mMoveDir = CalculateDirection(MovementComponent->Velocity, AISoldier->GetActorRotation());
+			mMoveDir = UKismetAnimationLibrary::CalculateDirection(MovementComponent->Velocity, AISoldier->GetActorRotation());
 		}
 	}
 }

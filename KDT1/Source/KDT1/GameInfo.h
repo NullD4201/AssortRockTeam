@@ -9,6 +9,8 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+#include "KismetAnimationLibrary.h"
+
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
