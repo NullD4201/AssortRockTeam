@@ -76,6 +76,7 @@ DerivedDataCache/*
 KDT1/Content/BasicInteraction/*
 KDT1/Content/Characters/*
 KDT1/Content/Collections/*
+KDT1/Content/Deko_MatrixDemo/*
 KDT1/Content/Developers/*
 KDT1/Content/HouseOfChangwon/*
 KDT1/Content/InfinityBladeWeapons/*
@@ -90,3 +91,4 @@ KDT1/Content/*/Demo/*.mp4
 KDT1/.idea/*
 KDT1/.vsconfig
 KDT1/Binaries/*
+*.7z
