@@ -27,7 +27,7 @@ AMainCharacter::AMainCharacter()
 	mCamera->SetupAttachment(mCameraArm);
 
 	mCheckRadius->SetupAttachment(GetCapsuleComponent());
-	mCheckRadius->SetSphereRadius(1500.f);
+	mCheckRadius->SetSphereRadius(3000.f);
 	mCheckRadius->SetCollisionProfileName(TEXT("EnemyTrace"));
 
 	mMesh->SetupAttachment(GetMesh(), "weapon");
@@ -56,7 +56,7 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	PlayerTargetLocked(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::SanitizeFloat(mTargetArray.Num()));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::SanitizeFloat(mTargetArray.Num()));
 }
 
 // Called to bind functionality to input
@@ -260,36 +260,95 @@ void AMainCharacter::SwitchLeft()
 	// RIght 가져오고, 그 중에서 값 비교해서 가장 오른쪽 AI 변수에 넣어주고
 	// Target 변경 해주기
 
+	if (!mIsTargetLocked)
+		return;
+
+	ClosestLeftAI = nullptr;
+	mLeftAIArray.Reset();
+	
 	for (int32 i = 0; i < mTargetArray.Num(); ++i)
 	{
-		if (mTargetArray[i] == TargetActor)
-			return;
-
-		FVector ToTargetVec = TargetActor->GetActorLocation() - mTargetArray[i]->GetActorLocation();
-		ToTargetVec.Normalize();
-
-		FVector CameraRightVec = mCamera->GetRightVector();
-
-		float DotValue = FVector::DotProduct(ToTargetVec, CameraRightVec);
-		if (DotValue > 0)
+		if (mTargetArray[i] != TargetActor)
 		{
-			mLeftAIArray.Add(mTargetArray[i]);
+			FVector ToTargetVec = TargetActor->GetActorLocation() - mTargetArray[i]->GetActorLocation();
+			ToTargetVec.Normalize();
+
+			FVector CameraRightVec = mCamera->GetRightVector();
+
+			float DotValue = FVector::DotProduct(ToTargetVec, CameraRightVec);
+
+			if (DotValue >= 0)
+			{
+				mLeftAIArray.Add(mTargetArray[i]);
+			}
 		}
 	}
+
+	if (mLeftAIArray.Num() > 0)
+		ClosestLeftAI = mLeftAIArray[0];
 
 	// LeftArray 배열 중에서 가장 Target과 가까운 놈 찾아내기
 	for (int32 i = 0; i < mLeftAIArray.Num(); ++i)
 	{
-		FVector::Distance(TargetActor->GetActorLocation(), mLeftAIArray[i]->GetActorLocation());
+		float NewAIDistance = FVector::Distance(TargetActor->GetActorLocation(), mLeftAIArray[i]->GetActorLocation());
+		float CloseTargetDis = FVector::Distance(TargetActor->GetActorLocation(), ClosestLeftAI->GetActorLocation());
 
+		if (NewAIDistance < CloseTargetDis)
+		{
+			ClosestLeftAI = mLeftAIArray[i];
+		}
 	}
 
+	if (ClosestLeftAI)
+	{
+		TargetActor = ClosestLeftAI;
+	}
 }
 
 void AMainCharacter::SwitchRight()
 {
+	if (!mIsTargetLocked)
+		return;
 
+	ClosestRightAI = nullptr;
+	mRightAIArray.Reset();
 
+	for (int32 i = 0; i < mTargetArray.Num(); ++i)
+	{
+		if (mTargetArray[i] != TargetActor)
+		{
+			FVector ToTargetVec = TargetActor->GetActorLocation() - mTargetArray[i]->GetActorLocation();
+			ToTargetVec.Normalize();
+
+			FVector CameraRightVec = mCamera->GetRightVector();
+
+			float DotValue = FVector::DotProduct(ToTargetVec, CameraRightVec);
+			if (DotValue < 0)
+			{
+				mRightAIArray.Add(mTargetArray[i]);
+			}
+		}
+	}
+
+	if (mRightAIArray.Num() > 0)
+		ClosestRightAI = mRightAIArray[0];
+
+	// LeftArray 배열 중에서 가장 Target과 가까운 놈 찾아내기
+	for (int32 i = 0; i < mRightAIArray.Num(); ++i)
+	{
+		float NewAIDistance = FVector::Distance(TargetActor->GetActorLocation(), mRightAIArray[i]->GetActorLocation());
+		float CloseTargetDis = FVector::Distance(TargetActor->GetActorLocation(), ClosestRightAI->GetActorLocation());
+
+		if (NewAIDistance < CloseTargetDis)
+		{
+			ClosestRightAI = mRightAIArray[i];
+		}
+	}
+
+	if (ClosestRightAI)
+	{
+		TargetActor = ClosestRightAI;
+	}
 }
 
 void AMainCharacter::CheckDotValueInRadius(float DeltaTime)
