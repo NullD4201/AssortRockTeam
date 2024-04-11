@@ -50,7 +50,6 @@ protected:
 	float mSpeedTime = 0.f;
 	float mDuration = 0.1f;
 
-	void CheckDotValueInRadius(float DeltaTime);
 	void PlayerWalkSpeedUpSmoothly(float DeltaTime);
 	void PlayerTargetLocked(float DeltaTime);
 	void CheckPlayerCameraAngle();
@@ -59,7 +58,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
