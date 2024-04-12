@@ -36,13 +36,12 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	AActor* Target = Cast<AActor>(Controller->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 	if (IsValid(Target))
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue, TEXT("Target Valid"));
 		Controller->StopMovement();
 		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
 		
 		return EBTNodeResult::Failed;
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, FString::Printf(TEXT("%s"), *Target->GetName()));
 
 	FVector Point = Pawn->GetPatrolPoint();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, Point);
@@ -95,6 +94,6 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::FromInt(Distance));
+		// GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::FromInt(Distance));
 	}
 }
