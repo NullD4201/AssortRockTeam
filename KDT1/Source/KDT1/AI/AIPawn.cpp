@@ -30,8 +30,7 @@ AAIPawn::AAIPawn()
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	// TODO BP_DefaultAIController_C
-	static ConstructorHelpers::FClassFinder<AAIController> AIClass(TEXT(""));
+	static ConstructorHelpers::FClassFinder<AAIController> AIClass(TEXT("/Script/CoreUObject.Class'/Script/KDT1.SoldierAIController_C'"));
 
     if (AIClass.Succeeded())
     {

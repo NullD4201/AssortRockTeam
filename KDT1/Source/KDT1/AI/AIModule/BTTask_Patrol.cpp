@@ -42,6 +42,8 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 		return EBTNodeResult::Failed;
 	}
 
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, FString::Printf(TEXT("%s"), *Target->GetName()));
+
 	FVector Point = Pawn->GetPatrolPoint();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, Point);
 

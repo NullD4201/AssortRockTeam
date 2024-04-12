@@ -16,7 +16,7 @@ AAISoldier::AAISoldier()
 		mMesh->SetSkeletalMesh(MeshAsset.Object);
 	}
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimAsset(TEXT("/Script/Engine.AnimBlueprint'/Game/KoreanTraditionalMartialArts/Animations/Hwando/AB_HwandoSoldier.AB_HwandoSoldier_C'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimAsset(TEXT("/Script/Engine.AnimBlueprint'/Game/Main/Animation/Soldier/ABP_Soldier.ABP_Soldier_C'"));
 	if (AnimAsset.Succeeded())
 	{
 		mMesh->SetAnimInstanceClass(AnimAsset.Class);
@@ -75,19 +75,5 @@ void AAISoldier::NormalAttack()
 
 		FActorSpawnParameters	SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	}
-}
-
-void AAISoldier::OnConstruction(const FTransform& Transform)
-{
-	Super::OnConstruction(Transform);
-
-	int32 NumberOfSections = ceil(HalfAngle * 2. / DeltaAngle);
-	float dAngle = (HalfAngle * 2. / NumberOfSections);
-
-	float LCurrentAngle = 0.f;
-	for (int i = 0; i < NumberOfSections; i++)
-	{
-		LCurrentAngle = i * dAngle - HalfAngle;
 	}
 }

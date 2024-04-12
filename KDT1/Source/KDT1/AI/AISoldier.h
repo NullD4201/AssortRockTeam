@@ -23,6 +23,4 @@ protected:
 public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void NormalAttack() override;
-
-	virtual void OnConstruction(const FTransform& Transform) override;
 };
