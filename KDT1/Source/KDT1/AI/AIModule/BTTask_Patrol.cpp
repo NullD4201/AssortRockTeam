@@ -8,6 +8,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "../SoldierAnimInstance.h"
+#include "KDT1/AI/SoldierPawn.h"
 
 UBTTask_Patrol::UBTTask_Patrol()
 {
@@ -46,7 +47,7 @@ EBTNodeResult::Type UBTTask_Patrol::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	FVector Point = Pawn->GetPatrolPoint();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, Point);
 
-	Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Walk);
+	Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Run);
 
 	return EBTNodeResult::InProgress;
 }
@@ -91,9 +92,5 @@ void UBTTask_Patrol::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 		Controller->StopMovement();
 		Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
 		Pawn->NextPatrolPointIndex();
-	}
-	else
-	{
-		// GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::FromInt(Distance));
 	}
 }

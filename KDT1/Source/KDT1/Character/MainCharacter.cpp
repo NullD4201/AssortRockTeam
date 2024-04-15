@@ -35,6 +35,7 @@ AMainCharacter::AMainCharacter()
 	mCheckRadius->OnComponentBeginOverlap.AddDynamic(this, &AMainCharacter::OnActiveRadiusBeginOverlap);
 	mCheckRadius->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::OnActiveRadiusEndOverlap);
 
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 }
 
 // Called when the game starts or when spawned

@@ -52,7 +52,7 @@ public:
 
 	ASoldierPawn();
 
-	virtual void ChangeAIAnimType(uint8 AnimType);
+	virtual void ChangeAIAnimType(uint8 AnimType) override;
 
 protected:
 	class USoldierAnimInstance* mAnimInstance;

@@ -84,5 +84,19 @@ void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 
 		float	Distance = FVector::Distance(AILocation, TargetLocation);
 		USoldierState* State = Pawn->GetState<USoldierState>();
+
+		if (Distance > State->mAttackDistance)
+		{
+			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+			Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Idle);
+		}
+		else
+		{
+			FRotator Rot = FRotationMatrix::MakeFromX(Dir).Rotator();
+			Rot.Pitch = 0.0;
+			Rot.Roll = 0.0;
+
+			Pawn->SetActorRotation(Rot);
+		}
 	}
 }

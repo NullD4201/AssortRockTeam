@@ -10,7 +10,6 @@ UENUM(BlueprintType)
 enum class ESoldierAnimType : uint8
 {
 	Idle,
-	Walk,
 	Run,
 	Attack,
 	Death

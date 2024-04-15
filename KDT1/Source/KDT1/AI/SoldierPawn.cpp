@@ -6,6 +6,7 @@
 #include "SoldierAIController.h"
 #include "SoldierAnimInstance.h"
 #include "SoldierState.h"
+#include "KDT1/UI/SoldierHpBarWidget.h"
 
 UDataTable* ASoldierPawn::mSoldierDataTable = nullptr;
 
@@ -21,7 +22,6 @@ ASoldierPawn::ASoldierPawn()
 	mState = CreateDefaultSubobject<USoldierState>(TEXT("SoldierState"));
 
 	mSoldierState = Cast<USoldierState>(mState);
-	mAnimInstance = Cast<USoldierAnimInstance>(mMesh->GetAnimInstance());
 
 	AIControllerClass = ASoldierAIController::StaticClass();
 
@@ -37,7 +37,7 @@ ASoldierPawn::ASoldierPawn()
 
 void ASoldierPawn::ChangeAIAnimType(uint8 AnimType)
 {
-	// mAnimInstance->ChangeAnimType((ESoldierAnimType) AnimType);
+	mAnimInstance->ChangeAnimType((ESoldierAnimType) AnimType);
 }
 
 void ASoldierPawn::BeginPlay()
