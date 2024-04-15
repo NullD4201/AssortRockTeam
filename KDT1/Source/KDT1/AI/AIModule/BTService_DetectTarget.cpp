@@ -36,7 +36,7 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	}
 
 	FHitResult	result;
-	bool IsCollision = GetWorld()->SweepSingleByChannel(result, AILocation, AILocation, FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeSphere(AIState->mTraceDistance), param);
+	bool IsCollision = GetWorld()->SweepSingleByChannel(result, AILocation, AILocation, FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AIState->mTraceDistance), param);
 
 #if ENABLE_DRAW_DEBUG
 	FColor DrawColor = IsCollision ? FColor::Red  : FColor::Green;
