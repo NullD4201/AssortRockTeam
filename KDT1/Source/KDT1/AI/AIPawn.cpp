@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "AISpawnPoint.h"
 #include "PatrolPointActor.h"
+#include "Components/ProgressBar.h"
 
 // Sets default values
 AAIPawn::AAIPawn()
@@ -19,6 +20,7 @@ AAIPawn::AAIPawn()
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	mWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	mMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
+	mHealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar Widget"));
 
 	mMovement->SetUpdatedComponent(mCapsule);
 
@@ -27,6 +29,10 @@ AAIPawn::AAIPawn()
 	mMesh->SetupAttachment(mCapsule);
 	mCapsule->SetRelativeLocation(FVector(0, 0, 0));
 	mWeaponMesh->SetupAttachment(mMesh, "weapon");
+	mHealthBar->SetupAttachment(GetRootComponent());
+
+	mHealthBar->SetRelativeScale3D(FVector(0.3, 0.3, 0.3));
+	mHealthBar->SetRelativeLocation(FVector(0, 0, 100));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
@@ -35,6 +41,13 @@ AAIPawn::AAIPawn()
     if (AIClass.Succeeded())
     {
 	    AIControllerClass = AIClass.Class;
+    }
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> HealthBarWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Main/UI/SoldierHealthBar.SoldierHealthBar_C'"));
+
+    if (HealthBarWidget.Succeeded())
+    {
+	    mHealthBar->SetWidgetClass(HealthBarWidget.Class);
     }
 
 	mSpawnPoint = nullptr;
@@ -100,7 +113,12 @@ void AAIPawn::OnConstruction(const FTransform& Transform)
 void AAIPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	FVector Dir = GetMovementComponent()->Velocity;
+	Dir.Z = 0.f;
+	Dir.Normalize();
 
+	mHealthBar->SetRelativeRotation(FRotator(0.0, Dir.Rotation().Yaw, 0.0));
 }
 
 float AAIPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,

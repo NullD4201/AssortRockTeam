@@ -6,6 +6,7 @@
 #include "SoldierAIController.h"
 #include "SoldierAnimInstance.h"
 #include "SoldierState.h"
+#include "KDT1/UI/SoldierHpBarWidget.h"
 
 UDataTable* ASoldierPawn::mSoldierDataTable = nullptr;
 

@@ -5,6 +5,7 @@
 #include "../GameInfo.h"
 #include "AIState.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/Pawn.h"
 #include "AIPawn.generated.h"
@@ -36,6 +37,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UFloatingPawnMovement* mMovement;
+
+	UPROPERTY(EditAnywhere)
+	UWidgetComponent* mHealthBar;
 
 	UPROPERTY(EditAnywhere)
 	class UAIState*		mState;
