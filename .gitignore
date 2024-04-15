@@ -92,6 +92,7 @@ KDT1/.idea/*
 KDT1/.vsconfig
 KDT1/Binaries/*
 *.7z
+<<<<<<< HEAD
 KDT1/Content/MS_ForestTut/MS_ForestTutSource.zip
 KDT1/Content/MS_ForestTut/3D_Asset/01_Granite_Rock_pkeeM/01_Granite_Rock_pkeeM_8K_inst.uasset
 KDT1/Content/MS_ForestTut/3D_Asset/01_Granite_Rock_pkeeM/Aset_rock_granite_M_pkeeM_8K_Albedo.uasset
@@ -192,6 +193,8 @@ KDT1/Content/MS_ForestTut/Surface/02_Pine_Needles_rmsivop0/rmsivop_4K_Albedo.uas
 KDT1/Content/MS_ForestTut/Surface/02_Pine_Needles_rmsivop0/rmsivop_4K_Displacement.uasset
 KDT1/Content/MS_ForestTut/Surface/02_Pine_Needles_rmsivop0/rmsivop_4K_Normal.uasset
 KDT1/Content/MS_ForestTut/Surface/02_Pine_Needles_rmsivop0/rmsivop_4K_Roughness.uasset
+=======
+>>>>>>> 37d75a73a1a3b31d21502d2defef0a1e30853134
 KDT1/Content/STF/Pack03-LandscapePro/Base/LandscapeGrassType/dirt_layer_grass.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Base/LandscapeGrassType/forest_layer_main.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Base/LandscapeGrassType/forest_layer_main_v2.uasset
@@ -679,6 +682,7 @@ KDT1/Content/STF/Pack03-LandscapePro/Maps/TestMap_sharedassets/grass2_noPlants_L
 KDT1/Content/STF/Pack03-LandscapePro/Maps/TestMap_sharedassets/rock_LayerInfo.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Maps/TestMap_sharedassets/rock02_LayerInfo.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Maps/TestMap_sharedassets/rock02_water_LayerInfo.uasset
+<<<<<<< HEAD
 KDT1/Content/CommonHazel/Foliage/PivotPainter/FT_CommonHazel_Field_01_PP.uasset
 KDT1/Content/CommonHazel/Foliage/PivotPainter/FT_CommonHazel_Field_02_PP.uasset
 KDT1/Content/CommonHazel/Foliage/PivotPainter/FT_CommonHazel_Field_03_PP.uasset
@@ -928,3 +932,5 @@ KDT1/Content/STF/Pack03-LandscapePro/Environment/Landscape/Landscape/T_ground_gr
 KDT1/Content/STF/Pack03-LandscapePro/Environment/Landscape/Landscape/T_ground_rock_02_Mat.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Environment/Landscape/Landscape/T_ground_rock_03_Mat.uasset
 KDT1/Content/STF/Pack03-LandscapePro/Environment/Landscape/Landscape/v2/T_ground_dirt_01_masks_Mat.uasset
+=======
+>>>>>>> 37d75a73a1a3b31d21502d2defef0a1e30853134
