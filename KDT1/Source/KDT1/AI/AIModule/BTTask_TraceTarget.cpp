@@ -8,6 +8,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "../AIPawn.h"
 #include "../SoldierAnimInstance.h"
+#include "KDT1/AI/SoldierPawn.h"
 #include "KDT1/AI/SoldierState.h"
 
 UBTTask_TraceTarget::UBTTask_TraceTarget()

@@ -21,7 +21,6 @@ ASoldierPawn::ASoldierPawn()
 	mState = CreateDefaultSubobject<USoldierState>(TEXT("SoldierState"));
 
 	mSoldierState = Cast<USoldierState>(mState);
-	mAnimInstance = Cast<USoldierAnimInstance>(mMesh->GetAnimInstance());
 
 	AIControllerClass = ASoldierAIController::StaticClass();
 
@@ -37,7 +36,7 @@ ASoldierPawn::ASoldierPawn()
 
 void ASoldierPawn::ChangeAIAnimType(uint8 AnimType)
 {
-	// mAnimInstance->ChangeAnimType((ESoldierAnimType) AnimType);
+	mAnimInstance->ChangeAnimType((ESoldierAnimType) AnimType);
 }
 
 void ASoldierPawn::BeginPlay()
