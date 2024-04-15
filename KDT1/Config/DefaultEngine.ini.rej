@@ -1,0 +1,21 @@
+diff a/KDT1/Config/DefaultEngine.ini b/KDT1/Config/DefaultEngine.ini	(rejected hunks)
+@@ -1,9 +0,14 @@
+-
+-
+-<<<<<<< HEAD
++
++
++<<<<<<< HEAD
++
+ [/Script/EngineSettings.GameMapsSettings]
+-GameDefaultMap=/Game/Level/MainMenuMap.MainMenuMap
+-EditorStartupMap=/Game/Level/AssasinateMap.AssasinateMap
++GameDefaultMap=/Game/Level/Map_Office.Map_Office
++EditorStartupMap=/Game/Level/Map_Office.Map_Office
++
++[/Script/EngineSettings.GameMapsSettings]
++GameDefaultMap=/Game/Level/Map_Office.Map_Office
++EditorStartupMap=/Game/Level/Map_Office.Map_Office
+ 
+ [/Script/WindowsTargetPlatform.WindowsTargetSettings]
+ DefaultGraphicsRHI=DefaultGraphicsRHI_DX12
