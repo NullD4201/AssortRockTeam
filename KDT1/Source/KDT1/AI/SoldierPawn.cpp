@@ -98,6 +98,12 @@ void ASoldierPawn::Tick(float DeltaSeconds)
 			}
 		}
 	}
+
+	FSoldierInfo* SoldierInfo = (FSoldierInfo*)mAIInfo;
+
+	UProgressBar* hp = Cast<UProgressBar>(mHealthBar->GetWidget()->GetWidgetFromName(TEXT("SoldierHpProgressBar")));
+
+	hp->SetPercent(SoldierInfo->mHp / SoldierInfo->mHpMax);
 }
 
 void ASoldierPawn::NormalAttack()
