@@ -108,7 +108,6 @@ void ASoldierPawn::Tick(float DeltaSeconds)
 
 void ASoldierPawn::NormalAttack()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("NormalAttack"));
 }
 
 float ASoldierPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,

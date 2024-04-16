@@ -63,7 +63,7 @@ void AAISoldier::NormalAttack()
 // 	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
 //
 // 	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
-// 		75.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+// 		GetHalfHeight(), 50.f, FRotationMatrix::MakeFromX(GetActorForwardVector()).ToQuat(),
 // 		DrawColor, false, 3.f);
 //
 // #endif
