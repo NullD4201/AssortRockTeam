@@ -4,7 +4,6 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
-#include "Components/TimelineComponent.h"
 #include "MainCharacter.generated.h"
 
 

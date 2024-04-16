@@ -77,7 +77,28 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 void AMainCharacter::NormalAttack()
 {
-	// TODO NormalAttack()
+	FCollisionQueryParams	param(NAME_None, false, this);
+	float	mAttackPoint = 20;
+	FVector StartLocation = GetActorLocation();
+	FVector EndLocation = StartLocation + GetActorForwardVector() * 50;
+	TArray<FHitResult> resultArray;
+	bool IsCollision = GetWorld()->SweepMultiByChannel(resultArray, StartLocation, EndLocation, FQuat::Identity, ECC_GameTraceChannel6, FCollisionShape::MakeSphere(50.f), param);
+
+#if ENABLE_DRAW_DEBUG
+	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
+	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
+		50 / 2.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+		DrawColor, false, 3.f);
+#endif
+
+	if (IsCollision)
+	{
+		for (int32 i = 0; i < resultArray.Num(); ++i)
+		{
+			FDamageEvent	DmgEvent;
+			resultArray[i].GetActor()->TakeDamage(50, DmgEvent, GetController(), this);
+		}
+	}
 }
 
 void AMainCharacter::PlayAttackMontage()
