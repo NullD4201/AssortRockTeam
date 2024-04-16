@@ -25,6 +25,9 @@ public:
 	// Sets default values for this pawn's properties
 	AAIPawn();
 
+	UPROPERTY(EditAnywhere)
+	UWidgetComponent* mHealthBar;
+
 protected:
 	UPROPERTY(EditAnywhere)
 	UCapsuleComponent* mCapsule;
@@ -37,9 +40,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UFloatingPawnMovement* mMovement;
-
-	UPROPERTY(EditAnywhere)
-	UWidgetComponent* mHealthBar;
 
 	UPROPERTY(EditAnywhere)
 	class UAIState*		mState;

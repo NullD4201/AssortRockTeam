@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "KDT1/AI/AIPawn.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UBTService_DetectTarget::UBTService_DetectTarget()
 {
@@ -47,9 +48,20 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	if (IsCollision)
 	{
 		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
+
+		Pawn->mHealthBar->SetVisibility(true);
+
+		FVector mHealthBarLocation = Pawn->mHealthBar->GetComponentLocation();
+		FVector mPlayerLocation = result.GetActor()->GetActorLocation();
+
+		FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
+
+		Pawn->mHealthBar->SetWorldRotation(Rot);
 	}
 	else
 	{
 		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+
+		Pawn->mHealthBar->SetVisibility(false);		
 	}
 }
