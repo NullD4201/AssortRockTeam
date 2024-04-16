@@ -118,7 +118,9 @@ void AAIPawn::Tick(float DeltaTime)
 	Dir.Z = 0.f;
 	Dir.Normalize();
 
-	mHealthBar->SetRelativeRotation(FRotator(0.0, Dir.Rotation().Yaw, 0.0));
+	mHealthBar->SetWorldRotation(FRotator(0.0, Dir.Rotation().Yaw, 0.0));
+
+	FRotator Rot = GEngine->GetFirstLocalPlayerController(this->GetWorld())->PlayerCameraManager->GetCameraRotation();
 }
 
 float AAIPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
