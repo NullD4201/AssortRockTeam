@@ -35,8 +35,15 @@ EBTNodeResult::Type UBTTask_NormalAttack::ExecuteTask(UBehaviorTreeComponent& Ow
 
 		return EBTNodeResult::Failed;
 	}
+	
+	FVector AILocation = Pawn->GetActorLocation();
+	FVector TargetLocation = Target->GetActorLocation();
+
+	FVector Dir = TargetLocation - AILocation;
+	FRotator Rot = FRotationMatrix::MakeFromX(Dir).Rotator();
 
 	Pawn->ChangeAIAnimType((uint8) ESoldierAnimType::Attack);
+	Pawn->SetActorRotation(Rot);
 
 	return EBTNodeResult::InProgress;
 }
@@ -94,7 +101,7 @@ void UBTTask_NormalAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 		{
 			FRotator Rot = FRotationMatrix::MakeFromX(Dir).Rotator();
 			Rot.Pitch = 0.0;
-			Rot.Roll = 0.0;
+			Rot.Roll = -10.0;
 
 			Pawn->SetActorRotation(Rot);
 		}

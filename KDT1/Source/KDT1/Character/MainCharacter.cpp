@@ -65,6 +65,16 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Player TakeDamage"));
+
+	return DamageAmount;
+}
+
 void AMainCharacter::NormalAttack()
 {
 	// TODO NormalAttack()

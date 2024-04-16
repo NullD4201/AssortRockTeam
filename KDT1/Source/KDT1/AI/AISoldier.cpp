@@ -55,18 +55,18 @@ void AAISoldier::NormalAttack()
 	FVector EndLocation = StartLocation + GetActorForwardVector() + 150.f;
 
 	FHitResult result;
-	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation, FQuat::Identity, ECC_GameTraceChannel7, FCollisionShape::MakeSphere(50.f), param);
+	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation, FQuat::Identity, ECC_GameTraceChannel5, FCollisionShape::MakeSphere(50.f), param);
 
-#if ENABLE_DRAW_DEBUG
-
-	// 구를 그린다.
-	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
-
-	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
-		75.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
-		DrawColor, false, 3.f);
-
-#endif
+// #if ENABLE_DRAW_DEBUG
+//
+// 	// 구를 그린다.
+// 	FColor	DrawColor = IsCollision ? FColor::Red : FColor::Green;
+//
+// 	DrawDebugCapsule(GetWorld(), (StartLocation + EndLocation) / 2.f,
+// 		75.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+// 		DrawColor, false, 3.f);
+//
+// #endif
 
 	if (IsCollision)
 	{
