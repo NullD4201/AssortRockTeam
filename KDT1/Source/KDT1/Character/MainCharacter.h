@@ -91,4 +91,9 @@ public:
 	void ChangeToWeaponSword();
 	void ChangeToWeaponSpear();
 
+private:
+	class UAIPerceptionStimuliSourceComponent* StimulusSource;
+
+	void SetupStimulusSource();
+
 };

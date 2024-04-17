@@ -5,6 +5,8 @@
 #include "PlayerAnimInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -36,6 +38,8 @@ AMainCharacter::AMainCharacter()
 	mCheckRadius->OnComponentEndOverlap.AddDynamic(this, &AMainCharacter::OnActiveRadiusEndOverlap);
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
+
+	SetupStimulusSource();
 }
 
 // Called when the game starts or when spawned
@@ -396,5 +400,16 @@ void AMainCharacter::ChangeToWeaponSpear()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
 }
+
+void AMainCharacter::SetupStimulusSource()
+{
+	StimulusSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
+	if (StimulusSource)
+	{
+		StimulusSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+		StimulusSource->RegisterWithPerceptionSystem();
+	}
+}
+
 
 

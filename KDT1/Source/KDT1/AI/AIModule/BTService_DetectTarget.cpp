@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BTService_DetectTarget.h"
-
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "KDT1/AI/AIPawn.h"
@@ -40,28 +38,17 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	bool IsCollision = GetWorld()->SweepSingleByChannel(result, AILocation, AILocation, FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(AIState->mTraceDistance), param);
 
 #if ENABLE_DRAW_DEBUG
-	FColor DrawColor = IsCollision ? FColor::Red  : FColor::Green;
+	FColor DrawColor = IsCollision ? FColor::Red : FColor::Green;
 
 	DrawDebugSphere(GetWorld(), AILocation, AIState->mTraceDistance, 20, DrawColor, false, 0.35f);
 #endif
 
 	if (IsCollision)
 	{
+		Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), true);
 		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
-
-		Pawn->mHealthBar->SetVisibility(true);
-
-		FVector mHealthBarLocation = Pawn->mHealthBar->GetComponentLocation();
-		FVector mPlayerLocation = result.GetActor()->GetActorLocation();
-
-		FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
-
-		Pawn->mHealthBar->SetWorldRotation(Rot);
 	}
 	else
-	{
-		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+		Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), false);
 
-		Pawn->mHealthBar->SetVisibility(false);		
-	}
 }

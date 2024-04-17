@@ -2,8 +2,9 @@
 
 
 #include "AISoldier.h"
-
 #include "SoldierState.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "SoldierAIController.h"
 #include "Engine/DamageEvents.h"
 
 AAISoldier::AAISoldier()
@@ -45,6 +46,8 @@ void AAISoldier::BeginPlay()
 void AAISoldier::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	CheckPlayer();
 }
 
 void AAISoldier::NormalAttack()
@@ -75,5 +78,33 @@ void AAISoldier::NormalAttack()
 
 		FActorSpawnParameters	SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	}
+}
+
+void AAISoldier::CheckPlayer()
+{
+	ASoldierAIController* AIControl = Cast<ASoldierAIController>(GetController());
+
+	bool IsInRadius = AIControl->GetBlackboardComponent()->GetValueAsBool(TEXT("IsInRadius"));
+	bool CanSeePlayer = AIControl->GetBlackboardComponent()->GetValueAsBool(TEXT("CanSeePlayer"));
+
+	if (IsInRadius == true || CanSeePlayer == true)
+	{
+		AActor* Target = Cast<AActor>(AIControl->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
+
+		mHealthBar->SetVisibility(true);
+
+		FVector mHealthBarLocation = mHealthBar->GetComponentLocation();
+		FVector mPlayerLocation = Target->GetActorLocation();
+
+		FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
+
+		mHealthBar->SetWorldRotation(Rot);
+	}
+	else
+	{
+		AIControl->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+
+		mHealthBar->SetVisibility(false);
 	}
 }
