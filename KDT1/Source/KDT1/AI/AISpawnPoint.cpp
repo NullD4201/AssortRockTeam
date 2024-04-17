@@ -23,6 +23,7 @@ AAISpawnPoint::AAISpawnPoint()
 
 	mSpawnAIPawn = nullptr;
 	mAccessTime = 0.f;
+	mRespawnEnabled = true;
 	mSpawnTime = 0.f;
 }
 
@@ -42,7 +43,7 @@ void AAISpawnPoint::Tick(float DeltaTime)
 	{
 		mAccessTime += DeltaTime;
 
-		if (mAccessTime >= mSpawnTime)
+		if (mAccessTime >= mSpawnTime && mRespawnEnabled)
 		{
 			Spawn();
 		}

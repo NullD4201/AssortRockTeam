@@ -30,6 +30,9 @@ protected:
 
 	AAIPawn* mSpawnAIPawn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool	mRespawnEnabled;
+
 	UPROPERTY(EditAnywhere)
 	float	mSpawnTime;
 
