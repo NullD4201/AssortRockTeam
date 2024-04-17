@@ -2,7 +2,7 @@
 
 
 #include "PlayerAnimInstance.h"
-
+#include "Kismet/KismetMathLibrary.h"
 #include "MainCharacter.h"
 
 UPlayerAnimInstance::UPlayerAnimInstance()
@@ -40,11 +40,48 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
+// 적을 찾는 함수
+ AActor* UPlayerAnimInstance::FindEnemy()
+{
+	// 플레이어의 위치와 방향을 가져옵니다.
+	FVector PlayerLocation = GetOwningActor()->GetActorLocation();
+	FRotator PlayerRotation = GetOwningActor()->GetActorRotation();
+
+	// 일정 범위 내의 모든 적을 찾습니다.
+	TArray<AActor*> FoundEnemies;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAISoldier::StaticClass(), FoundEnemies);
+
+	AActor* closestEnemy = nullptr;
+	float closestDistance = FLT_MAX;
+
+	// 가장 가까운 적을 찾습니다.
+	for (AActor* enemy : FoundEnemies)
+	{
+		float distance = FVector::Dist(PlayerLocation, enemy->GetActorLocation());
+		if (distance < closestDistance)
+		{
+			closestDistance = distance;
+			closestEnemy = enemy;
+		}
+	}
+
+	return closestEnemy;
+}
+
 void UPlayerAnimInstance::PlayAttackMontage()
 {
 	if (!mAttackEnable)
 	{
 		return;
+	}
+
+	// 적을 찾습니다.
+	AActor* enemy = FindEnemy();
+	if (enemy)
+	{
+		// 플레이어가 적을 바라보도록 합니다.
+		FRotator lookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwningActor()->GetActorLocation(), enemy->GetActorLocation());
+		GetOwningActor()->SetActorRotation(lookAtRotation);
 	}
 
 	if (!Montage_IsPlaying(mAttackMontageArray[mAttackIndex]))
