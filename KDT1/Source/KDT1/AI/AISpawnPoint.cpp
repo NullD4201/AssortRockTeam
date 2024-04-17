@@ -25,8 +25,6 @@ AAISpawnPoint::AAISpawnPoint()
 	mAccessTime = 0.f;
 	mRespawnEnabled = true;
 	mSpawnTime = 0.f;
-	mRespawnVar = 0;
-	mRespawnCount = 0;
 }
 
 // Called when the game starts or when spawned
@@ -45,25 +43,9 @@ void AAISpawnPoint::Tick(float DeltaTime)
 	{
 		mAccessTime += DeltaTime;
 
-		if (mAccessTime >= mSpawnTime)
+		if (mAccessTime >= mSpawnTime && mRespawnEnabled)
 		{
 			Spawn();
-			if (mRespawnEnabled)
-			{
-				if (mRespawnCount > 0 && mRespawnCount >= mRespawnVar)
-				{
-					mRespawnVar++;
-					Spawn();
-				}
-				else if (mRespawnCount == 0)
-				{
-					Spawn();
-				}
-			}
-			else
-			{
-				Destroy();
-			}
 		}
 	}
 }

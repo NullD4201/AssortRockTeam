@@ -33,10 +33,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool	mRespawnEnabled;
 
-	int32	mRespawnVar;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(EditCondition="mRespawnEnabled", ClampMin="0", UIMin="0"))
-	int32	mRespawnCount;
-
 	UPROPERTY(EditAnywhere)
 	float	mSpawnTime;
 
