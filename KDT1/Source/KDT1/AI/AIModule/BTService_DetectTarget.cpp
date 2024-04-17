@@ -51,7 +51,7 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	else
 	{
 		Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), false);
-		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+		//Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 	}
 
 }

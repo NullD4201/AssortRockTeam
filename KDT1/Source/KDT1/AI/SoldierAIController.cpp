@@ -50,7 +50,7 @@ void ASoldierAIController::SetupPerceptionSystem()
 	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception Component"));
 
-	SightConfig->SightRadius = 1000.f;
+	SightConfig->SightRadius = 800.f;
 	SightConfig->LoseSightRadius = SightConfig->SightRadius + 200.f;
 	SightConfig->PeripheralVisionAngleDegrees = 60.f;
 	SightConfig->SetMaxAge(5.f);

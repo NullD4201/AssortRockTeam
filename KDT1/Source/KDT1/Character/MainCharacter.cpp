@@ -201,7 +201,7 @@ void AMainCharacter::TargetLock()
 	FHitResult	result;
 
 	bool IsCollision = GetWorld()->SweepSingleByChannel(result, StartLocation, EndLocation,
-		FQuat::Identity, ECC_GameTraceChannel2, FCollisionShape::MakeSphere(350.f),
+		FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeSphere(350.f),
 		param);
 
 #if ENABLE_DRAW_DEBUG
