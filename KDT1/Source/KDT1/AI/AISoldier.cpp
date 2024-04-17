@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "SoldierAIController.h"
 #include "Engine/DamageEvents.h"
+#include "KDT1/Character/MainCharacter.h"
 
 AAISoldier::AAISoldier()
 {
@@ -97,7 +98,7 @@ void AAISoldier::CheckPlayer()
 			mHealthBar->SetVisibility(true);
 
 			FVector mHealthBarLocation = mHealthBar->GetComponentLocation();
-			FVector mPlayerLocation = Target->GetActorLocation();
+			FVector mPlayerLocation = Cast<AMainCharacter>(Target)->mCamera->GetComponentLocation();
 
 			FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
 

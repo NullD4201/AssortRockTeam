@@ -15,11 +15,10 @@ class KDT1_API AMainCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMainCharacter();
-
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UCameraComponent* mCamera;
 
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USpringArmComponent* mCameraArm;
 
