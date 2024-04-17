@@ -25,7 +25,7 @@ AAISpawnPoint::AAISpawnPoint()
 	mAccessTime = 0.f;
 	mRespawnEnabled = true;
 	mSpawnTime = 0.f;
-	mRespawnVar = 0;
+	mRespawnVar = -1;
 	mRespawnCount = 0;
 }
 
@@ -48,19 +48,8 @@ void AAISpawnPoint::Tick(float DeltaTime)
 		if (mAccessTime >= mSpawnTime)
 		{
 			Spawn();
-			if (mRespawnEnabled)
-			{
-				if (mRespawnCount > 0 && mRespawnCount >= mRespawnVar)
-				{
-					mRespawnVar++;
-					Spawn();
-				}
-				else if (mRespawnCount == 0)
-				{
-					Spawn();
-				}
-			}
-			else
+			mRespawnVar++;
+			if (!mRespawnEnabled || (mRespawnCount > 0 && mRespawnCount <= mRespawnVar))
 			{
 				Destroy();
 			}
