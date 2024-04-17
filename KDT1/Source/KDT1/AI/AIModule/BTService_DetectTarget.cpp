@@ -25,7 +25,7 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	}
 
 	FVector AILocation = Pawn->GetActorLocation();
-	AILocation.Z = Pawn->GetHalfHeight();
+	/*AILocation.Z = Pawn->GetHalfHeight();*/
 
 	FCollisionQueryParams	param(NAME_None, false, Pawn);
 	UAIState* AIState = Pawn->GetState<UAIState>();
