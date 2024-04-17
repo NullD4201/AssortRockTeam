@@ -54,7 +54,7 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-	AActor* FindEnemy();
+	AActor* FindEnemy(float range);
 
 	void PlayAttackMontage();
 	void PlaySprint();
