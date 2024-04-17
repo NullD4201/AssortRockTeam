@@ -4,7 +4,9 @@
 
 #include "../GameInfo.h"
 #include "Animation/AnimInstance.h"
+#include "../AI/AISoldier.h"
 #include "PlayerAnimInstance.generated.h"
+
 
 UCLASS()
 class KDT1_API UPlayerAnimInstance : public UAnimInstance
@@ -51,6 +53,8 @@ protected:
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	AActor* FindEnemy();
 
 	void PlayAttackMontage();
 	void PlaySprint();
