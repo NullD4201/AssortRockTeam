@@ -47,4 +47,6 @@ void USoldierAnimInstance::AnimNotify_AttackEnd()
 void USoldierAnimInstance::AnimNotify_DeathEnd()
 {
 	ASoldierPawn* Pawn = Cast<ASoldierPawn>(TryGetPawnOwner());
+
+	Pawn->Destroy();
 }
