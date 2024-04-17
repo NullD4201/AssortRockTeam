@@ -41,11 +41,10 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 }
 
 // 적을 찾는 함수
- AActor* UPlayerAnimInstance::FindEnemy()
+ AActor* UPlayerAnimInstance::FindEnemy(float range)
 {
 	// 플레이어의 위치와 방향을 가져옵니다.
 	FVector PlayerLocation = GetOwningActor()->GetActorLocation();
-	FRotator PlayerRotation = GetOwningActor()->GetActorRotation();
 
 	// 일정 범위 내의 모든 적을 찾습니다.
 	TArray<AActor*> FoundEnemies;
@@ -58,7 +57,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	for (AActor* enemy : FoundEnemies)
 	{
 		float distance = FVector::Dist(PlayerLocation, enemy->GetActorLocation());
-		if (distance < closestDistance)
+		if (distance < closestDistance && distance <= range)
 		{
 			closestDistance = distance;
 			closestEnemy = enemy;
@@ -76,7 +75,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	}
 
 	// 적을 찾습니다.
-	AActor* enemy = FindEnemy();
+	AActor* enemy = FindEnemy(1000.f);
 	if (enemy)
 	{
 		// 플레이어가 적을 바라보도록 합니다.
@@ -155,6 +154,15 @@ void UPlayerAnimInstance::PlaySkillMontage()
 {
 	if (mAnimType == EPlayerAnimType::Dodge || mAnimType == EPlayerAnimType::Attack)
 		return;
+
+	// 적을 찾습니다.
+	AActor* enemy = FindEnemy(1000.f);
+	if (enemy)
+	{
+		// 플레이어가 적을 바라보도록 합니다.
+		FRotator lookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwningActor()->GetActorLocation(), enemy->GetActorLocation());
+		GetOwningActor()->SetActorRotation(lookAtRotation);
+	}
 
 	if (!Montage_IsPlaying(mSkillMontage))
 	{
