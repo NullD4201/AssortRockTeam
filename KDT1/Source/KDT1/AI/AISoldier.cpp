@@ -92,14 +92,17 @@ void AAISoldier::CheckPlayer()
 	{
 		AActor* Target = Cast<AActor>(AIControl->GetBlackboardComponent()->GetValueAsObject(TEXT("Target")));
 
-		mHealthBar->SetVisibility(true);
+		if (IsValid(Target))
+		{
+			mHealthBar->SetVisibility(true);
 
-		FVector mHealthBarLocation = mHealthBar->GetComponentLocation();
-		FVector mPlayerLocation = Target->GetActorLocation();
+			FVector mHealthBarLocation = mHealthBar->GetComponentLocation();
+			FVector mPlayerLocation = Target->GetActorLocation();
 
-		FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
+			FRotator Rot = UKismetMathLibrary::FindLookAtRotation(mHealthBarLocation, mPlayerLocation);
 
-		mHealthBar->SetWorldRotation(Rot);
+			mHealthBar->SetWorldRotation(Rot);
+		}
 	}
 	else
 	{
