@@ -14,6 +14,11 @@ AMainCharacter::AMainCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	mAttackPoint = 50;
+	mArmorPoint = 15;
+	mHpMax = 500;
+	mHp = mHpMax;
+
 	mIdleMaxSpeed = 600.f;
 	mSprintMaxSpeed = 1000.f;
 	mIsSprinting = false;
@@ -80,7 +85,7 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Player TakeDamage"));
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Player TakeDamage " + FString::FromInt(DamageAmount - mArmorPoint)));
 
 	return DamageAmount;
 }
@@ -88,7 +93,7 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 void AMainCharacter::NormalAttack()
 {
 	FCollisionQueryParams	param(NAME_None, false, this);
-	float	mAttackPoint = 20;
+	
 	FVector StartLocation = GetActorLocation();
 	FVector EndLocation = StartLocation + GetActorForwardVector() * 50;
 	TArray<FHitResult> resultArray;
@@ -106,7 +111,7 @@ void AMainCharacter::NormalAttack()
 		for (int32 i = 0; i < resultArray.Num(); ++i)
 		{
 			FDamageEvent	DmgEvent;
-			resultArray[i].GetActor()->TakeDamage(50, DmgEvent, GetController(), this);
+			resultArray[i].GetActor()->TakeDamage(mAttackPoint, DmgEvent, GetController(), this);
 		}
 	}
 }

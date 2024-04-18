@@ -85,6 +85,7 @@ void AAISoldier::CheckPlayer()
 		if (IsValid(Target))
 		{
 			mHealthBar->SetVisibility(true);
+			mQuestionMark->SetVisibility(false);
 
 			FVector mHealthBarLocation = mHealthBar->GetComponentLocation();
 			FVector mPlayerLocation = Cast<AMainCharacter>(Target)->mCamera->GetComponentLocation();
@@ -99,5 +100,6 @@ void AAISoldier::CheckPlayer()
 		AIControl->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 
 		mHealthBar->SetVisibility(false);
+		mQuestionMark->SetVisibility(true);
 	}
 }
