@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
 #include "Components/Border.h"
+#include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "PlayerHUDWidget.generated.h"
 
@@ -19,8 +20,6 @@ class KDT1_API UPlayerHUDWidget : public UUserWidget
 
 protected:
 	UImage* mWeaponType;
-	UImage* SpeechImage;
-	UTextBlock* OpenText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UTexture2D* mWeaponSword;
@@ -32,7 +31,10 @@ protected:
 	UTexture2D* mWeaponBow;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UBorder* SpeechBorder;
+	UProgressBar* mHealthBar;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTextBlock* mHealthText;
 
 	UPlayerHUDWidget(const FObjectInitializer& ObjectInitializer);
 
@@ -40,5 +42,5 @@ protected:
 
 public:
 	void SetWeaponType(EPlayerWeaponType Weapon);
-	
+	void SetHealth(int32 mHp);
 };

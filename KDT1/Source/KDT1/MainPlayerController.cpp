@@ -25,7 +25,7 @@ void AMainPlayerController::BeginPlay()
 void AMainPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-
+	
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	ensure(EnhancedInputComponent);
 

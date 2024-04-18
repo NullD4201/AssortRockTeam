@@ -22,6 +22,8 @@ void UPlayerHUDWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	mWeaponType = Cast<UImage>(GetWidgetFromName(TEXT("WeaponType")));
+
+	mHealthBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("HealthProgress")));
 }
 
 void UPlayerHUDWidget::SetWeaponType(EPlayerWeaponType Weapon)
@@ -39,4 +41,9 @@ void UPlayerHUDWidget::SetWeaponType(EPlayerWeaponType Weapon)
 		mWeaponType->SetBrushFromTexture(mWeaponSword);
 		break;
 	}
+}
+
+void UPlayerHUDWidget::SetHealth(int32 mHp)
+{
+	mHealthBar->SetPercent(mHp / 500.f);
 }

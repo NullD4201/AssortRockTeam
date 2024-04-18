@@ -19,6 +19,15 @@ public:
 	UCameraComponent* mCamera;
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32	mAttackPoint;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32	mArmorPoint;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32	mHp;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32	mHpMax;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USpringArmComponent* mCameraArm;
 

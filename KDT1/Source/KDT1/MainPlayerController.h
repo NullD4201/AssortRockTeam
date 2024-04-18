@@ -14,15 +14,15 @@ UCLASS()
 class KDT1_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 public :
 	AMainPlayerController();
+	UUserWidget*		mPlayerHUD;
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-protected:
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
 	void OnSprint(const FInputActionValue& InputActionValue);
