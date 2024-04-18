@@ -103,7 +103,7 @@ void ASoldierPawn::Tick(float DeltaSeconds)
 
 	UProgressBar* hp = Cast<UProgressBar>(mHealthBar->GetWidget()->GetWidgetFromName(TEXT("SoldierHpProgressBar")));
 
-	hp->SetPercent(SoldierInfo->mHp / SoldierInfo->mHpMax);
+	hp->SetPercent(mSoldierState->mHp * 1.f / mSoldierState->mHpMax);
 }
 
 void ASoldierPawn::NormalAttack()
@@ -115,7 +115,7 @@ float ASoldierPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	mSoldierState->mHp -= DamageAmount;
+	mSoldierState->mHp -= (DamageAmount - mSoldierState->mArmorPoint);
 
 	if (!mHitEnable)
 	{
