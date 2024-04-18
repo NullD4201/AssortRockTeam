@@ -24,9 +24,13 @@ AMainCharacter::AMainCharacter()
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	mCheckRadius = CreateDefaultSubobject<USphereComponent>(TEXT("CheckRadius"));
+	/*mEyeSightCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("EyeSightCameraArm"));
+	mEyeSightCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("EyeSightCamera"));*/
+	mPlayerEyeSight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerEyeSight"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
+	mPlayerEyeSight->SetupAttachment(GetRootComponent());
 
 	mCheckRadius->SetupAttachment(GetCapsuleComponent());
 	mCheckRadius->SetSphereRadius(3000.f);
@@ -61,6 +65,8 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	PlayerTargetLocked(DeltaTime);
 
+	FRotator Camera_CurrentRotation = mCamera->GetComponentRotation();
+	mPlayerEyeSight->SetRelativeRotation(FRotator(90.f,Camera_CurrentRotation.Yaw, Camera_CurrentRotation.Roll), false);
 }
 
 // Called to bind functionality to input

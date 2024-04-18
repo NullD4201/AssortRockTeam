@@ -18,6 +18,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UCameraComponent* mCamera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UCameraComponent* mEyeSightCamera;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USpringArmComponent* mCameraArm;
@@ -30,6 +33,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USphereComponent* mCheckRadius = nullptr;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USpringArmComponent* mEyeSightCameraArm;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* mPlayerEyeSight;
+
 	float mIdleMaxSpeed;
 	float mSprintMaxSpeed;
 	float mCurrentMaxWalkSpeed;
@@ -37,6 +46,9 @@ protected:
 	float mCurrentSpeed;
 	bool mIsTargetLocked;
 	bool mIsAngleLocked;
+	float FixedZValue = 2800.f;
+	float FixedPitchValue = 90.f;
+	float FixedYawValue = 90.f;
 
 	AActor* TargetActor = nullptr;
 	TArray<AActor*>	mTargetArray;
