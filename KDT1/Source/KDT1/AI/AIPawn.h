@@ -43,6 +43,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	class UAIState*		mState;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* mQuestionMark;
 	
 	FAIInfo* mAIInfo;
 

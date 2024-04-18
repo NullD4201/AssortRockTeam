@@ -19,6 +19,7 @@ AAIPawn::AAIPawn()
 	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Body"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	mWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
+	mQuestionMark = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("QuestionMark"));
 	mMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 	mHealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar Widget"));
 
@@ -29,10 +30,26 @@ AAIPawn::AAIPawn()
 	mMesh->SetupAttachment(mCapsule);
 	mCapsule->SetRelativeLocation(FVector(0, 0, 0));
 	mWeaponMesh->SetupAttachment(mMesh, "weapon");
+	mQuestionMark->SetupAttachment(mMesh);
 	mHealthBar->SetupAttachment(GetRootComponent());
 
 	mHealthBar->SetRelativeScale3D(FVector(0.3, 0.3, 0.3));
 	mHealthBar->SetRelativeLocation(FVector(0, 0, 100));
+
+	mQuestionMark->SetRelativeLocation(FVector(0, 0, 200));
+	mQuestionMark->SetRelativeScale3D(FVector(0.1, 0.1, 0.1));
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> QuestionMark(TEXT("/Script/Engine.StaticMesh'/Game/Main/Meshes/SM_Questionmark.SM_Questionmark'"));
+	if (QuestionMark.Succeeded())
+	{
+		mQuestionMark->SetStaticMesh(QuestionMark.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterial> QuestionMaterial(TEXT("/Script/Engine.Material'/Game/Main/Material/AILocation.AILocation'"));
+	if (QuestionMaterial.Succeeded())
+	{
+		mQuestionMark->SetMaterial(0, QuestionMaterial.Object);
+	}
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
