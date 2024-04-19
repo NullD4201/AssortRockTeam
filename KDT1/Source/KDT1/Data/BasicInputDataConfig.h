@@ -38,4 +38,6 @@ public:
 	UInputAction* TargetLock = nullptr;
 	UInputAction* SwitchLeft = nullptr;
 	UInputAction* SwitchRight = nullptr;
+	UInputAction* ChangeCharacter1 = nullptr;
+	UInputAction* ChangeCharacter2 = nullptr;
 };

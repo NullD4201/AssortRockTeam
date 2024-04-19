@@ -45,6 +45,8 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->TargetLock, ETriggerEvent::Started, this, &ThisClass::OnTargetLock);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchLeft, ETriggerEvent::Started, this, &ThisClass::OnSwitchLeft);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchRight, ETriggerEvent::Started, this, &ThisClass::OnSwitchRight);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter1, ETriggerEvent::Completed, this, &AMainPlayerController::OnCharacterChange1);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter2, ETriggerEvent::Completed, this, &AMainPlayerController::OnCharacterChange2);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -166,4 +168,18 @@ void AMainPlayerController::OnSwitchRight(const FInputActionValue& InputActionVa
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->SwitchRight();
+}
+
+void AMainPlayerController::OnCharacterChange1(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->ChangeToWeaponSword();
+}
+
+void AMainPlayerController::OnCharacterChange2(const FInputActionValue& InputActionValue)
+{
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->ChangeToWeaponSpear();
 }

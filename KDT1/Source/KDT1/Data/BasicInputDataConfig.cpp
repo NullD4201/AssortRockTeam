@@ -133,4 +133,20 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			SwitchRight = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change1.IA_Change1'") };
+		if (Asset.Succeeded())
+		{
+			ChangeCharacter1 = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Change2.IA_Change2'") };
+		if (Asset.Succeeded())
+		{
+			ChangeCharacter2 = Asset.Object;
+		}
+	}
 }

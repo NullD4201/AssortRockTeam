@@ -23,6 +23,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
+	UPROPERTY(EditAnywhere)
+	class UPlayerHUDWidget*		UI_PlayerHUD;
+
 	void OnMove(const FInputActionValue& InputActionValue);
 	void OnLook(const FInputActionValue& InputActionValue);
 	void OnSprint(const FInputActionValue& InputActionValue);
@@ -38,4 +41,6 @@ protected:
 	void OnTargetLock(const FInputActionValue& InputActionValue);
 	void OnSwitchLeft(const FInputActionValue& InputActionValue);
 	void OnSwitchRight(const FInputActionValue& InputActionValue);
+	void OnCharacterChange1(const FInputActionValue& InputActionValue);
+	void OnCharacterChange2(const FInputActionValue& InputActionValue);
 };
