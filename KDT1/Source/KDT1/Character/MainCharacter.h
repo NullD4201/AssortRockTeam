@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
+#include "KDT1/UI/PlayerHUDWidget.h"
 #include "MainCharacter.generated.h"
 
 
@@ -20,6 +21,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UCameraComponent* mPlayerEyeSightCamera;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EPlayerWeaponType	mPlayerWeaponType;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -50,6 +54,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* mPlayerEyeSight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPlayerHUDWidget*	mPlayerHUDWidget;
 
 	float mIdleMaxSpeed;
 	float mSprintMaxSpeed;

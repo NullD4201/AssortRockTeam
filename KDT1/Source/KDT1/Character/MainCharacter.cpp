@@ -3,6 +3,10 @@
 
 #include "MainCharacter.h"
 #include "PlayerAnimInstance.h"
+#include "SpearCharacter.h"
+#include "SwordCharacter.h"
+#include "KDT1/MainPlayerController.h"
+#include "KDT1/GameMode/MainGameModeBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
@@ -76,6 +80,8 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	FRotator Camera_CurrentRotation = mCamera->GetComponentRotation();
 	mPlayerEyeSight->SetRelativeRotation(FRotator(90.f,Camera_CurrentRotation.Yaw, Camera_CurrentRotation.Roll), false);
+
+	GetController<AMainPlayerController>()->GetPlayerHUDWidget()->SetHealth(mHp);
 }
 
 // Called to bind functionality to input
@@ -89,7 +95,7 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Player TakeDamage " + FString::FromInt(DamageAmount - mArmorPoint)));
+	mHp -= (DamageAmount - mArmorPoint);
 
 	return DamageAmount;
 }
@@ -408,12 +414,18 @@ void AMainCharacter::OnActiveRadiusEndOverlap(UPrimitiveComponent* OverlappedCom
 
 void AMainCharacter::ChangeToWeaponSword()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
+	if (mPlayerWeaponType != EPlayerWeaponType::Sword)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
+	}
 }
 
 void AMainCharacter::ChangeToWeaponSpear()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
+	if (mPlayerWeaponType != EPlayerWeaponType::Spear)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
+	}
 }
 
 void AMainCharacter::SetupStimulusSource()

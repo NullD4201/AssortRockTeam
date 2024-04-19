@@ -15,9 +15,18 @@ class KDT1_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+private:
+	TSubclassOf<UUserWidget>	mPlayerHUDWidgetClass;
+	class UPlayerHUDWidget*		mPlayerHUDWidget;
+
 public :
 	AMainPlayerController();
 	UUserWidget*		mPlayerHUD;
+
+	class UPlayerHUDWidget* GetPlayerHUDWidget()
+	{
+		return mPlayerHUDWidget;
+	}
 
 protected:
 	virtual void BeginPlay() override;

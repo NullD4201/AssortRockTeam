@@ -9,7 +9,12 @@
 
 AMainPlayerController::AMainPlayerController()
 {
+	static ConstructorHelpers::FClassFinder<UUserWidget> PlayerHUDWidgetClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Main/UI/PlayerHUD.PlayerHUD_C'"));
 
+	if (PlayerHUDWidgetClass.Succeeded())
+	{
+		mPlayerHUDWidgetClass = PlayerHUDWidgetClass.Class;
+	}
 }
 
 void AMainPlayerController::BeginPlay()
@@ -20,6 +25,8 @@ void AMainPlayerController::BeginPlay()
 	const UBasicInputDataConfig* MainInputDataConfig = GetDefault<UBasicInputDataConfig>();
 	Subsystem->AddMappingContext(MainInputDataConfig->DefaultContext, 0);
 
+	mPlayerHUDWidget = CreateWidget<UPlayerHUDWidget>(GetWorld(), mPlayerHUDWidgetClass);
+	mPlayerHUDWidget->AddToViewport();
 }
 
 void AMainPlayerController::SetupInputComponent()
