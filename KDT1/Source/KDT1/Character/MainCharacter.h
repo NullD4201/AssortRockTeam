@@ -24,6 +24,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	EPlayerWeaponType	mPlayerWeaponType;
+	
+	class UPlayerAnimInstance* mAnimInst;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -41,7 +43,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USpringArmComponent* mPlayerEyeSightCameraArm;
 
-	class UPlayerAnimInstance* mAnimInst;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* mMesh;

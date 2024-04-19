@@ -16,6 +16,9 @@ class KDT1_API UPlayerAnimInstance : public UAnimInstance
 public:
 	UPlayerAnimInstance();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool    bIsPlayerAlive;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float		mMoveSpeed;
@@ -34,6 +37,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* mSkillMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimMontage* mDeathMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UAnimMontage>>	mAttackMontageArray;
@@ -66,6 +72,7 @@ public:
 	{
 		return mAnimType;
 	}
+	void Death();
 
 	UFUNCTION()
 	void AnimNotify_Attack();
@@ -87,4 +94,7 @@ public:
 
 	UFUNCTION()
 	void AnimNotify_DodgeFinish();
+
+	UFUNCTION()
+	void AnimNotify_DeathEnd();
 };
