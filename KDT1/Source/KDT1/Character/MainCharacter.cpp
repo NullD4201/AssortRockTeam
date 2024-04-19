@@ -66,6 +66,8 @@ void AMainCharacter::BeginPlay()
 
 	mAnimInst = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 
+	mAnimInst->bIsPlayerAlive = true;
+
 	mCurrentMaxWalkSpeed = mIdleMaxSpeed;
 }
 
@@ -96,6 +98,12 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	mHp -= (DamageAmount - mArmorPoint);
+
+	if (mHp <= 0)
+	{
+		mAnimInst->Death();
+		mHp = 0;
+	}
 
 	return DamageAmount;
 }

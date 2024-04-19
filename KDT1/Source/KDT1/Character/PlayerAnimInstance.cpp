@@ -14,6 +14,7 @@ UPlayerAnimInstance::UPlayerAnimInstance()
 	bIsSprinting = false;
 	bIsTargetLock = false;
 	mAnimType = EPlayerAnimType::Idle;
+	bIsPlayerAlive = true;
 }
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
@@ -187,6 +188,20 @@ void UPlayerAnimInstance::TargetLock()
 	}
 }
 
+void UPlayerAnimInstance::Death()
+{
+	if (!Montage_IsPlaying(mDeathMontage) && bIsPlayerAlive)
+	{
+		bIsPlayerAlive = false;
+		mAttackEnable = false;
+		mDodgeEnable = false;
+		mAnimType = EPlayerAnimType::Death;
+
+		Montage_SetPosition(mDeathMontage, 0.0f);
+		Montage_Play(mDeathMontage);
+	}
+}
+
 void UPlayerAnimInstance::AnimNotify_Attack()
 {
 	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
@@ -236,4 +251,8 @@ void UPlayerAnimInstance::AnimNotify_DodgeFinish()
 	mDodgeEnable = true;
 }
 
-
+void UPlayerAnimInstance::AnimNotify_DeathEnd()
+{
+	// UKismetSystemLibrary::QuitEditor();
+	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, TEXT("Game Over"));
+}

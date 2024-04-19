@@ -4,6 +4,8 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "KDT1/AI/AIPawn.h"
+#include "KDT1/Character/MainCharacter.h"
+#include "KDT1/Character/PlayerAnimInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 
 UBTService_DetectTarget::UBTService_DetectTarget()
@@ -45,13 +47,20 @@ void UBTService_DetectTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 
 	if (IsCollision)
 	{
-		Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), true);
-		Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
+		if (!Cast<AMainCharacter>(result.GetActor())->mAnimInst->bIsPlayerAlive)
+		{
+			Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+			Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), false);
+		}
+		else
+		{
+			Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), true);
+			Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), result.GetActor());
+		}
 	}
 	else
 	{
 		Controller->GetBlackboardComponent()->SetValueAsBool(TEXT("IsInRadius"), false);
 		//Controller->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 	}
-
 }
