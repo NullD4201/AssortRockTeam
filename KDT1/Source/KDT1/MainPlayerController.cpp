@@ -45,8 +45,8 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->TargetLock, ETriggerEvent::Started, this, &ThisClass::OnTargetLock);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchLeft, ETriggerEvent::Started, this, &ThisClass::OnSwitchLeft);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchRight, ETriggerEvent::Started, this, &ThisClass::OnSwitchRight);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter1, ETriggerEvent::Completed, this, &AMainPlayerController::OnCharacterChange1);
-	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter2, ETriggerEvent::Completed, this, &AMainPlayerController::OnCharacterChange2);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter1, ETriggerEvent::Started, this, &AMainPlayerController::OnCharacterChange1);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter2, ETriggerEvent::Started, this, &AMainPlayerController::OnCharacterChange2);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -107,7 +107,6 @@ void AMainPlayerController::OnSkill(const FInputActionValue& InputActionValue)
 
 void AMainPlayerController::ChangeToSword(const FInputActionValue& InputActionValue)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Blue, TEXT("Change1"));
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->ChangeToWeaponSword();
@@ -115,7 +114,6 @@ void AMainPlayerController::ChangeToSword(const FInputActionValue& InputActionVa
 
 void AMainPlayerController::ChangeToSpear(const FInputActionValue& InputActionValue)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Blue, TEXT("Change2"));
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->ChangeToWeaponSpear();
