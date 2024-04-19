@@ -29,13 +29,17 @@ AMainCharacter::AMainCharacter()
 	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
 	mCheckRadius = CreateDefaultSubobject<USphereComponent>(TEXT("CheckRadius"));
-	/*mEyeSightCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("EyeSightCameraArm"));
-	mEyeSightCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("EyeSightCamera"));*/
+	
+	mPlayerEyeSightCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("EyeSightCameraArm"));
+	mPlayerEyeSightCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("EyeSightCamera"));
 	mPlayerEyeSight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerEyeSight"));
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
-	mPlayerEyeSight->SetupAttachment(GetRootComponent());
+
+	mPlayerEyeSightCameraArm->SetupAttachment(GetCapsuleComponent());
+	mPlayerEyeSightCamera->SetupAttachment(mPlayerEyeSightCameraArm);
+	mPlayerEyeSight->SetupAttachment(mPlayerEyeSightCamera);
 
 	mCheckRadius->SetupAttachment(GetCapsuleComponent());
 	mCheckRadius->SetSphereRadius(3000.f);

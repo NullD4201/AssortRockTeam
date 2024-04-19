@@ -19,7 +19,7 @@ public:
 	UCameraComponent* mCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UCameraComponent* mEyeSightCamera;
+	UCameraComponent* mPlayerEyeSightCamera;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -33,6 +33,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USpringArmComponent* mCameraArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USpringArmComponent* mPlayerEyeSightCameraArm;
 
 	class UPlayerAnimInstance* mAnimInst;
 
