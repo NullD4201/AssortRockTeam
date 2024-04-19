@@ -101,6 +101,10 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 	if (mHp <= 0)
 	{
+		GetMovementComponent()->Velocity = FVector(0, 0, 0);
+		GetController<AMainPlayerController>()->SetIgnoreLookInput(true);
+		GetController<AMainPlayerController>()->SetIgnoreMoveInput(true);
+		
 		mAnimInst->Death();
 		mHp = 0;
 	}

@@ -206,7 +206,6 @@ void UPlayerAnimInstance::Death()
 		mAnimType = EPlayerAnimType::Death;
 
 		Montage_SetPosition(mDeathMontage, 0.0f);
-		Montage_Play(mDeathMontage);
 	}
 }
 
