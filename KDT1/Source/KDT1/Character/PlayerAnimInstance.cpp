@@ -80,6 +80,10 @@ void UPlayerAnimInstance::PlayAttackMontage()
 	{
 		// 플레이어가 적을 바라보도록 합니다.
 		FRotator lookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwningActor()->GetActorLocation(), enemy->GetActorLocation());
+		lookAtRotation.Pitch = 0.0f;
+		/*lookAtRotation.Yaw = 0.0f;*/
+		FString LookAtRotationString = FString::Printf(TEXT("LookAtRotation: Pitch: %f, Yaw: %f, Roll: %f"), lookAtRotation.Pitch, lookAtRotation.Yaw, lookAtRotation.Roll);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);
 		GetOwningActor()->SetActorRotation(lookAtRotation);
 	}
 
@@ -161,6 +165,10 @@ void UPlayerAnimInstance::PlaySkillMontage()
 	{
 		// 플레이어가 적을 바라보도록 합니다.
 		FRotator lookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwningActor()->GetActorLocation(), enemy->GetActorLocation());
+		lookAtRotation.Pitch = 0.0f;
+		/*lookAtRotation.Yaw = 0.0f;*/
+		FString LookAtRotationString = FString::Printf(TEXT("LookAtRotation: Pitch: %f, Yaw: %f, Roll: %f"), lookAtRotation.Pitch, lookAtRotation.Yaw, lookAtRotation.Roll);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);
 		GetOwningActor()->SetActorRotation(lookAtRotation);
 	}
 
