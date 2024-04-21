@@ -84,7 +84,7 @@ void UPlayerAnimInstance::PlayAttackMontage()
 		lookAtRotation.Pitch = 0.0f;
 		/*lookAtRotation.Yaw = 0.0f;*/
 		FString LookAtRotationString = FString::Printf(TEXT("LookAtRotation: Pitch: %f, Yaw: %f, Roll: %f"), lookAtRotation.Pitch, lookAtRotation.Yaw, lookAtRotation.Roll);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);
+		/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);*/
 		GetOwningActor()->SetActorRotation(lookAtRotation);
 	}
 
@@ -169,7 +169,7 @@ void UPlayerAnimInstance::PlaySkillMontage()
 		lookAtRotation.Pitch = 0.0f;
 		/*lookAtRotation.Yaw = 0.0f;*/
 		FString LookAtRotationString = FString::Printf(TEXT("LookAtRotation: Pitch: %f, Yaw: %f, Roll: %f"), lookAtRotation.Pitch, lookAtRotation.Yaw, lookAtRotation.Roll);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);
+		/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, LookAtRotationString);*/
 		GetOwningActor()->SetActorRotation(lookAtRotation);
 	}
 
