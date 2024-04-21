@@ -193,7 +193,7 @@ void AMainPlayerController::OnCharacterChange2(const FInputActionValue& InputAct
 
 void AMainPlayerController::OnGrapple(const FInputActionValue& InputActionValue)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue, TEXT("여기에요!"));
+	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue, TEXT("여기에요!"));*/
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->Grapple();
@@ -201,7 +201,7 @@ void AMainPlayerController::OnGrapple(const FInputActionValue& InputActionValue)
 
 void AMainPlayerController::StopGrapple(const FInputActionValue& InputActionValue)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Emerald, TEXT("여기에요!"));
+	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Emerald, TEXT("여기에요!"));*/
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->EndGrapple();
