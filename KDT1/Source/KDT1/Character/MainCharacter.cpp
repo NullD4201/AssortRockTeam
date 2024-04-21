@@ -9,7 +9,9 @@
 #include "KDT1/GameMode/MainGameModeBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
+#include "KDT1/Actor/EffectBase.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -111,6 +113,9 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
+	USoundBase* SoundBase = LoadObject<USoundWave>(nullptr, TEXT("/Script/Engine.SoundWave'/Game/Main/Sounds/HurtSound.HurtSound'"));
+	UGameplayStatics::PlaySound2D(GetWorld(), SoundBase);
+
 	mHp -= (DamageAmount - mArmorPoint);
 
 	if (mHp <= 0)
@@ -148,6 +153,15 @@ void AMainCharacter::NormalAttack()
 		{
 			FDamageEvent	DmgEvent;
 			resultArray[i].GetActor()->TakeDamage(mAttackPoint, DmgEvent, GetController(), this);
+
+			FActorSpawnParameters	SpawnParameters;
+			SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+			AEffectBase* EffectBase = GetWorld()->SpawnActor<AEffectBase>(
+				resultArray[i].ImpactPoint,
+				resultArray[i].ImpactNormal.Rotation(), SpawnParameters
+			);
+			EffectBase->SetSoundAsset(TEXT("/Script/Engine.SoundWave'/Game/Main/Sounds/SpearSound.SpearSound'"));
 		}
 	}
 }
