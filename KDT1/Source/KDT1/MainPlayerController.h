@@ -52,4 +52,6 @@ protected:
 	void OnSwitchRight(const FInputActionValue& InputActionValue);
 	void OnCharacterChange1(const FInputActionValue& InputActionValue);
 	void OnCharacterChange2(const FInputActionValue& InputActionValue);
+	void OnGrapple(const FInputActionValue& InputActionValue);
+	void StopGrapple(const FInputActionValue& InputActionValue);
 };

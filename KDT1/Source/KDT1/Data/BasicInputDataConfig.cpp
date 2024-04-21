@@ -149,4 +149,12 @@ UBasicInputDataConfig::UBasicInputDataConfig()
 			ChangeCharacter2 = Asset.Object;
 		}
 	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction> Asset
+		{ TEXT("/Script/EnhancedInput.InputAction'/Game/Main/Input/IA_Grapple.IA_Grapple'") };
+		if (Asset.Succeeded())
+		{
+			Grapple = Asset.Object;
+		}
+	}
 }

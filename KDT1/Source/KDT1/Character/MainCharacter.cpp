@@ -9,6 +9,7 @@
 #include "KDT1/GameMode/MainGameModeBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "CableComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -37,6 +38,10 @@ AMainCharacter::AMainCharacter()
 	mPlayerEyeSightCameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("EyeSightCameraArm"));
 	mPlayerEyeSightCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("EyeSightCamera"));
 	mPlayerEyeSight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerEyeSight"));
+
+	GrappleCable = CreateDefaultSubobject<UCableComponent>(TEXT("Grappling Line"));
+	GrappleCable->SetupAttachment(mCamera);
+	GrappleCable->SetVisibility(true);
 
 	mCameraArm->SetupAttachment(GetCapsuleComponent());
 	mCamera->SetupAttachment(mCameraArm);
@@ -84,6 +89,15 @@ void AMainCharacter::Tick(float DeltaTime)
 	mPlayerEyeSight->SetRelativeRotation(FRotator(90.f,Camera_CurrentRotation.Yaw, Camera_CurrentRotation.Roll), false);
 
 	GetController<AMainPlayerController>()->GetPlayerHUDWidget()->SetHealth(mHp);
+
+	if (isGrappling)
+	{
+		GrappleCable->EndLocation = GetActorTransform().InverseTransformPosition(GrabPoint);
+		GetCharacterMovement()->AddForce((GrabPoint - GetActorLocation()).GetSafeNormal() * 250000);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("여기에요!"));
+		FVector CurrentVelocity = GetCharacterMovement()->Velocity;
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("Current Velocity: %s"), *CurrentVelocity.ToString()));
+	}
 }
 
 // Called to bind functionality to input
@@ -438,6 +452,38 @@ void AMainCharacter::ChangeToWeaponSpear()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
 	}
+}
+
+void AMainCharacter::Grapple()
+{
+	FVector Start = GrappleCable->GetComponentLocation();
+	FVector End = Start + (MaxLineDistance * UKismetMathLibrary::GetForwardVector(mCamera->GetComponentRotation()));
+	DrawDebugLine(GetWorld(), Start, End, FColor::Emerald);
+
+	FHitResult HitResult;
+	FCollisionQueryParams TraceParams;
+	bool hasHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, TraceParams);
+
+	if (hasHit)
+	{
+		//무언가를 잡고있을 때 무슨 일이 일어나는지
+		isGrappling = true;
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+		GrappleCable->SetVisibility(true);
+		GrabPoint = HitResult.ImpactPoint;
+	}
+}
+
+void AMainCharacter::EndGrapple()
+{
+	isGrappling = false;
+	if (!GetCharacterMovement()->IsFalling())
+	{
+		/*FVector CurrentVelocity = GetCharacterMovement()->Velocity;*/
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Falling);
+		/*GetCharacterMovement()->Velocity = FVector(CurrentVelocity.X, CurrentVelocity.Y, GetCharacterMovement()->Velocity.Z);*/
+	}
+	GrappleCable->SetVisibility(false);
 }
 
 void AMainCharacter::SetupStimulusSource()

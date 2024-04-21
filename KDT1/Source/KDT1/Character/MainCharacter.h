@@ -24,6 +24,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	EPlayerWeaponType	mPlayerWeaponType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Grappling, meta = (AllowPrivateAccess = "true"))
+	class UCableComponent* GrappleCable;
 	
 	class UPlayerAnimInstance* mAnimInst;
 
@@ -122,9 +125,16 @@ public:
 	void ChangeToWeaponSword();
 	void ChangeToWeaponSpear();
 
+	void Grapple();
+	void EndGrapple();
+
 private:
 	class UAIPerceptionStimuliSourceComponent* StimulusSource;
 
 	void SetupStimulusSource();
+
+	float MaxLineDistance = 6000.f;
+	bool isGrappling = false;
+	FVector GrabPoint;
 
 };

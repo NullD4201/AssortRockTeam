@@ -40,4 +40,5 @@ public:
 	UInputAction* SwitchRight = nullptr;
 	UInputAction* ChangeCharacter1 = nullptr;
 	UInputAction* ChangeCharacter2 = nullptr;
+	UInputAction* Grapple= nullptr;
 };

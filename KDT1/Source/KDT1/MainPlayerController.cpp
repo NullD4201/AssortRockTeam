@@ -54,6 +54,8 @@ void AMainPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MainInputDataConfig->SwitchRight, ETriggerEvent::Started, this, &ThisClass::OnSwitchRight);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter1, ETriggerEvent::Started, this, &AMainPlayerController::OnCharacterChange1);
 	EnhancedInputComponent->BindAction(MainInputDataConfig->ChangeCharacter2, ETriggerEvent::Started, this, &AMainPlayerController::OnCharacterChange2);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Grapple, ETriggerEvent::Started, this, &ThisClass::OnGrapple);
+	EnhancedInputComponent->BindAction(MainInputDataConfig->Grapple, ETriggerEvent::Completed, this, &ThisClass::StopGrapple);
 }
 
 void AMainPlayerController::OnMove(const FInputActionValue& InputActionValue)
@@ -187,4 +189,20 @@ void AMainPlayerController::OnCharacterChange2(const FInputActionValue& InputAct
 	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
 
 	ControlledPawn->ChangeToWeaponSpear();
+}
+
+void AMainPlayerController::OnGrapple(const FInputActionValue& InputActionValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue, TEXT("여기에요!"));
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->Grapple();
+}
+
+void AMainPlayerController::StopGrapple(const FInputActionValue& InputActionValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Emerald, TEXT("여기에요!"));
+	AMainCharacter* ControlledPawn = GetPawn<AMainCharacter>();
+
+	ControlledPawn->EndGrapple();
 }
