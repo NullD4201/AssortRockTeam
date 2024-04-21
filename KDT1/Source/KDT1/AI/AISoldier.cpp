@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "SoldierAIController.h"
 #include "Engine/DamageEvents.h"
+#include "KDT1/Actor/EffectBase.h"
 #include "KDT1/Character/MainCharacter.h"
 
 AAISoldier::AAISoldier()
@@ -68,6 +69,12 @@ void AAISoldier::NormalAttack()
 
 		FActorSpawnParameters	SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		AEffectBase* EffectBase = GetWorld()->SpawnActor<AEffectBase>(
+			result.ImpactPoint,
+			result.ImpactNormal.Rotation(), SpawnParams
+		);
+		EffectBase->SetSoundAsset(TEXT("/Script/Engine.SoundWave'/Game/Main/Sounds/SwordSound.SwordSound'"));
 	}
 }
 
