@@ -94,9 +94,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	{
 		GrappleCable->EndLocation = GetActorTransform().InverseTransformPosition(GrabPoint);
 		GetCharacterMovement()->AddForce((GrabPoint - GetActorLocation()).GetSafeNormal() * 250000);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("여기에요!"));
 		FVector CurrentVelocity = GetCharacterMovement()->Velocity;
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("Current Velocity: %s"), *CurrentVelocity.ToString()));
 	}
 }
 
@@ -457,6 +455,7 @@ void AMainCharacter::ChangeToWeaponSpear()
 void AMainCharacter::Grapple()
 {
 	FVector Start = GrappleCable->GetComponentLocation();
+	/*FVector Start = GetCapsuleComponent()->GetComponentLocation();*/
 	FVector End = Start + (MaxLineDistance * UKismetMathLibrary::GetForwardVector(mCamera->GetComponentRotation()));
 	DrawDebugLine(GetWorld(), Start, End, FColor::Emerald);
 
