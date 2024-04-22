@@ -456,7 +456,7 @@ void AMainCharacter::ChangeToWeaponSword()
 {
 	if (mPlayerWeaponType != EPlayerWeaponType::Sword)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
+		// GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon1"));
 		mPlayerWeaponType = EPlayerWeaponType::Sword;
 	}
 }
@@ -465,7 +465,7 @@ void AMainCharacter::ChangeToWeaponSpear()
 {
 	if (mPlayerWeaponType != EPlayerWeaponType::Spear)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
+		// GEngine->AddOnScreenDebugMessage(-1, 1., FColor::Green, TEXT("Weapon2"));
 		mPlayerWeaponType = EPlayerWeaponType::Spear;
 	}
 }
