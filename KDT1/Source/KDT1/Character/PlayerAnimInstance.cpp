@@ -261,5 +261,5 @@ void UPlayerAnimInstance::AnimNotify_DodgeFinish()
 void UPlayerAnimInstance::AnimNotify_DeathEnd()
 {
 	// UKismetSystemLibrary::QuitEditor();
-	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, TEXT("Game Over"));
+	// GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, TEXT("Game Over"));
 }
