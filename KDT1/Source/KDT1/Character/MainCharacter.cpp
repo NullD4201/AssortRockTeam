@@ -91,6 +91,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	mPlayerEyeSight->SetRelativeRotation(FRotator(90.f,Camera_CurrentRotation.Yaw, Camera_CurrentRotation.Roll), false);
 
 	GetController<AMainPlayerController>()->GetPlayerHUDWidget()->SetHealth(mHp);
+	GetController<AMainPlayerController>()->GetPlayerHUDWidget()->SetWeaponType(mPlayerWeaponType);
 
 	if (isGrappling)
 	{
@@ -294,6 +295,7 @@ void AMainCharacter::PlayerTargetLocked(float DeltaTime)
 		FRotator PlayerRot = FRotationMatrix::MakeFromX(TargetVec - ActorVec).Rotator();
 
 		FRotator RInter = FMath::RInterpTo(ViewRot, PlayerRot, DeltaTime, 5.f);
+		RInter.Pitch = GetController()->K2_GetActorRotation().Pitch;
 
 		GetController()->SetControlRotation(RInter);
 

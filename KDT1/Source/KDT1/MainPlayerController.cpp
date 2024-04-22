@@ -82,8 +82,8 @@ void AMainPlayerController::OnLook(const FInputActionValue& InputActionValue)
 	if (!ControlledPawn->GetboolTargetLocked())
 	{
 		AddYawInput(ActionValue.X);
-		AddPitchInput(ActionValue.Y);
 	}
+	AddPitchInput(ActionValue.Y);
 }
 
 void AMainPlayerController::OnSprint(const FInputActionValue& InputActionValue)

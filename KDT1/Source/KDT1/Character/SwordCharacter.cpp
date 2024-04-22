@@ -27,4 +27,6 @@ ASwordCharacter::ASwordCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(SwordAnimInstance.Class);
 	}
+	mPlayerWeaponType = EPlayerWeaponType::Sword;
+
 }

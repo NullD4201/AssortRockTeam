@@ -27,4 +27,5 @@ ASpearCharacter::ASpearCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(SpearAnimInstance.Class);
 	}
+	mPlayerWeaponType = EPlayerWeaponType::Spear;
 }
