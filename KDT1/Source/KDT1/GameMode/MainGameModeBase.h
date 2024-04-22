@@ -17,5 +17,11 @@ class KDT1_API AMainGameModeBase : public AGameModeBase
 public :
 	AMainGameModeBase();
 
+	virtual APlayerController* Login(UPlayer* NewPlayer, ENetRole InRemoteRole,
+		const FString& Portal, const FString& Options,
+		const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage);
+
+private:
+	EPlayerWeaponType	mPlayerWeaponType;
 
 };

@@ -128,6 +128,11 @@ public:
 	void Grapple();
 	void EndGrapple();
 
+	UFUNCTION(BlueprintCallable)
+	void OpenCombatLevel();
+	UFUNCTION(BlueprintCallable)
+	void OpenAssasinLevel();
+
 private:
 	class UAIPerceptionStimuliSourceComponent* StimulusSource;
 

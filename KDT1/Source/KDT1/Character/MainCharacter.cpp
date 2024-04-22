@@ -511,5 +511,27 @@ void AMainCharacter::SetupStimulusSource()
 	}
 }
 
+void AMainCharacter::OpenCombatLevel()
+{
+	EPlayerWeaponType	WeaponType = mPlayerWeaponType;
+
+	FString	Option = FString::Printf(TEXT("Type=%d?"),
+		(int32)WeaponType);
+
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("CombatMap"), true,
+		Option);
+}
+
+void AMainCharacter::OpenAssasinLevel()
+{
+	EPlayerWeaponType	WeaponType = mPlayerWeaponType;
+
+	FString	Option = FString::Printf(TEXT("Type=%d?"),
+		(int32)WeaponType);
+
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("AssasinateMap"), true,
+		Option);
+}
+
 
 
